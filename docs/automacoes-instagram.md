@@ -361,7 +361,9 @@ Como gerar:
    - Permissions: selecione pelo menos `instagram_basic`, `instagram_manage_comments`, `instagram_manage_messages`, `pages_messaging`, `pages_read_engagement`, `pages_show_list`, `business_management`
 5. Copie o token (Meta so mostra 1 vez — salve num lugar seguro temporariamente).
 6. No Robo MultiPost, va em **Settings > Credenciais > Instagram > Tokens de Messaging > Meta System User Token** e cole o token no campo.
-7. Clique em **Validar e salvar**. O backend chama `/me` e `/me/accounts` no Graph API pra confirmar que o token e valido e mostra o business name + contas conectadas.
+7. Clique em **Validar e salvar**. O backend valida o token em `/me?fields=id,name`, resolve o Business Manager em `/me/businesses` e descobre as contas em `/me/assigned_pages` (edge propria do node System User) + `/me/accounts` + `owned_pages`/`client_pages` de cada business, mostrando o business name + contas conectadas.
+
+> **Atencao ao passo 3:** permissoes (escopos) e atribuicao de ativos sao coisas diferentes. Um System User pode ter todos os escopos e ainda assim nao alcancar nenhuma conta se as Pages/contas Instagram nao estiverem em **Add Assets**. Quando isso acontece, a validacao passa (token e valido) mas a tela mostra **0 contas conectadas** com um aviso — volte ao Business Settings e atribua os ativos.
 
 Com isso feito, **todas** as automacoes de story passam a funcionar imediatamente. O token nao precisa ser atualizado ate o admin revogar no Meta Dashboard.
 
@@ -413,6 +415,8 @@ Os scopes sao selecionados no momento da geracao do token — revise o checklist
 
 ### Erros comuns
 
+- **"(#100) Tried accessing nonexisting field (business)"** ao salvar o System User Token → bug corrigido: a validacao pedia `fields=business` em `/me`, campo que o node de um System User Token nao expoe. Se o erro reaparecer, confira que o backend esta atualizado — a validacao correta usa `/me?fields=id,name` + `/me/businesses`.
+- **Token valido, mas "0 contas conectadas"** → o System User tem os escopos porem nenhuma Page/conta Instagram atribuida. Business Settings > System Users > **Add Assets** > selecione a Page e a conta do Instagram com acesso total.
 - **"O app nao tem acesso avancado a permissao instagram_manage_messages"** → token foi gerado sem a scope de messaging, ou o app Meta ainda esta em Dev Mode. Regerar o token com a scope correta e confirmar que o app esta em Live Mode.
 - **"Token expirado"** → IG User Token nao usado por > 60 dias. Gerar novo no Meta Dashboard e re-adicionar na tela de credenciais.
 - **"Destinatario nao tem funcao no app"** → app ainda em Dev Mode. Mover para Live Mode ou adicionar o usuario como Instagram Tester temporariamente.

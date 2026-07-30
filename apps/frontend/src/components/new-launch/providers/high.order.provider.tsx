@@ -8,7 +8,7 @@ import React, {
   useImperativeHandle,
   useMemo,
 } from 'react';
-import { useForm, FormProvider } from 'react-hook-form';
+import { useForm, FormProvider, DefaultValues } from 'react-hook-form';
 import { IsOptional } from 'class-validator';
 import { classValidatorResolver } from '@hookform/resolvers/class-validator';
 import { useLaunchStore } from '@gitroom/frontend/components/new-launch/store';
@@ -52,6 +52,10 @@ export const withProvider = function <T extends object>(params: {
     maximumCharacters?: number;
   }>;
   dto?: any;
+  // Valores padrao das settings do provider. Precisam ficar aqui (e nao em
+  // `register(name, { value })`) porque a prop `values` do useForm sobrescreve
+  // todo campo montado que nao esteja no objeto — ver o merge no useForm abaixo.
+  defaults?: DefaultValues<T>;
   checkValidity?: (
     value: Array<
       Array<{
@@ -70,6 +74,7 @@ export const withProvider = function <T extends object>(params: {
     SettingsComponent,
     CustomPreviewComponent,
     dto,
+    defaults,
     checkValidity,
     maximumCharacters,
   } = params;
@@ -186,8 +191,13 @@ export const withProvider = function <T extends object>(params: {
 
     const form = useForm({
       resolver: classValidatorResolver(dto || Empty),
+      // `defaultValues` cobre o post novo; o merge cobre editar/duplicar/set.
+      // As settings salvas sao espalhadas por ultimo e sempre vencem o default,
+      // entao nenhum post existente e reescrito — o default so preenche buraco
+      // (ex.: post Facebook salvo antes de `post_type` existir).
+      defaultValues: defaults,
       ...(Object.keys(selectedIntegration.settings).length > 0
-        ? { values: { ...selectedIntegration.settings } }
+        ? { values: { ...defaults, ...selectedIntegration.settings } }
         : {}),
       mode: 'all',
       criteriaMode: 'all',

@@ -460,6 +460,14 @@ export const MessagingTokensSection: FC<Props> = ({ refreshKey = 0 }) => {
               {state.systemTokenInfo.pages.length}{' '}
               {t('connected_accounts', 'contas conectadas')}
             </div>
+            {state.systemTokenInfo.pages.length === 0 && (
+              <div className="text-[11px] text-customColor19 leading-[1.4]">
+                {t(
+                  'meta_system_user_token_no_assets',
+                  'O token e valido, mas nenhuma Pagina/conta do Instagram esta atribuida a este Usuario do Sistema. Permissoes (escopos) nao bastam: em Business Settings > System Users, clique em "Adicionar ativos" e atribua a Pagina e a conta do Instagram com acesso total.'
+                )}
+              </div>
+            )}
             <button
               type="button"
               onClick={handleRemoveSystemToken}

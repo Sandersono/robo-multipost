@@ -4,6 +4,7 @@
   "meta_system_user_token_placeholder": "Cole o System User Access Token aqui (começa com EAA...)",
   "meta_system_user_token_how_to": "Como gerar no Business Manager →",
   "meta_system_user_token_invalid": "Token inválido. Verifique o Meta Dashboard.",
+  "meta_system_user_token_no_assets": "O token é válido, mas nenhuma Página/conta do Instagram está atribuída a este Usuário do Sistema. Permissões (escopos) não bastam: em Business Settings > System Users, clique em \"Adicionar ativos\" e atribua a Página e a conta do Instagram com acesso total.",
   "alternative": "alternativa",
   "meta_instagram_tokens_label": "Token do Instagram",
   "meta_instagram_tokens_hint": "Gere um token específico para cada Instagram. Expira em 60 dias, renovado automaticamente a cada uso após 24h.",

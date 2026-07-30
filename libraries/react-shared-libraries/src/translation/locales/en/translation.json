@@ -4,6 +4,7 @@
   "meta_system_user_token_placeholder": "Paste the System User Access Token here (starts with EAA...)",
   "meta_system_user_token_how_to": "How to generate in Business Manager →",
   "meta_system_user_token_invalid": "Invalid token. Check the Meta Dashboard.",
+  "meta_system_user_token_no_assets": "The token is valid, but no Page/Instagram account is assigned to this System User. Permissions (scopes) are not enough: in Business Settings > System Users, click \"Add Assets\" and assign the Page and the Instagram account with full control.",
   "alternative": "alternative",
   "meta_instagram_tokens_label": "Instagram Token",
   "meta_instagram_tokens_hint": "Generate a specific token for each Instagram account. Expires in 60 days, auto-refreshed on each use after 24h.",
