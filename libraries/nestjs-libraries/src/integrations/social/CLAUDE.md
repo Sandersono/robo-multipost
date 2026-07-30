@@ -145,11 +145,16 @@ The company fully rebranded Late/getlate.dev → Zernio (same company, new brand
 6. **Symptom:** Token refresh in an infinite loop → **Cause:** `RefreshToken` thrown even after a successful refresh. **Fix:** ensure the new token updates `Integration.token` and the original call is retried with the new token.
 7. **Symptom:** `GET /{mediaId}?fields=...,boost_eligibility_info` returns `"(#100) Tried accessing nonexisting field"` → **Cause:** `boost_eligibility_info` only exists on the Facebook Login Graph (`graph.facebook.com`); the Instagram Login Graph (`graph.instagram.com` / standalone) does not expose it. Per [Meta docs](https://developers.facebook.com/docs/instagram-platform/reference/instagram-media), only "Instagram API with Facebook Login" supports it. **Fix:** check `host.includes('graph.facebook.com')` before including the field. `InstagramProvider.getMediaMetadata` already implements this guard with a retry-without-field safety net — reuse it instead of writing a new Graph API call for media metadata.
 
+8. **Symptom:** saving the Meta **System User Token** fails with `"(#100) Tried accessing nonexisting field (business)"` → **Cause:** the validation asked `/me?fields=...,business`. The [System User node](https://developers.facebook.com/docs/graph-api/reference/system-user/) exposes only `id`, `name`, `created_by`, `created_time`, `finance_permission`, `ip_permission` — there is no `business` field, and the Graph rejects the whole request, so a perfectly valid token gets refused. **Fix:** validate with `/me?fields=id,name` and resolve the Business Manager via the `/me/businesses` edge (same path `InstagramProvider.pages` already uses). Related: a System User usually does **not** appear in `/me/accounts` (that edge lists pages of a user who went through the OAuth dialog) — discover its pages via `/me/assigned_pages` plus `owned_pages`/`client_pages` per business, and keep every step after `/me` fail-soft. Canonical implementation: `InstagramMessagingService.validateSystemUserToken` + `collectSystemUserPages`. **Granted scopes ≠ assigned assets:** a System User with every scope still reaches zero accounts until the Page/IG account is added under Business Settings > System Users > *Add Assets*.
+
 ## Commands
 
 ```bash
 # Spec for a specific provider
 pnpm jest libraries/nestjs-libraries/src/integrations/social/x.provider.spec.ts
+
+# Spec for the messaging tokens (System User Token validation)
+pnpm jest libraries/nestjs-libraries/src/integrations/social/instagram-messaging.service.spec.ts
 ```
 
 ## References

@@ -246,7 +246,21 @@ export class InstagramMessagingService {
   }
 
   /**
-   * Validate a Meta System User Access Token by calling /me and /me/accounts.
+   * Validate a Meta System User Access Token.
+   *
+   * ATENCAO: NAO pedir `business` em `/me`. O node retornado por um System
+   * User Token nao expoe esse campo e a Graph responde
+   * `(#100) Tried accessing nonexisting field (business)`, o que reprovava
+   * tokens perfeitamente validos. O Business Manager vem de `/me/businesses`
+   * (mesmo caminho de `InstagramProvider.pages`).
+   *
+   * Descoberta de contas: System Users normalmente NAO aparecem em
+   * `/me/accounts` (essa edge lista as pages do usuario que passou pelo dialog
+   * de OAuth), so nos assets do BM. Por isso a busca comeca em
+   * `/me/assigned_pages` (edge propria do node System User) e complementa com
+   * `/me/accounts` + `owned_pages`/`client_pages` de cada business. Todas as
+   * etapas depois do `/me` sao fail-soft: token valido nunca e reprovado
+   * porque uma edge opcional falhou.
    */
   async validateSystemUserToken(
     token: string
@@ -257,9 +271,9 @@ export class InstagramMessagingService {
 
     try {
       const meRes = await fetch(
-        `${GRAPH_FB}/me?fields=id,name,business&access_token=${encodeURIComponent(token)}`
+        `${GRAPH_FB}/me?fields=id,name&access_token=${encodeURIComponent(token)}`
       );
-      const meBody = await meRes.json();
+      const meBody = await meRes.json().catch(() => ({}));
       if (!meRes.ok || meBody.error) {
         return {
           ok: false,
@@ -269,26 +283,15 @@ export class InstagramMessagingService {
         };
       }
 
-      const accountsRes = await fetch(
-        `${GRAPH_FB}/me/accounts?fields=id,name,instagram_business_account{id,username}&access_token=${encodeURIComponent(token)}`
+      const businesses = await this.fetchGraphList(
+        `${GRAPH_FB}/me/businesses?fields=id,name&access_token=${encodeURIComponent(token)}`
       );
-      const accountsBody = await accountsRes.json();
-      const pages: MetaSystemUserTokenInfo['pages'] = [];
-      if (accountsRes.ok && Array.isArray(accountsBody?.data)) {
-        for (const page of accountsBody.data) {
-          pages.push({
-            id: page.id,
-            name: page.name,
-            igUserId: page?.instagram_business_account?.id,
-            username: page?.instagram_business_account?.username,
-          });
-        }
-      }
+      const pages = await this.collectSystemUserPages(token, businesses);
 
       return {
         ok: true,
-        businessId: meBody?.business?.id,
-        businessName: meBody?.business?.name || meBody?.name,
+        businessId: businesses[0]?.id,
+        businessName: businesses[0]?.name || meBody?.name,
         pages,
       };
     } catch (e: any) {
@@ -297,6 +300,78 @@ export class InstagramMessagingService {
       );
       return { ok: false, error: e?.message || 'Erro ao validar token.' };
     }
+  }
+
+  /**
+   * GET numa edge do Graph que retorna `{ data: [...] }`, fail-soft: qualquer
+   * falha (HTTP, erro do Graph, rede) devolve lista vazia. Usado apenas nas
+   * etapas opcionais da validacao de token. O log nunca inclui a query string
+   * para nao vazar o access_token.
+   */
+  private async fetchGraphList(url: string): Promise<any[]> {
+    const path = url.split('?')[0];
+    try {
+      const res = await fetch(url);
+      const body = await res.json().catch(() => ({}));
+      if (!res.ok || body?.error || !Array.isArray(body?.data)) {
+        this._logger.warn(
+          `Graph edge ${path} sem dados: ${
+            body?.error ? JSON.stringify(body.error) : `HTTP ${res.status}`
+          }`
+        );
+        return [];
+      }
+      return body.data;
+    } catch (e: any) {
+      this._logger.warn(
+        `Graph edge ${path} falhou: ${e?.message || String(e)}`
+      );
+      return [];
+    }
+  }
+
+  /**
+   * Lista as pages (e contas IG vinculadas) alcancaveis pelo System User
+   * Token: `assigned_pages` (edge do node System User) primeiro, depois
+   * `/me/accounts` e por fim `owned_pages`/`client_pages` de cada business.
+   * Deduplica por page id preservando a ordem de descoberta.
+   */
+  private async collectSystemUserPages(
+    token: string,
+    businesses: Array<{ id?: string }>
+  ): Promise<MetaSystemUserTokenInfo['pages']> {
+    const encoded = encodeURIComponent(token);
+    const fields = 'id,name,instagram_business_account{id,username}';
+    const urls = [
+      `${GRAPH_FB}/me/assigned_pages?fields=${fields}&limit=100&access_token=${encoded}`,
+      `${GRAPH_FB}/me/accounts?fields=${fields}&limit=100&access_token=${encoded}`,
+    ];
+
+    for (const business of businesses) {
+      if (!business?.id) continue;
+      urls.push(
+        `${GRAPH_FB}/${business.id}/owned_pages?fields=${fields}&limit=100&access_token=${encoded}`,
+        `${GRAPH_FB}/${business.id}/client_pages?fields=${fields}&limit=100&access_token=${encoded}`
+      );
+    }
+
+    const seen = new Set<string>();
+    const pages: MetaSystemUserTokenInfo['pages'] = [];
+
+    for (const url of urls) {
+      for (const page of await this.fetchGraphList(url)) {
+        if (!page?.id || seen.has(page.id)) continue;
+        seen.add(page.id);
+        pages.push({
+          id: page.id,
+          name: page.name,
+          igUserId: page?.instagram_business_account?.id,
+          username: page?.instagram_business_account?.username,
+        });
+      }
+    }
+
+    return pages;
   }
 
   /**
