@@ -1,16 +1,16 @@
 # Graph Report - robo-multipost  (2026-07-30)
 
 ## Corpus Check
-- 984 files · ~867,892 words
+- 984 files · ~868,149 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 9758 nodes · 24985 edges · 855 communities (417 shown, 438 thin omitted)
+- 9804 nodes · 25033 edges · 849 communities (409 shown, 440 thin omitted)
 - Extraction: 99% EXTRACTED · 1% INFERRED · 0% AMBIGUOUS · INFERRED: 324 edges (avg confidence: 0.84)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `17b8f669`
+- Built from commit: `d1db42a6`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -315,6 +315,7 @@
 - [[_COMMUNITY_Community 297|Community 297]]
 - [[_COMMUNITY_Community 298|Community 298]]
 - [[_COMMUNITY_Community 299|Community 299]]
+- [[_COMMUNITY_Community 300|Community 300]]
 - [[_COMMUNITY_Community 301|Community 301]]
 - [[_COMMUNITY_Community 302|Community 302]]
 - [[_COMMUNITY_Community 303|Community 303]]
@@ -447,10 +448,10 @@
 - [[_COMMUNITY_Community 430|Community 430]]
 - [[_COMMUNITY_Community 431|Community 431]]
 - [[_COMMUNITY_Community 432|Community 432]]
-- [[_COMMUNITY_Community 433|Community 433]]
 - [[_COMMUNITY_Community 434|Community 434]]
 - [[_COMMUNITY_Community 435|Community 435]]
 - [[_COMMUNITY_Community 436|Community 436]]
+- [[_COMMUNITY_Community 437|Community 437]]
 - [[_COMMUNITY_Community 438|Community 438]]
 - [[_COMMUNITY_Community 439|Community 439]]
 - [[_COMMUNITY_Community 440|Community 440]]
@@ -560,12 +561,12 @@
 - [[_COMMUNITY_Community 544|Community 544]]
 - [[_COMMUNITY_Community 545|Community 545]]
 - [[_COMMUNITY_Community 546|Community 546]]
-- [[_COMMUNITY_Community 547|Community 547]]
-- [[_COMMUNITY_Community 548|Community 548]]
-- [[_COMMUNITY_Community 549|Community 549]]
-- [[_COMMUNITY_Community 550|Community 550]]
-- [[_COMMUNITY_Community 551|Community 551]]
-- [[_COMMUNITY_Community 552|Community 552]]
+- [[_COMMUNITY_Community 557|Community 557]]
+- [[_COMMUNITY_Community 558|Community 558]]
+- [[_COMMUNITY_Community 559|Community 559]]
+- [[_COMMUNITY_Community 560|Community 560]]
+- [[_COMMUNITY_Community 561|Community 561]]
+- [[_COMMUNITY_Community 562|Community 562]]
 - [[_COMMUNITY_Community 563|Community 563]]
 - [[_COMMUNITY_Community 564|Community 564]]
 - [[_COMMUNITY_Community 565|Community 565]]
@@ -596,12 +597,12 @@
 - [[_COMMUNITY_Community 590|Community 590]]
 - [[_COMMUNITY_Community 591|Community 591]]
 - [[_COMMUNITY_Community 592|Community 592]]
-- [[_COMMUNITY_Community 593|Community 593]]
 - [[_COMMUNITY_Community 594|Community 594]]
 - [[_COMMUNITY_Community 595|Community 595]]
 - [[_COMMUNITY_Community 596|Community 596]]
 - [[_COMMUNITY_Community 597|Community 597]]
 - [[_COMMUNITY_Community 598|Community 598]]
+- [[_COMMUNITY_Community 599|Community 599]]
 - [[_COMMUNITY_Community 600|Community 600]]
 - [[_COMMUNITY_Community 601|Community 601]]
 - [[_COMMUNITY_Community 602|Community 602]]
@@ -851,12 +852,6 @@
 - [[_COMMUNITY_Community 846|Community 846]]
 - [[_COMMUNITY_Community 847|Community 847]]
 - [[_COMMUNITY_Community 848|Community 848]]
-- [[_COMMUNITY_Community 849|Community 849]]
-- [[_COMMUNITY_Community 850|Community 850]]
-- [[_COMMUNITY_Community 851|Community 851]]
-- [[_COMMUNITY_Community 852|Community 852]]
-- [[_COMMUNITY_Community 853|Community 853]]
-- [[_COMMUNITY_Community 854|Community 854]]
 
 ## God Nodes (most connected - your core abstractions)
 1. `useT()` - 682 edges
@@ -866,9 +861,9 @@
 5. `useModals()` - 156 edges
 6. `Button()` - 154 edges
 7. `useSettings()` - 149 edges
-8. `useVariables()` - 116 edges
-9. `IntegrationService` - 102 edges
-10. `[0.5.3] - 2026-06-07` - 95 edges
+8. `[0.5.3] - 2026-06-07` - 118 edges
+9. `useVariables()` - 116 edges
+10. `IntegrationService` - 102 edges
 
 ## Surprising Connections (you probably didn't know these)
 - `docker-compose.dev.yaml services` --semantically_similar_to--> `docker-compose.yaml production-like stack`  [INFERRED] [semantically similar]
@@ -984,143 +979,223 @@
 - **Zernio-Abstracted Multi-Platform Providers** — zernio_bluesky_provider_zernioblueskyp, zernio_facebook_provider_zerniofacebookp, zernio_googlebusiness_provider_zerniogoogleb, zernio_instagram_provider_zernioinstagram, zernio_linkedin_provider_zerniolinkedin, zernio_pinterest_provider_zerniopinterest, zernio_reddit_provider_zernioreddit, zernio_snapchat_provider_zerniossnapchat, zernio_telegram_provider_zerniotelegram [EXTRACTED 1.00]
 - **SocialProvider Protocol Stack** — social_integrations_interface_socialprovider, social_integrations_interface_iauthenticator, social_integrations_interface_isocialmediaintegration, social_integrations_interface_clientinformation [EXTRACTED 1.00]
 
-## Communities (855 total, 438 thin omitted)
+## Communities (849 total, 440 thin omitted)
 
 ### Community 0 - "Community 0"
 Cohesion: 0.03
-Nodes (55): CaptionDto, authenticatedController, exports(), BillingSubscribeDto, Nowpayments, ProcessPayment, ApproveOAuthDto, AuthorizeOAuthQueryDto (+47 more)
+Nodes (67): CaptionDto, loadPersonaBlock(), logger, ASPECT_RATIOS, GenerateVideoBodyDto, MODES, DEPTHS, FORMATS (+59 more)
 
 ### Community 1 - "Community 1"
-Cohesion: 0.03
-Nodes (101): GlobalError(), LoginWithOidc(), NeynarAuthButton(), getHelpfulReasonForRegistrationFailure(), Inputs, Register(), RegisterAfter(), WalletProvider (+93 more)
+Cohesion: 0.02
+Nodes (49): buildAgentSkillMarkdown(), AuthMiddleware, removeAuth(), makeOrg(), makeReqRes(), orgProfiles, { req, res, next }, AuthService (+41 more)
 
 ### Community 2 - "Community 2"
-Cohesion: 0.02
-Nodes (45): AutopostActivity, AutopostRepository, dalle, dallePrompt, generateContent, model, parser, WorkflowChannelsState (+37 more)
+Cohesion: 0.03
+Nodes (42): AutopostActivity, EncryptionModule, EncryptionService, CreateGeneratedPostsDto, InnerPost, PostGroup, IntegrationFunctionDto, IntegrationManager (+34 more)
 
 ### Community 3 - "Community 3"
-Cohesion: 0.03
-Nodes (28): AgenciesRepository, AgenciesService, CreateAgencyDto, CreateAgencyLogoDto, AiModule, AnnouncementDto, AnnouncementsRepository, AnnouncementsService (+20 more)
+Cohesion: 0.02
+Nodes (35): AgenciesRepository, AgenciesService, CreateAgencyDto, CreateAgencyLogoDto, AiModule, AnnouncementDto, AnnouncementsRepository, AnnouncementsService (+27 more)
 
 ### Community 4 - "Community 4"
 Cohesion: 0.03
-Nodes (49): AuthService, decrypt_legacy_using_IV(), deriveLegacyKeyIv(), encrypt_legacy_using_IV(), { keyLength, ivLength }, body, googleInvite, INVITE (+41 more)
+Nodes (79): GlobalError(), Inputs, Login(), LoginWithOidc(), NeynarAuthButton(), getHelpfulReasonForRegistrationFailure(), Inputs, Register() (+71 more)
 
 ### Community 5 - "Community 5"
-Cohesion: 0.09
-Nodes (41): Rules(), Plug(), PostPlug(), BadBody, checkScopes(), fetch(), handleErrors(), mention() (+33 more)
+Cohesion: 0.03
+Nodes (100): Agent(), AgentList(), AgentChat(), AgentErrorMessage(), AiErrorKind, classifyAiError(), friendlyAiErrorMessage(), Hooks() (+92 more)
 
 ### Community 6 - "Community 6"
-Cohesion: 0.04
-Nodes (89): ColorPicker(), DatePicker(), isUSCitizen(), CreateThumbnail(), MediaComponentInner(), MediaSettingsLayout(), postUrlEmitter, useMediaSettings() (+81 more)
+Cohesion: 0.05
+Nodes (68): AddOrEditWebhook(), Autopost(), details, getOptions(), getOptionsChoose(), getPostImmediately(), Accept(), Button() (+60 more)
 
 ### Community 7 - "Community 7"
-Cohesion: 0.03
-Nodes (42): ImageMode, GenerateVideoInput, ASPECT_RATIOS, GenerateImageBodyDto, MODES, ASPECT_RATIOS, GenerateVideoBodyDto, MODES (+34 more)
+Cohesion: 0.04
+Nodes (99): AppliedCouponDisplay(), CouponInput(), EmbeddedBilling(), FormWrapper(), PriceBreakdown(), StripeInputs(), SubmitBar(), Info() (+91 more)
 
 ### Community 8 - "Community 8"
-Cohesion: 0.03
-Nodes (25): CREDENTIAL_ALIAS, ENV_MAPPING, facebookCreds, linkedinCreds, DribbbleProvider, FarcasterProvider, InstagramStandaloneProvider, ListmonkProvider (+17 more)
+Cohesion: 0.05
+Nodes (70): ApprovedAppsComponent(), useApprovedApps(), Inputs, Inputs, BillingComponent(), FinishTrial(), LifetimeDeal(), Features() (+62 more)
 
 ### Community 9 - "Community 9"
 Cohesion: 0.05
-Nodes (75): FirstStep(), GeneratorComponent(), GeneratorPopup(), DNDProvider(), usePreventWindowUnload(), useProfilePermissions(), TrashIcon(), AddProviderButton() (+67 more)
+Nodes (73): Index(), metadata, AdAliasesField(), AdAliasesFieldProps, AliasPreviewRow(), AliasPreviewRowProps, AddLinkModal(), Props (+65 more)
 
 ### Community 10 - "Community 10"
-Cohesion: 0.05
-Nodes (73): Index(), metadata, AdAliasesField(), AdAliasesFieldProps, AliasPreviewRow(), AliasPreviewRowProps, AddLinkModal(), Props (+65 more)
+Cohesion: 0.02
+Nodes (106): [0.5.3] - 2026-06-07, Adicionado, Adicionado, Adicionado, Adicionado, Adicionado, Adicionado, Adicionado (+98 more)
 
 ### Community 11 - "Community 11"
 Cohesion: 0.05
-Nodes (69): AiProviderSettingsSection(), ApprovedAppsComponent(), useApprovedApps(), LifetimeDeal(), CopyButton(), DeveloperComponent(), useOAuthApp(), DeveloperIconComponent() (+61 more)
+Nodes (70): DatePicker(), isUSCitizen(), usePreventWindowUnload(), VideoFrame(), CalendarIcon(), CheckmarkIcon(), ChevronDownIcon(), ChevronLeftIcon() (+62 more)
 
 ### Community 12 - "Community 12"
 Cohesion: 0.04
-Nodes (42): ApiModule, BYPASS_PREFIXES, isAuthBypassPath(), AdminRoleRequiredException, PoliciesGuard, { context, reflector }, guard, handlers (+34 more)
+Nodes (43): AiAspectRatio, AiImageService, ASPECT_TO_OPENAI_SIZE, extractOpenAiError(), extractOpenRouterError(), GeneratedImage, GenerateImageOptions, ImageMode (+35 more)
 
 ### Community 13 - "Community 13"
-Cohesion: 0.05
-Nodes (58): ChartSocial(), AppliedCouponDisplay(), CouponInput(), EmbeddedBilling(), FormWrapper(), PriceBreakdown(), StripeInputs(), SubmitBar() (+50 more)
+Cohesion: 0.13
+Nodes (24): checkScopes(), fetch(), handleErrors(), mention(), runInConcurrent(), safeStringify(), Tool(), DiscordDto (+16 more)
 
 ### Community 14 - "Community 14"
-Cohesion: 0.03
-Nodes (11): CreateOAuthAppDto, OAuthRepository, OAuthService, UpdateOAuthAppDto, OrganizationRepository, ProfilePersonaData, OAuthAppController, makeSecureId() (+3 more)
+Cohesion: 0.05
+Nodes (37): MediaDto, None, ProviderExtension, DevToSettingsDto, DevToTagsSettingsDto, FarcasterDto, FarcasterId, FarcasterValue (+29 more)
 
 ### Community 15 - "Community 15"
-Cohesion: 0.08
-Nodes (34): Activate(), ResendInputs, ResendStatus, ForgotReturn(), Inputs, Button(), ReactLoading(), LinkedinCompany() (+26 more)
+Cohesion: 0.07
+Nodes (40): DribbbleSettings(), isMp4, url, FacebookSettings(), video, Input(), callToActionTypes, GmbSettings() (+32 more)
 
 ### Community 16 - "Community 16"
-Cohesion: 0.06
-Nodes (38): Inputs, Inputs, Comments, deleteDialog(), SafeImage(), SafeImageProps, ApiKeyDto, AddProviderComponent() (+30 more)
+Cohesion: 0.02
+Nodes (88): [0.5.0] - 2026-04-29, Adicionado, Adicionado, Adicionado, Adicionado, Adicionado, Adicionado, Adicionado (+80 more)
 
 ### Community 17 - "Community 17"
 Cohesion: 0.05
-Nodes (22): formatsForProvider(), formatsForSourceType(), isDestinationCompatible(), PROVIDER_DESTINATION_FORMATS, PROVIDER_SOURCE_TYPES, REPOST_DESTINATION_PROVIDERS, REPOST_SOURCE_PROVIDERS, SOURCE_DESTINATION_MATRIX (+14 more)
+Nodes (55): DEFAULT_IMAGE_MODELS, DEFAULT_TEXT_MODELS, ImageClientResult, isReasoningModel(), REASONING_MODEL_PREFIXES, cases, credential(), fn() (+47 more)
 
 ### Community 18 - "Community 18"
-Cohesion: 0.02
-Nodes (85): [0.5.3] - 2026-06-07, Adicionado, Adicionado, Adicionado, Adicionado, Adicionado, Adicionado, Adicionado (+77 more)
+Cohesion: 0.1
+Nodes (32): DevtoTags(), SelectOrganization(), DiscordChannelSelect(), DiscordComponent(), DribbbleTeams(), Select, HashnodePublications(), HashnodeTags() (+24 more)
 
 ### Community 19 - "Community 19"
 Cohesion: 0.05
-Nodes (36): MediaDto, MoltbookSettings(), Integration, PostContent, Tags, allProviders(), AllProvidersSettings, EmptySettings (+28 more)
+Nodes (68): AiKindCard(), CardBody(), CardHeader(), CardStatus(), CredentialForm(), CredentialFormProps, DynamicOptions(), emptyState (+60 more)
 
 ### Community 20 - "Community 20"
-Cohesion: 0.09
-Nodes (34): DevtoTags(), SelectOrganization(), DiscordChannelSelect(), DiscordComponent(), DribbbleTeams(), FacebookSettings(), video, Select (+26 more)
-
-### Community 21 - "Community 21"
 Cohesion: 0.14
 Nodes (79): $(), a(), aa(), ab(), b(), ba(), Bb(), bc() (+71 more)
 
+### Community 21 - "Community 21"
+Cohesion: 0.06
+Nodes (21): CREDENTIAL_ALIAS, ENV_MAPPING, facebookCreds, linkedinCreds, MediumProvider, GenerateAuthUrlResponse, usageCache, ZernioBaseProvider (+13 more)
+
 ### Community 22 - "Community 22"
-Cohesion: 0.03
-Nodes (77): [0.5.0] - 2026-04-29, Adicionado, Adicionado, Adicionado, Adicionado, Adicionado, Adicionado, Adicionado (+69 more)
+Cohesion: 0.04
+Nodes (21): PublicAuthMiddleware, ExtractContentService, findDepth(), openai, OpenaiService, VoicePrompt, authenticatedController, exports() (+13 more)
 
 ### Community 23 - "Community 23"
-Cohesion: 0.07
-Nodes (46): AddOrEditWebhook(), Autopost(), details, getOptions(), getOptionsChoose(), getPostImmediately(), Slider(), Textarea() (+38 more)
+Cohesion: 0.05
+Nodes (22): UploadDto, GetNotificationsDto, PublicController, ThirdPartyController, ImportMediaDto, ImportMediaItemDto, CloudflareStorage, LocalStorage (+14 more)
 
 ### Community 24 - "Community 24"
 Cohesion: 0.06
-Nodes (62): AiKindCard(), CardBody(), CardHeader(), CardStatus(), CredentialForm(), CredentialFormProps, DynamicOptions(), emptyState (+54 more)
+Nodes (48): Activate(), ResendInputs, ResendStatus, Forgot(), ForgotReturn(), OAuthAuthorizePage(), Prorate(), useZernioAccounts() (+40 more)
 
 ### Community 25 - "Community 25"
-Cohesion: 0.06
-Nodes (44): AnalyticsComponent(), StarsTableComponent(), UpDown(), AfterActivate(), Forgot(), Login(), useZernioAccounts(), ZernioAccount (+36 more)
+Cohesion: 0.05
+Nodes (27): IntegrationsActivity, startMcp(), SubscriptionExceptionFilter, ProfileAccessGuard, exports(), ProfileSeedModule, initializeSentry(), FILTER (+19 more)
 
 ### Community 26 - "Community 26"
-Cohesion: 0.05
-Nodes (18): InstagramDmButton, IgMessagingTokenEntry, InstagramMessagingService, MessagingTokensState, MetaSystemUserTokenInfo, renderButton(), ValidateIgUserResult, ValidateSystemUserResult (+10 more)
+Cohesion: 0.06
+Nodes (22): CATALOG, EmailCatalog, EmailLang, en, NOTIFICATION_MESSAGE_KEYS, pt, EmailParams, emailT() (+14 more)
 
 ### Community 27 - "Community 27"
-Cohesion: 0.11
-Nodes (17): SettingsComponent(), DribbbleSettings(), isMp4, url, ThreadFinisher(), Checkbox, Input(), LinkedInSettings() (+9 more)
+Cohesion: 0.05
+Nodes (16): agentCategories, AgentGraphInsertService, category, hook, model, topic, WorkflowChannelsState, AgentGraphService (+8 more)
 
 ### Community 28 - "Community 28"
-Cohesion: 0.03
-Nodes (59): Adicionado, Adicionado, Adicionado, Adicionado, Adicionado, Adicionado, Adicionado, Adicionado (+51 more)
+Cohesion: 0.06
+Nodes (37): SettingsComponent(), ThreadFinisher(), ChevronUpIcon(), DelayIcon(), InformationComponent(), Invalid(), Valid(), Arrow() (+29 more)
 
 ### Community 29 - "Community 29"
-Cohesion: 0.06
-Nodes (20): IntegrationsActivity, buildSettingsForFormat(), captionForFormat(), FetchedItem, hashtagMatches(), renderCaption(), RepostActivity, RepostCycleResult (+12 more)
+Cohesion: 0.05
+Nodes (13): category, contentZod(), dalle, escapeTemplateBraces(), hook, model, PersonaData, renderPersonaForPrompt() (+5 more)
 
 ### Community 30 - "Community 30"
-Cohesion: 0.06
-Nodes (13): DEPTHS, FORMATS, GeneratePostFromWebDto, MODES, TOPICS, WebExtractDto, WebSearchDto, ProfileService (+5 more)
+Cohesion: 0.03
+Nodes (60): Adicionado, Adicionado, Adicionado, Adicionado, Adicionado, Adicionado, Adicionado, Adicionado (+52 more)
 
 ### Community 31 - "Community 31"
-Cohesion: 0.15
-Nodes (27): FacebookPreview(), Icons(), IntegrationContext, useIntegration(), useMediaDirectory(), VideoOrImage(), InstagramPreview(), InstagramCollaboratorsTags() (+19 more)
+Cohesion: 0.16
+Nodes (28): FacebookPreview(), Icons(), useFormatting(), useIntegration(), useMediaDirectory(), VideoOrImage(), InstagramPreview(), GeneralPreviewComponent() (+20 more)
 
 ### Community 32 - "Community 32"
+Cohesion: 0.08
+Nodes (28): AnalyticsComponent(), Chart(), ChartSocial(), mergeDataPoints(), ForksList, Stars, StarsAndForksInterface, StarsList (+20 more)
+
+### Community 33 - "Community 33"
+Cohesion: 0.05
+Nodes (11): BYPASS_PREFIXES, isAuthBypassPath(), IntegrationsController, NotificationsController, ProfilesController, makeOrgService(), makeService(), orgAdmin (+3 more)
+
+### Community 34 - "Community 34"
 Cohesion: 0.09
 Nodes (38): crxI18n(), stripDevIcons(), baseBuildOptions, baseManifest, outDir, skoolProvider, CookieDefinition, CookieProvider (+30 more)
 
-### Community 33 - "Community 33"
+### Community 35 - "Community 35"
+Cohesion: 0.07
+Nodes (35): AboutPageViews, AllDesktopPageViews, AllMobilePageViews, AllPageViews, CareersPageViews, Clicks, DesktopAboutPageViews, DesktopCareersPageViews (+27 more)
+
+### Community 36 - "Community 36"
 Cohesion: 0.08
-Nodes (16): FlowActivity, UnmatchedCommentService, { enrichUnmatchedComment }, enrichUnmatchedCommentWorkflow(), FlowExecutionInput, flowExecutionWorkflow(), {
+Nodes (25): Auth(), metadata, Index(), metadata, metadata, Page(), Auth(), metadata (+17 more)
+
+### Community 37 - "Community 37"
+Cohesion: 0.08
+Nodes (31): defaultEdgeOptions, edgeTypes, FlowEditorInner(), FlowEditorProps, NODE_TOOLBAR_CONFIG, NODE_TYPE_MAP, nodeTypes, REVERSE_NODE_TYPE_MAP (+23 more)
+
+### Community 38 - "Community 38"
+Cohesion: 0.11
+Nodes (37): FlowEditorComponent(), FORMAT_LABEL, groupDestinations(), GroupedDestination, GroupedSource, groupSources(), RepostChannelOption, RepostDestination (+29 more)
+
+### Community 41 - "Community 41"
+Cohesion: 0.05
+Nodes (47): 10. Catalogo dinamico de modelos, 11. Variaveis de ambiente, 12. Testes, 13. Pendencias / itens futuros, 14. Pontos de entrada para mudancas comuns, 1. Visao geral, 2.1. AiProviderCredential, 2.2. Por que `scope` e nao apenas `profileId IS NULL`? (+39 more)
+
+### Community 42 - "Community 42"
+Cohesion: 0.05
+Nodes (47): 412 Precondition Failed vs 402 (billing collision), AiCatalogService (Redis cache TTL 1h), AiClientFactory (text/image/textForMastra), AiImageService (fetch direto), AiScope enum design (PROFILE/WORKSPACE), AiTextService, AI Provider System Reference, AI Credential resolution chain (PROFILE > WORKSPACE > 412) (+39 more)
+
+### Community 43 - "Community 43"
+Cohesion: 0.04
+Nodes (45): Automacoes Instagram (estilo ManyChat), code:block1 (Inicio -> Condicao (palavra="PROMO") -> Responder Comentario), code:env (FACEBOOK_APP_SECRET="seu-app-secret"), code:bash (# Backend), code:block4 ([Usuario responde ao story no app do Instagram]), code:block5 (No momento de enviar DM:), Como criar, Como funciona por dentro (+37 more)
+
+### Community 44 - "Community 44"
+Cohesion: 0.09
+Nodes (11): Dub, getOptions(), Empty, getOptions(), Kutt, getOptions(), LinkDrip, options (+3 more)
+
+### Community 45 - "Community 45"
+Cohesion: 0.08
+Nodes (6): ProfileService, fakeProfile, makeRepo(), profile, profiles, makeRepo()
+
+### Community 46 - "Community 46"
+Cohesion: 0.06
+Nodes (8): ApproveOAuthDto, AuthorizeOAuthQueryDto, CreateOAuthAppDto, OAuthRepository, OAuthService, UpdateOAuthAppDto, OAuthAuthorizedController, OAuthController
+
+### Community 47 - "Community 47"
+Cohesion: 0.05
+Nodes (41): A1 — IDOR: histórico de execução de flows acessível cross-tenant, A2 — IDOR: membros de perfil de qualquer org (vaza e-mails), A3 — IDOR de escrita: remover membros de perfil de outra org, A4 — IDOR de escrita: adicionar membros a perfil de outra org, A5 — Cache Redis sem namespace de org, Achados detalhados (ordenados por severidade), 🟠 Alto, Auditoria de Segurança — Robô MultiPost (+33 more)
+
+### Community 48 - "Community 48"
+Cohesion: 0.07
+Nodes (43): Activate, AfterActivate, BillingComponent, Conditional Branding Pattern, Force Dynamic Rendering, LocalStorage Return URL Pattern, Registration Gate Pattern, Server-Side Rendering with Async Components (+35 more)
+
+### Community 49 - "Community 49"
+Cohesion: 0.05
+Nodes (40): AGENTS.md — Robô MultiPost, AI Context References, AI Infrastructure (already exists), API-First, Backend Architecture, Branches, Branding, Code Style (+32 more)
+
+### Community 50 - "Community 50"
+Cohesion: 0.1
+Nodes (39): allMode, arg, body, boundFlow, commentPayload, fetchMock, flow, flowMatching (+31 more)
+
+### Community 51 - "Community 51"
+Cohesion: 0.05
+Nodes (41): [0.3.0] - 2026-04-03, Adicionado, Adicionado, Adicionado, Adicionado, Adicionado, Adicionado, Adicionado (+33 more)
+
+### Community 53 - "Community 53"
+Cohesion: 0.08
+Nodes (8): ThirdParty(), ThirdPartyParams, ThirdPartyManager, exports(), ThirdPartyModule, HeygenProvider, ReelFarmProvider, ThirdPartyService
+
+### Community 54 - "Community 54"
+Cohesion: 0.17
+Nodes (14): Rules(), Plug(), PostPlug(), BadBody, InstagramDto, reduceImageBySize(), uploadVideo(), buildButton() (+6 more)
+
+### Community 55 - "Community 55"
+Cohesion: 0.12
+Nodes (26): continueProviderList, ContinueProviderConfig, ContinueProviderProps, EmptyStateMessage, SWR_OPTIONS, withContinueProvider(), FacebookContinue Component, FacebookContinue (+18 more)
+
+### Community 56 - "Community 56"
+Cohesion: 0.11
+Nodes (15): FlowActivity, { enrichUnmatchedComment }, enrichUnmatchedCommentWorkflow(), FlowExecutionInput, flowExecutionWorkflow(), {
   getFlowWithNodes,
   replyToComment,
   sendDirectMessage,
@@ -1131,143 +1206,33 @@ Nodes (16): FlowActivity, UnmatchedCommentService, { enrichUnmatchedComment }, e
   appendExecutionLog,
   createPendingPostback,
   sendOpeningDmWithPostback,
-}, interpolateVariables() (+8 more)
+}, interpolateVariables(), parseDuration() (+7 more)
 
-### Community 34 - "Community 34"
-Cohesion: 0.08
-Nodes (31): defaultEdgeOptions, edgeTypes, FlowEditorInner(), FlowEditorProps, NODE_TOOLBAR_CONFIG, NODE_TYPE_MAP, nodeTypes, REVERSE_NODE_TYPE_MAP (+23 more)
-
-### Community 35 - "Community 35"
-Cohesion: 0.11
-Nodes (37): FlowEditorComponent(), FORMAT_LABEL, groupDestinations(), GroupedDestination, GroupedSource, groupSources(), RepostChannelOption, RepostDestination (+29 more)
-
-### Community 36 - "Community 36"
-Cohesion: 0.07
-Nodes (35): AboutPageViews, AllDesktopPageViews, AllMobilePageViews, AllPageViews, CareersPageViews, Clicks, DesktopAboutPageViews, DesktopCareersPageViews (+27 more)
-
-### Community 38 - "Community 38"
-Cohesion: 0.07
-Nodes (20): AgentGraphService, category, contentZod(), dalle, escapeTemplateBraces(), hook, model, PersonaData (+12 more)
-
-### Community 40 - "Community 40"
-Cohesion: 0.05
-Nodes (47): 10. Catalogo dinamico de modelos, 11. Variaveis de ambiente, 12. Testes, 13. Pendencias / itens futuros, 14. Pontos de entrada para mudancas comuns, 1. Visao geral, 2.1. AiProviderCredential, 2.2. Por que `scope` e nao apenas `profileId IS NULL`? (+39 more)
-
-### Community 41 - "Community 41"
-Cohesion: 0.07
-Nodes (11): ThirdParty(), ThirdPartyParams, ThirdPartyManager, exports(), ThirdPartyModule, HeygenProvider, openai, OpenaiService (+3 more)
-
-### Community 42 - "Community 42"
-Cohesion: 0.05
-Nodes (6): buildAgentSkillMarkdown(), AuthController, PublicController, pump, UsersController, getCookieUrlFromDomain()
-
-### Community 43 - "Community 43"
-Cohesion: 0.05
-Nodes (47): 412 Precondition Failed vs 402 (billing collision), AiCatalogService (Redis cache TTL 1h), AiClientFactory (text/image/textForMastra), AiImageService (fetch direto), AiScope enum design (PROFILE/WORKSPACE), AiTextService, AI Provider System Reference, AI Credential resolution chain (PROFILE > WORKSPACE > 412) (+39 more)
-
-### Community 44 - "Community 44"
-Cohesion: 0.04
-Nodes (45): Automacoes Instagram (estilo ManyChat), code:block1 (Inicio -> Condicao (palavra="PROMO") -> Responder Comentario), code:env (FACEBOOK_APP_SECRET="seu-app-secret"), code:bash (# Backend), code:block4 ([Usuario responde ao story no app do Instagram]), code:block5 (No momento de enviar DM:), Como criar, Como funciona por dentro (+37 more)
-
-### Community 45 - "Community 45"
-Cohesion: 0.06
-Nodes (15): ProfileRepository, fakeProfile, mockFindFirst, mockFindMany, mockMemberFindMany, mockPersonaModel, mockProfileMemberModel, mockProfileModel (+7 more)
-
-### Community 46 - "Community 46"
-Cohesion: 0.09
-Nodes (11): Dub, getOptions(), Empty, getOptions(), Kutt, getOptions(), LinkDrip, options (+3 more)
-
-### Community 47 - "Community 47"
-Cohesion: 0.07
-Nodes (9): AuthMiddleware, makeOrg(), makeReqRes(), orgProfiles, { req, res, next }, EmailNotificationsDto, UserDetailDto, UsersRepository (+1 more)
-
-### Community 48 - "Community 48"
-Cohesion: 0.06
-Nodes (25): callToActionTypes, GmbSettings(), topicTypes, InternalChannels(), SettingsComponent(), CharacterCondition, {
-      current,
-      selectedIntegration,
-      setCurrent,
-      internal,
-      global,
-      date,
-      isGlobal,
-      tab,
-      setTotalChars,
-      justCurrent,
-      allIntegrations,
-      setPostComment,
-      setEditor,
-      dummy,
-      setChars,
-      setComments,
-      setHide,
-    }, { data, isLoading } (+17 more)
-
-### Community 49 - "Community 49"
-Cohesion: 0.09
-Nodes (13): fixAcceptHeader(), startMcp(), ConfigurationChecker, SubscriptionException, getErrorMessage(), SubscriptionExceptionFilter, initializeSentry(), AppModule (+5 more)
-
-### Community 50 - "Community 50"
-Cohesion: 0.05
-Nodes (41): A1 — IDOR: histórico de execução de flows acessível cross-tenant, A2 — IDOR: membros de perfil de qualquer org (vaza e-mails), A3 — IDOR de escrita: remover membros de perfil de outra org, A4 — IDOR de escrita: adicionar membros a perfil de outra org, A5 — Cache Redis sem namespace de org, Achados detalhados (ordenados por severidade), 🟠 Alto, Auditoria de Segurança — Robô MultiPost (+33 more)
-
-### Community 51 - "Community 51"
-Cohesion: 0.07
-Nodes (43): Activate, AfterActivate, BillingComponent, Conditional Branding Pattern, Force Dynamic Rendering, LocalStorage Return URL Pattern, Registration Gate Pattern, Server-Side Rendering with Async Components (+35 more)
-
-### Community 52 - "Community 52"
-Cohesion: 0.05
-Nodes (40): AGENTS.md — Robô MultiPost, AI Context References, AI Infrastructure (already exists), API-First, Backend Architecture, Branches, Branding, Code Style (+32 more)
-
-### Community 53 - "Community 53"
-Cohesion: 0.1
-Nodes (39): allMode, arg, body, boundFlow, commentPayload, fetchMock, flow, flowMatching (+31 more)
-
-### Community 55 - "Community 55"
-Cohesion: 0.09
-Nodes (14): removeAuth(), PublicAuthMiddleware, ExtractContentService, findDepth(), authenticatedController, exports(), PublicApiModule, CodesService (+6 more)
-
-### Community 56 - "Community 56"
-Cohesion: 0.12
-Nodes (26): continueProviderList, ContinueProviderConfig, ContinueProviderProps, EmptyStateMessage, SWR_OPTIONS, withContinueProvider(), FacebookContinue Component, FacebookContinue (+18 more)
-
-### Community 58 - "Community 58"
-Cohesion: 0.1
-Nodes (19): Auth(), metadata, metadata, Page(), Auth(), metadata, Auth(), metadata (+11 more)
-
-### Community 59 - "Community 59"
-Cohesion: 0.11
-Nodes (26): Agent(), AgentList(), AgentChat(), AgentErrorMessage(), AiErrorKind, classifyAiError(), friendlyAiErrorMessage(), Hooks() (+18 more)
-
-### Community 61 - "Community 61"
+### Community 57 - "Community 57"
 Cohesion: 0.08
 Nodes (15): SubscriptionRepository, error, func, makeOrg(), mockCreditsModel, mockOrganizationModel, mockSubscriptionModel, mockUsedCodesModel (+7 more)
 
-### Community 62 - "Community 62"
+### Community 58 - "Community 58"
+Cohesion: 0.05
+Nodes (4): DribbbleProvider, InstagramStandaloneProvider, SlackProvider, WordpressProvider
+
+### Community 59 - "Community 59"
 Cohesion: 0.06
 Nodes (36): Auto-rebuild, Browser Validation (Claude in Chrome), Cadeia de precedencia (modo managed), Code Graph (Graphify), code:block1 (graphify update .    # re-extract only changed files), code:block2 (graphify .), code:bash (# Development), code:block4 (1. AI_CREDITS_MODE=unlimited → SEMPRE ilimitado, ignora tudo) (+28 more)
 
-### Community 63 - "Community 63"
+### Community 60 - "Community 60"
 Cohesion: 0.09
 Nodes (16): InfraHealthComponent, InfraHealthKey, InfraHealthResponse, InfraHealthStatus, InfraHealthRepository, prisma, repo, InfraHealthService (+8 more)
 
-### Community 64 - "Community 64"
-Cohesion: 0.11
-Nodes (10): SetsController, SetsDto, UpdateSetsDto, SetsRepository, dto, mockSets, SetsService, dto (+2 more)
-
-### Community 65 - "Community 65"
+### Community 61 - "Community 61"
 Cohesion: 0.11
 Nodes (13): AppLayout(), jakartaSans, PHProvider(), FacebookComponent(), HtmlComponent(), SentryComponent(), ChangeDirClient(), ChangeDirComponent (+5 more)
 
-### Community 66 - "Community 66"
-Cohesion: 0.1
-Nodes (16): getAudioDuration(), ImagesSlides, ImagesSlidesParams, limit, transloadit, FalService, limit, VideoFunctionTool (+8 more)
+### Community 62 - "Community 62"
+Cohesion: 0.09
+Nodes (10): AutopostDto, Integrations, AutopostRepository, AutopostService, dalle, dallePrompt, generateContent, model (+2 more)
 
-### Community 67 - "Community 67"
-Cohesion: 0.06
-Nodes (36): [0.3.0] - 2026-04-03, Adicionado, Adicionado, Adicionado, Adicionado, Adicionado, Adicionado, Adicionado (+28 more)
-
-### Community 68 - "Community 68"
+### Community 64 - "Community 64"
 Cohesion: 0.1
 Nodes (13): PostActivity, {
   getPostsList,
@@ -1285,205 +1250,213 @@ Nodes (13): PostActivity, {
   isCommentable,
 }, iterate (+5 more)
 
-### Community 69 - "Community 69"
-Cohesion: 0.11
-Nodes (12): AuthProvider(), AuthProviderParams, postRegistration(), client, FarcasterProvider, mockFetch(), clientAndYoutube(), defaultRedirect() (+4 more)
+### Community 65 - "Community 65"
+Cohesion: 0.1
+Nodes (13): DribbbleDto, FacebookDto, FacebookProvider, fetchWithTimeout(), buildPost(), fetchMock, finishCall, makeRes() (+5 more)
 
-### Community 70 - "Community 70"
+### Community 66 - "Community 66"
+Cohesion: 0.1
+Nodes (14): UnmatchedCommentService, InstagramDmButton, IgMessagingTokenEntry, MessagingTokensState, MetaSystemUserTokenInfo, ValidateIgUserResult, ValidateSystemUserResult, IgRoute (+6 more)
+
+### Community 67 - "Community 67"
 Cohesion: 0.06
 Nodes (33): 1. Configuration is per-workspace via the UI, 2. Every resolution goes through `AiProviderResolverService`, 3. 412, not 402, 4. Use `AiClientFactory` and dedicated services for new consumers, 5. Per-profile override, Add a new AI consumer, Add a new provider (e.g., a new image provider), AI Credits System (+25 more)
 
-### Community 71 - "Community 71"
+### Community 68 - "Community 68"
 Cohesion: 0.07
 Nodes (35): DribbbleDto, FacebookDto, FarcasterDto, FarcasterId, FarcasterValue, GmbSettingsDto, HashnodeSettingsDto, HashnodeTagsSettings (+27 more)
 
-### Community 72 - "Community 72"
+### Community 69 - "Community 69"
+Cohesion: 0.22
+Nodes (9): AgentToolInterface, checkAuth(), socialIntegrationList, countCharacters(), IntegrationSchedulePostTool, tryParseJson(), IntegrationTriggerTool, readRequestContext() (+1 more)
+
+### Community 70 - "Community 70"
+Cohesion: 0.11
+Nodes (18): DevtoSettings(), Canonical(), ColorPicker(), CustomSelect(), Textarea(), HashnodeSettings(), delayOptions, InternalChannels() (+10 more)
+
+### Community 71 - "Community 71"
 Cohesion: 0.06
 Nodes (32): 1. Por que estamos fazendo isso, 2. Pré-requisitos, 3. Restrições inegociáveis, 4. Plano de execução, 5. Definition of Done geral, 6. Anti-padrões a evitar, 7. Troubleshooting comum, Bootstrap: Ativar dotcontext no Robô MultiPost (+24 more)
 
+### Community 72 - "Community 72"
+Cohesion: 0.13
+Nodes (16): AgentModelResolver, MinimalRequestContext, safeParseOrg(), buildContext(), context, ChatModule, exports(), AgentState (+8 more)
+
 ### Community 73 - "Community 73"
+Cohesion: 0.06
+Nodes (33): [0.2.0] - 2026-02-28, Adicionado, Adicionado, Adicionado, Adicionado, Adicionado, Adicionado, Adicionado (+25 more)
+
+### Community 74 - "Community 74"
+Cohesion: 0.09
+Nodes (10): makeFlowsService(), makeOptions(), ExtractUrlsTool, GenerateImageTool, GenerateVideoTool, KnowledgeQueryTool, ListCommentAutomationsTool, EMPTY_CONTEXT (+2 more)
+
+### Community 75 - "Community 75"
 Cohesion: 0.13
 Nodes (16): AiCatalogService, KIND_TO_OUTPUT_MODALITIES, parsePrice(), cached, prefix, redisStore, getStaticCatalog(), KIEAI_VIDEO (+8 more)
 
-### Community 74 - "Community 74"
-Cohesion: 0.13
-Nodes (25): ModeTab(), ModeTabProps, ReferenceImageDropzone(), ReferenceImageDropzoneProps, AiImage(), ASPECT_OPTIONS, AspectIcon(), AspectRatio (+17 more)
+### Community 76 - "Community 76"
+Cohesion: 0.1
+Nodes (12): CreatePostDto, Integration, Post, PostContent, Tags, allProviders(), AllProvidersSettings, EmptySettings (+4 more)
 
-### Community 75 - "Community 75"
+### Community 78 - "Community 78"
 Cohesion: 0.12
 Nodes (29): aliases, created, cutoff, data, edges, enrichedAt, execution, existing (+21 more)
 
-### Community 76 - "Community 76"
-Cohesion: 0.12
-Nodes (14): IgWebhookController, SignatureScope, body, commentBody(), ENV_KEYS, integration(), makeReq(), orgs (+6 more)
-
-### Community 77 - "Community 77"
-Cohesion: 0.13
-Nodes (12): AiProviderResolverService, mockResolved(), profileCred, wsCred, AiWebSearchService, ExtractOpts, PRIVATE_HOST_PATTERNS, SearchOpts (+4 more)
-
-### Community 78 - "Community 78"
-Cohesion: 0.13
-Nodes (16): AiTextService, buildFriendlyProviderMessage(), CaptionAction, CaptionOptions, PicturePromptSchema, PostObjectSchema, providerErrorStatus(), sanitize() (+8 more)
-
 ### Community 79 - "Community 79"
-Cohesion: 0.07
-Nodes (28): 1. Usuario, 2. Organizacao (Organization), 3. Perfil (Profile), Caso 1: Freelancer / Uso pessoal, Caso 2: Pequena agencia com poucos clientes, Caso 3: Agencia com equipe, Caso 4: Multiplas empresas isoladas, Casos de uso (+20 more)
+Cohesion: 0.14
+Nodes (13): Auth(), metadata, metadata, Page(), ChangeDir(), config, proxy(), getT() (+5 more)
 
 ### Community 80 - "Community 80"
-Cohesion: 0.07
-Nodes (28): 1. Visao geral do fluxo, 2. Camadas de credenciais (IMPORTANTE), 3. Roteamento de tokens e hosts (core logic), 4. Follow-gate de 2 etapas (postback), 5.1 Criacao programatica (API publica / MCP / SDK), 5. UI — Wizard e Flow Builder, 6. Arquivos-chave (mapa rapido para agentes), 7. Convencoes e armadilhas (leia antes de mexer) (+20 more)
+Cohesion: 0.08
+Nodes (3): InstagramProvider, fetchMock, url
 
 ### Community 81 - "Community 81"
-Cohesion: 0.07
-Nodes (28): 1. Autenticação, 2. Swagger interativo, 3. Endpoints, 4. Referência completa do corpo (`POST` e `PUT`), 5. Modos de vínculo (`postMode`), 6. Boas práticas (o que é melhor), 7. Exemplos, 8. ⚠️ Pré-requisito para o disparo real (webhook da Meta) (+20 more)
+Cohesion: 0.1
+Nodes (9): AiClientFactory, MastraService, fixAcceptHeader(), CopilotController, mockRes(), org, profile, req (+1 more)
 
 ### Community 82 - "Community 82"
-Cohesion: 0.21
-Nodes (13): CreateFlowDto, FlowEdgeDto, FlowNodeDto, QuickCreateFlowDto, SaveCanvasDto, UpdateFlowDto, UpdateFlowStatusDto, FLOW_BODY_EXAMPLES (+5 more)
-
-### Community 83 - "Community 83"
-Cohesion: 0.14
-Nodes (12): ChatModule, exports(), AgentState, LoadToolsService, renderArray(), MastraService, isKnowledgeBaseEnabled, knowledgeBaseEnabled() (+4 more)
-
-### Community 84 - "Community 84"
 Cohesion: 0.09
 Nodes (7): PublicIntegrationsController, actual, fetchMock, makeIntegrationService(), makeMediaService(), makePostsService(), query
 
+### Community 83 - "Community 83"
+Cohesion: 0.07
+Nodes (28): 1. Usuario, 2. Organizacao (Organization), 3. Perfil (Profile), Caso 1: Freelancer / Uso pessoal, Caso 2: Pequena agencia com poucos clientes, Caso 3: Agencia com equipe, Caso 4: Multiplas empresas isoladas, Casos de uso (+20 more)
+
+### Community 84 - "Community 84"
+Cohesion: 0.07
+Nodes (28): 1. Visao geral do fluxo, 2. Camadas de credenciais (IMPORTANTE), 3. Roteamento de tokens e hosts (core logic), 4. Follow-gate de 2 etapas (postback), 5.1 Criacao programatica (API publica / MCP / SDK), 5. UI — Wizard e Flow Builder, 6. Arquivos-chave (mapa rapido para agentes), 7. Convencoes e armadilhas (leia antes de mexer) (+20 more)
+
+### Community 85 - "Community 85"
+Cohesion: 0.07
+Nodes (28): 1. Autenticação, 2. Swagger interativo, 3. Endpoints, 4. Referência completa do corpo (`POST` e `PUT`), 5. Modos de vínculo (`postMode`), 6. Boas práticas (o que é melhor), 7. Exemplos, 8. ⚠️ Pré-requisito para o disparo real (webhook da Meta) (+20 more)
+
 ### Community 86 - "Community 86"
+Cohesion: 0.07
+Nodes (30): BlueskProvider (withProvider wrapper), DevtoProvider (withProvider wrapper), DevtoTags Component, Discord Provider Component, DiscordChannelSelect, Discord DTO, GMB Settings DTO, Lemmy DTO (+22 more)
+
+### Community 87 - "Community 87"
+Cohesion: 0.21
+Nodes (13): CreateFlowDto, FlowEdgeDto, FlowNodeDto, QuickCreateFlowDto, SaveCanvasDto, UpdateFlowDto, UpdateFlowStatusDto, FLOW_BODY_EXAMPLES (+5 more)
+
+### Community 89 - "Community 89"
 Cohesion: 0.13
 Nodes (13): EmailActivity, Email, emailSignal, SendEmail, sendEmailSignal, digestEmailWorkflow(), { getUserOrgs, sendDigestEmail }, { getUserOrgs, sendEmailAsync } (+5 more)
 
-### Community 87 - "Community 87"
-Cohesion: 0.07
-Nodes (29): [0.2.0] - 2026-02-28, Adicionado, Adicionado, Adicionado, Adicionado, Adicionado, Adicionado, Adicionado (+21 more)
+### Community 90 - "Community 90"
+Cohesion: 0.22
+Nodes (16): formatsForProvider(), formatsForSourceType(), isDestinationCompatible(), PROVIDER_DESTINATION_FORMATS, PROVIDER_SOURCE_TYPES, REPOST_DESTINATION_PROVIDERS, REPOST_SOURCE_PROVIDERS, SOURCE_DESTINATION_MATRIX (+8 more)
 
-### Community 88 - "Community 88"
-Cohesion: 0.13
-Nodes (12): AiClientFactory, DEFAULT_IMAGE_MODELS, DEFAULT_TEXT_MODELS, ImageClientResult, isReasoningModel(), REASONING_MODEL_PREFIXES, TextClientResult, AgentModelResolver (+4 more)
+### Community 91 - "Community 91"
+Cohesion: 0.14
+Nodes (8): SetsDto, SetsRepository, dto, mockSets, SetsService, dto, mockResult, mockSets
 
-### Community 89 - "Community 89"
+### Community 92 - "Community 92"
 Cohesion: 0.07
 Nodes (25): Add a new feature component, code:typescript (const useCommunity = () => {), code:typescript (const useCommunity = () => ({), code:typescript (import { useT } from '@gitroom/react/translation/get.transat), code:typescript (const fetch = useFetch();), code:typescript (import * as Sentry from '@sentry/nextjs';), code:typescript (import * as Sentry from '@sentry/nextjs';), code:bash (pnpm dev                  # Frontend + backend + orchestrato) (+17 more)
 
-### Community 90 - "Community 90"
-Cohesion: 0.11
-Nodes (11): FacebookProvider, fetchWithTimeout(), buildPost(), fetchMock, finishCall, makeRes(), photosCall, photoStoriesCalls (+3 more)
+### Community 94 - "Community 94"
+Cohesion: 0.15
+Nodes (14): getAudioDuration(), ImagesSlides, ImagesSlidesParams, limit, transloadit, FalService, limit, ExposeVideoFunction() (+6 more)
 
-### Community 92 - "Community 92"
+### Community 95 - "Community 95"
 Cohesion: 0.13
 Nodes (11): MediaController, abortMultipartUpload(), completeMultipartUpload(), createMultipartUpload(), generateRandomString(), handleR2Upload(), listParts(), prepareUploadParts() (+3 more)
 
-### Community 93 - "Community 93"
+### Community 96 - "Community 96"
 Cohesion: 0.07
 Nodes (25): Add a new service, Add a new table, Approach by layer, code:typescript (import {), code:typescript (describe('ClassName', () => {), code:bash (pnpm test                 # All tests (with coverage)), Commands, Common Workflows (+17 more)
 
-### Community 94 - "Community 94"
-Cohesion: 0.07
-Nodes (27): BlueskProvider (withProvider wrapper), DevtoProvider (withProvider wrapper), DevtoTags Component, Discord Provider Component, DiscordChannelSelect, Discord DTO, GMB Settings DTO, Lemmy DTO (+19 more)
-
-### Community 95 - "Community 95"
-Cohesion: 0.16
-Nodes (13): AiVideoService, GeneratedVideo, sanitize(), SEEDANCE_MODELS, allLogs, body, credentialFor(), fetchSpy (+5 more)
+### Community 97 - "Community 97"
+Cohesion: 0.08
+Nodes (3): RepostRepository, errorSpy, temporal
 
 ### Community 99 - "Community 99"
-Cohesion: 0.14
-Nodes (4): body, payload, result, XProvider
-
-### Community 100 - "Community 100"
-Cohesion: 0.16
-Nodes (15): AiAspectRatio, AiImageService, ASPECT_TO_OPENAI_SIZE, extractOpenAiError(), extractOpenRouterError(), GeneratedImage, GenerateImageOptions, body (+7 more)
+Cohesion: 0.17
+Nodes (13): buildSettingsForFormat(), captionForFormat(), FetchedItem, hashtagMatches(), renderCaption(), RepostActivity, RepostCycleResult, RuleDestinationWithIntegration (+5 more)
 
 ### Community 101 - "Community 101"
 Cohesion: 0.14
-Nodes (7): ReviewLinksRepository, ReviewLinksService, sanitizeContent(), sanitizeEmail(), sanitizeText(), sha256Hex(), stripHtml()
+Nodes (4): body, payload, result, XProvider
 
 ### Community 102 - "Community 102"
-Cohesion: 0.08
-Nodes (23): 1. Every provider extends `SocialAbstract` and implements `SocialProvider`, 2. `ClientInformation` propagation is MANDATORY in OAuth, 3. Instagram routing via `resolveIgRoute`, 4. Three Meta credential layers (NEVER mix), Add a new provider, Add a provider via Zernio, Architecture, code:typescript (import { resolveIgRoute } from '@gitroom/nestjs-libraries/in) (+15 more)
-
-### Community 103 - "Community 103"
-Cohesion: 0.33
-Nodes (4): AgentToolInterface, checkAuth(), readRequestContext(), WebSearchTool
-
-### Community 104 - "Community 104"
 Cohesion: 0.21
 Nodes (14): ImageSlidesComponent(), Voice, Voices, VoiceSelector(), VEO3Settings(), VeoComponent(), Voice, useVideo() (+6 more)
 
+### Community 103 - "Community 103"
+Cohesion: 0.17
+Nodes (9): AuthProvider(), AuthProviderParams, postRegistration(), client, mockFetch(), clientAndYoutube(), defaultRedirect(), GoogleProvider (+1 more)
+
+### Community 104 - "Community 104"
+Cohesion: 0.08
+Nodes (23): 1. Every provider extends `SocialAbstract` and implements `SocialProvider`, 2. `ClientInformation` propagation is MANDATORY in OAuth, 3. Instagram routing via `resolveIgRoute`, 4. Three Meta credential layers (NEVER mix), Add a new provider, Add a provider via Zernio, Architecture, code:typescript (import { resolveIgRoute } from '@gitroom/nestjs-libraries/in) (+15 more)
+
 ### Community 105 - "Community 105"
-Cohesion: 0.18
-Nodes (6): NewsletterInterface, NewsletterService, newsletterProviders, BeehiivProvider, EmailEmptyProvider, ListmonkProvider
+Cohesion: 0.09
+Nodes (22): [0.5.2] - 2026-04-29, [0.5.4] - 2026-06-07, [0.5.5] - 2026-06-07, Alterado, Alterado, Alterado, Alterado, Changelog (+14 more)
 
 ### Community 106 - "Community 106"
 Cohesion: 0.09
 Nodes (21): Add a new Flow type (e.g., `comment_on_post` for `dm_to_followers`), Add a new MCP tool, Chat (Mastra Agents + MCP Tools + IG Webhook) — Claude Code Instructions, code:bash (# Chat specs), Commands, Common Workflows, Context propagation is mandatory, Debug the IG webhook (+13 more)
 
 ### Community 107 - "Community 107"
-Cohesion: 0.11
-Nodes (7): ExtractUrlsTool, GenerateImageTool, GenerateVideoTool, IntegrationTriggerTool, KnowledgeQueryTool, EMPTY_CONTEXT, MinimalRequestContext
+Cohesion: 0.18
+Nodes (6): NewsletterInterface, NewsletterService, newsletterProviders, BeehiivProvider, EmailEmptyProvider, ListmonkProvider
 
 ### Community 108 - "Community 108"
 Cohesion: 0.09
 Nodes (23): AComponent link editor, AddPostButton, BoldText formatting tool, Bullets list tool, DelayComponent scheduling, Editor single post composer, EditorWrapper multi-post manager, InterceptBoldShortcut extension (+15 more)
 
 ### Community 109 - "Community 109"
-Cohesion: 0.2
-Nodes (7): EmailInterface, EmptyProvider, NodeMailerProvider, transporter, resend, ResendProvider, html
+Cohesion: 0.12
+Nodes (6): ToolReturn, getValidationSchemas(), GenerateVideoOptionsTool, IntegrationValidationTool, VideoFunctionTool, VideoManager
 
 ### Community 110 - "Community 110"
-Cohesion: 0.17
-Nodes (8): loadPersonaBlock(), logger, PersonaLike, renderPersonaPrompt(), sanitize(), sanitizeList(), AiWebSearchController, result
+Cohesion: 0.2
+Nodes (7): EmailInterface, EmptyProvider, NodeMailerProvider, transporter, resend, ResendProvider, html
 
 ### Community 111 - "Community 111"
 Cohesion: 0.09
 Nodes (20): 1. Resumo, 2. ✅ ADOTAR (cherry-pick limpo, não toca arquivo divergente), 3. ⚠️ REVISAR (merge manual — toca arquivo divergente), 4. ⏭️ PULAR (49 commits) — agrupado por motivo, 5. Recomendação final, 6. Resultado da execução do cherry-pick seguro (2026-06-06), 7. Fechamento do backlog (2026-06-07), ✅ Adotado (mergeado em `main`) (+12 more)
 
 ### Community 112 - "Community 112"
-Cohesion: 0.17
-Nodes (13): graduationStrategies, hasVideo, InstagramCollaborators(), postType, video, MediaComponent(), MediumSettings(), MediumTags() (+5 more)
+Cohesion: 0.15
+Nodes (5): InstagramMessagingService, renderButton(), fetchMock, meUrl, page
 
-### Community 114 - "Community 114"
+### Community 113 - "Community 113"
+Cohesion: 0.17
+Nodes (10): buildProfileScope(), NotificationScope, NotificationsRepository, mockNotifCount, mockNotifCreate, mockNotifFindMany, mockNotifModel, mockUserFindFirst (+2 more)
+
+### Community 115 - "Community 115"
+Cohesion: 0.16
+Nodes (12): Checkbox, graduationStrategies, hasVideo, InstagramCollaborators(), postType, video, InstagramCollaboratorsTags(), LinkedInSettings() (+4 more)
+
+### Community 117 - "Community 117"
 Cohesion: 0.1
 Nodes (21): AgentRun, Orchestrator AppModule, CommandModule, Orphan-records to default-profile data migration, ConfigurationTask, digestEmailWorkflow, EmailActivity, emailSignal definition (+13 more)
 
-### Community 115 - "Community 115"
+### Community 118 - "Community 118"
+Cohesion: 0.15
+Nodes (11): buildService(), disconnect, integration, integrations, makeService(), manager, notify, repo (+3 more)
+
+### Community 120 - "Community 120"
 Cohesion: 0.19
 Nodes (6): BindFromInboxDto, CreateAliasDto, IgnoreUnmatchedDto, ListUnmatchedQueryDto, LookupAliasQueryDto, AutomationsInboxController
 
-### Community 116 - "Community 116"
-Cohesion: 0.16
-Nodes (8): agentCategories, AgentGraphInsertService, category, hook, model, topic, WorkflowChannelsState, agentTopics
-
-### Community 117 - "Community 117"
-Cohesion: 0.21
-Nodes (9): Auth(), metadata, config, proxy(), languages, customFetch(), fetchBackend, Params (+1 more)
-
-### Community 118 - "Community 118"
+### Community 121 - "Community 121"
 Cohesion: 0.1
-Nodes (19): [0.5.1] - 2026-04-29, [0.5.4] - 2026-06-07, [0.5.5] - 2026-06-07, Alterado, Alterado, Alterado, Changelog, Corrigido (+11 more)
+Nodes (18): Arquivos Envolvidos, code:block7 (Container start), code:sql (ALTER TABLE "Organization" ADD COLUMN "aiImageCredits" INTEG), Como funciona o deploy de schema neste projeto, Consideracoes, Contexto, Custos, Decisoes Tomadas (+10 more)
 
-### Community 119 - "Community 119"
+### Community 122 - "Community 122"
 Cohesion: 0.1
 Nodes (18): Add a guard or interceptor, Add a new REST route, Backend (NestJS) — Claude Code Instructions, code:block1 (Controller >> Service >> Repository), code:block2 (Controller >> Manager >> Service >> Repository), code:typescript (import * as Sentry from '@sentry/nestjs';), code:bash (pnpm dev-backend          # Run backend + frontend), Commands (+10 more)
 
-### Community 120 - "Community 120"
+### Community 123 - "Community 123"
 Cohesion: 0.1
 Nodes (18): 1. Configuração (variáveis de ambiente), 2. Conceitos, 3. Fluxo recomendado, 4. ⭐ Regra de ouro dos flows: `next_publication` vs `specific`, 5. Comandos, 6. Boas práticas para o agente, 7. Mantenedor: mantenha esta skill em sincronia, Analytics (+10 more)
 
-### Community 121 - "Community 121"
-Cohesion: 0.23
-Nodes (14): StatusAutomationProblem, StatusChannelProblem, StatusChannelRef, StatusEventType, StatusHistoryChannel, StatusHistoryItem, StatusHistoryResponse, StatusPostProblem (+6 more)
-
-### Community 122 - "Community 122"
+### Community 124 - "Community 124"
 Cohesion: 0.12
 Nodes (20): CommentBox, CommentComponent, EditableCommentComponent, /comments REST endpoints, POST /integrations/function, POST /media/information, POST /media/upload-server, POST /media/upload-simple (+12 more)
-
-### Community 123 - "Community 123"
-Cohesion: 0.2
-Nodes (13): textToTiptapHtml(), AiCaption(), SparkleIcon(), AiSearch(), FieldRow(), isValidPublicUrl(), LinkIcon(), ModalProps (+5 more)
-
-### Community 124 - "Community 124"
-Cohesion: 0.23
-Nodes (9): Chart(), mergeDataPoints(), ForksList, Stars, StarsAndForksInterface, StarsList, TotalList, StarsAndForks() (+1 more)
 
 ### Community 125 - "Community 125"
 Cohesion: 0.27
@@ -1510,56 +1483,56 @@ Cohesion: 0.11
 Nodes (17): Add a new activity, Add a new step to the IG Flow engine, Add a new workflow, code:bash (pnpm build:orchestrator), Commands, Common Workflows, Instagram host/token routing (`resolveIgRoute`), Key File Map (+9 more)
 
 ### Community 132 - "Community 132"
-Cohesion: 0.21
-Nodes (8): DevtoSettings(), Canonical(), CustomSelect(), HashnodeSettings(), useShowPostSelector(), RenderOptions(), TranslatedLabel(), TranslatedLabelProps
+Cohesion: 0.27
+Nodes (12): StatusAutomationProblem, StatusChannelProblem, StatusChannelRef, StatusEventType, StatusHistoryChannel, StatusHistoryItem, StatusHistoryResponse, StatusPostProblem (+4 more)
 
 ### Community 134 - "Community 134"
-Cohesion: 0.14
-Nodes (4): CreatePostDto, FlowStatusInput, Postiz, toQueryString()
+Cohesion: 0.22
+Nodes (11): NoProfileAssignedException, ProfileManageDeniedException, ProfileReadOnlyException, context, guard, makeContext(), MakeContextOptions, makeGuard() (+3 more)
 
 ### Community 135 - "Community 135"
 Cohesion: 0.19
-Nodes (7): AuthLayout(), ReturnUrlComponent, metadata, Page(), ChangeDir(), getT(), LogoTextComponent()
-
-### Community 136 - "Community 136"
-Cohesion: 0.19
 Nodes (16): Automacoes Instagram (estilo ManyChat), code:bash (# 1. Baixar o arquivo de configuração), code:bash (# Atualizar para a versão mais recente), Como atualizar, Créditos, Desenvolvimento local, Instalação rápida (Docker Compose), Integração com n8n (+8 more)
 
-### Community 137 - "Community 137"
+### Community 136 - "Community 136"
 Cohesion: 0.11
 Nodes (18): code:typescript (// subscription.repository.ts — comportamento atual), code:prisma (model Profile {), code:block31 (checkCredits(organization, profile, type) {), code:block32 (1. Valor configurado no perfil (aiImageCredits / aiVideoCred), code:env (# Default de creditos para novos perfis no modo managed (opc), code:block34 (AI_CREDITS_MODE=unlimited → SEMPRE ilimitado, independente d), code:block35 (1. Perfil default → sempre ilimitado (e o admin)), code:typescript (// Antes de gerar) (+10 more)
 
-### Community 138 - "Community 138"
+### Community 137 - "Community 137"
 Cohesion: 0.11
 Nodes (15): 2.1 Alteracao no Prisma Schema, 2.2 Alterar checkCredits para receber profile, 2.3 Alterar getCreditsFrom para filtrar por profile, 2.4 Alterar useCredit para registrar profileId, 2.5 Alterar controllers que chamam checkCredits/useCredit, 2.6 Novas env vars, 2.7 Testes da Onda 2, 2.8 Documentacao da Onda 2 (+7 more)
 
-### Community 139 - "Community 139"
+### Community 138 - "Community 138"
 Cohesion: 0.11
 Nodes (16): `apps/backend/src/api/`, `apps/frontend/src/components/launches/`, Como o `doc-maintainer` deve usar esta seção, Conscious Deferrals (decisões de não criar CLAUDE.md filho — gatilhos para revisão), Especificação, Gatilho, Identidade, Implementação — não fazer agora (+8 more)
 
-### Community 140 - "Community 140"
+### Community 139 - "Community 139"
 Cohesion: 0.11
 Nodes (16): 1. Identity & Multi-Tenancy, 2. Content & Composer, 3. Social Integrations, 4. AI Layer, 5. Automations / Instagram Flows, 6. Repost Engine, 7. Lifecycle / Operational, 8. Marketplace (disabled by default — `DISABLE_MARKETPLACE=true`) (+8 more)
 
-### Community 141 - "Community 141"
+### Community 140 - "Community 140"
 Cohesion: 0.12
 Nodes (18): ISocialMediaIntegration Interface, PostDetails Type, SocialProvider Interface, Social Provider Error Handling Pattern, TiktokProvider, VkProvider, WhopProvider, WordpressProvider (+10 more)
 
-### Community 142 - "Community 142"
+### Community 141 - "Community 141"
 Cohesion: 0.19
 Nodes (18): Authentication & Authorization Layer, @AuthProvider decorator, AuthProviderAbstract, ButtonCaster, FarcasterProvider, GithubProvider, GoogleProvider, Login (+10 more)
 
-### Community 143 - "Community 143"
-Cohesion: 0.27
-Nodes (18): AgentToolInterface, AsyncLocalStorage context helpers, checkAuth, MCP Tool Context Propagation via AsyncLocalStorage, IntegrationListTool, IntegrationManager.getAllIntegrations, IntegrationManager, socialIntegrationList (+10 more)
-
-### Community 144 - "Community 144"
+### Community 142 - "Community 142"
 Cohesion: 0.19
 Nodes (18): GmbProvider, HashnodeProvider, Hashnode Tags Dataset, KickProvider, LemmyProvider, LinkedinPageProvider, LinkedinProvider, ListmonkProvider (+10 more)
 
+### Community 143 - "Community 143"
+Cohesion: 0.28
+Nodes (14): expandPostItem(), expandPosts(), expandPostsList(), INTEGRATION_KEYS, mapKeys(), minifyPostItem(), minifyPosts(), minifyPostsList() (+6 more)
+
+### Community 144 - "Community 144"
+Cohesion: 0.32
+Nodes (11): aspectRatio, generateCaptions, HeygenProviderComponent(), SelectAvatarComponent(), SelectVoiceComponent(), useThirdPartyFunction(), useThirdPartyFunctionSWR(), useThirdPartySubmit() (+3 more)
+
 ### Community 145 - "Community 145"
-Cohesion: 0.12
-Nodes (15): 1. Tela de Settings (modo managed), 2. Feedback no componente de geracao, 3. Painel Admin (modo SaaS), Arquivos Envolvidos, Caso 1: Self-Hosted Pessoal (Ilimitado), Caso 2: SaaS Multi-Tenant (Creditos Gerenciados), Caso 3: Hibrido (Admin Ilimitado, Clientes Limitados), Casos de Uso (+7 more)
+Cohesion: 0.21
+Nodes (12): textToTiptapHtml(), SparkleIcon(), AiSearch(), FieldRow(), isValidPublicUrl(), LinkIcon(), ModalProps, SearchIcon() (+4 more)
 
 ### Community 146 - "Community 146"
 Cohesion: 0.12
@@ -1578,104 +1551,96 @@ Cohesion: 0.12
 Nodes (17): Custom Provider Settings Configuration Pattern, Dribbble Settings Component, DribbbleTeams Component, Dribbble DTO, Facebook DTO, Instagram DTO, LinkedIn DTO, Facebook Preview Component (+9 more)
 
 ### Community 150 - "Community 150"
-Cohesion: 0.15
-Nodes (17): Agente 1A - Late Backend, Agente 1B - Late Frontend, Agente 2B - Sistema de Credenciais Frontend, LatePinterestProvider, LateTikTokProvider, Credenciais de Providers por Workspace + Integracao Late, useFetch hook, Temporal Cassandra dynamic config (+9 more)
-
-### Community 151 - "Community 151"
 Cohesion: 0.23
 Nodes (4): StartupMigrationService, buildPrisma(), buildService(), ensure
 
-### Community 152 - "Community 152"
-Cohesion: 0.31
-Nodes (14): expandPostItem(), expandPosts(), expandPostsList(), INTEGRATION_KEYS, mapKeys(), minifyPostItem(), minifyPosts(), minifyPostsList() (+6 more)
-
-### Community 153 - "Community 153"
-Cohesion: 0.2
-Nodes (6): CopilotController, mockRes(), org, profile, req, res
-
-### Community 154 - "Community 154"
-Cohesion: 0.17
-Nodes (10): aiImage, aiText, buildOrg(), constructor(), { HttpException }, service, subscription, fetchMock (+2 more)
-
-### Community 155 - "Community 155"
-Cohesion: 0.13
-Nodes (14): code:bash (# Desenvolvimento), Comandos Uteis, Desenvolvimento, Dica, Ferramentas Necessarias, Indice, Obrigatorias, Obrigatorias (+6 more)
-
-### Community 156 - "Community 156"
+### Community 151 - "Community 151"
 Cohesion: 0.12
-Nodes (16): 6. Plano em Ondas (TDD), code:typescript (import { IsArray, IsOptional, IsString, MaxLength, ArrayMaxS), code:bash (pnpm add @mastra/rag), code:sql (CREATE EXTENSION IF NOT EXISTS vector;), code:typescript (@Injectable()), code:typescript (import { PostgresStore, PgVector } from '@mastra/pg';), code:typescript (MastraService.mastra = new Mastra({), code:typescript (@Post('/profiles/:profileId/knowledge/upload')) (+8 more)
+Nodes (16): 6. Plano em Ondas (TDD), code:typescript (getPersona(profileId: string)), code:typescript (getPersona(orgId: string, profileId: string)), code:typescript (import { IsArray, IsOptional, IsString, MaxLength, ArrayMaxS), code:typescript (interface WorkflowChannelsState {), code:typescript (persona: null,), code:typescript (async start(orgId: string, body: GeneratorDto, profileId?: s), code:bash (pnpm prisma-generate) (+8 more)
 
-### Community 157 - "Community 157"
+### Community 152 - "Community 152"
 Cohesion: 0.12
 Nodes (14): API, Arquivos, code:env (ENABLE_KNOWLEDGE_BASE="true"  # default quando nao definido), code:block2 (kb_<profileIdSemHifens>), code:block3 (upload → criar registro PROCESSING → extrair texto →), code:block4 (GET    /settings/profiles/:id/knowledge                     ), Feature flag, Isolamento por perfil (+6 more)
 
-### Community 158 - "Community 158"
+### Community 153 - "Community 153"
 Cohesion: 0.12
 Nodes (16): 7.1. Hierarquia de Dados Proposta, 7.2. Migracao do `Organization` Existente, 7.3. Resolucao de Contexto, 7.4. Credenciais — Modelo de Seguranca, 7.5. Login e Acesso do Cliente, 7.6. Settings Isoladas, 7.7. Calendario e Agendamento, 7.8. Media Library (+8 more)
 
-### Community 159 - "Community 159"
+### Community 154 - "Community 154"
 Cohesion: 0.12
 Nodes (16): Robo MultiPost Root CLAUDE.md, AI Credits System rationale, Browser Validation (Claude in Chrome), Controller-Service-Repository layering, gh pr --repo fork guard rule, GitLab Flow branching policy, i18n via useT principle, PNPM only principle (+8 more)
 
-### Community 160 - "Community 160"
-Cohesion: 0.14
-Nodes (16): AiClientFactory - Unified Provider Factory, AiClientFactory Specifications, AI Credits System, AiImageService - T2I and I2I Image Generation, AiImageService Specifications, AI Provider Resolution Chain - PROFILE→WORKSPACE→412, AiProviderResolverService - Resolution Chain PROFILE→WORKSPACE→412, AiProviderResolverService Specifications (+8 more)
-
-### Community 161 - "Community 161"
+### Community 155 - "Community 155"
 Cohesion: 0.17
 Nodes (16): Agent (root wrapper), AgentList, AgentChat (CopilotKit agent chat), Hooks (useCopilotAction manualPosting), LoadMessages, Message (UserMessage renderer), NewInput (chat input wrapper), OpenModal (post scheduling modal opener) (+8 more)
 
-### Community 162 - "Community 162"
+### Community 156 - "Community 156"
+Cohesion: 0.14
+Nodes (16): AiClientFactory - Unified Provider Factory, AiClientFactory Specifications, AI Credits System, AiImageService - T2I and I2I Image Generation, AiImageService Specifications, AI Provider Resolution Chain - PROFILE→WORKSPACE→412, AiProviderResolverService - Resolution Chain PROFILE→WORKSPACE→412, AiProviderResolverService Specifications (+8 more)
+
+### Community 157 - "Community 157"
 Cohesion: 0.15
 Nodes (16): allProviders, AllProvidersSettings, EmptySettings, CreatePostDto, Integration, Post, PostContent, CreateTagDto (+8 more)
 
-### Community 163 - "Community 163"
-Cohesion: 0.25
-Nodes (13): body, mockMemberDeleteMany, mockOrgCreate, mockOrgFindFirst, mockOrgFindUnique, mockOrgModel, mockOrgUpdate, mockProfileMemberModel (+5 more)
-
-### Community 165 - "Community 165"
-Cohesion: 0.13
-Nodes (15): 1.1 Schema Prisma, 1.2 Backend — KIE.AI Credential, 1.3 Frontend — Secao API Keys na tab IA, 1.4 Testes, 1.5 Documentacao, 3.1 KieAiProvider Service, 3.2 Integracao com Services Existentes, 3.3 Refactor do Veo3 (+7 more)
-
-### Community 166 - "Community 166"
-Cohesion: 0.13
-Nodes (13): Client Login (Fase Futura), code:prisma (enum ProfileRole {), code:block2 (POST /profiles/:id/invite       — Enviar convite para client), Consideracoes de Seguranca, Endpoints Necessarios, Estimativa de Escopo, Fluxo de Autenticacao, Implementacao Frontend (+5 more)
-
-### Community 167 - "Community 167"
-Cohesion: 0.13
-Nodes (15): 4. N8N — Referencia de Gestao de Credenciais Criptografadas, Algoritmo: AES-256-CBC, code:block7 ([UI cria credencial] → [API encrypta] → [DB armazena encrypt), Compartilhamento de Credenciais, External Secrets (Enterprise), Licoes para o MultiPost, Licoes para o MultiPost, Projects (Multi-Workspace) (+7 more)
-
-### Community 168 - "Community 168"
-Cohesion: 0.13
-Nodes (15): 5. MIXPOST — Referencia de Social Media com Workspaces, Autenticacao e Acesso, Autenticacao e Acesso, code:block8 (Installation), code:block9 (HTTP Request → Route: /mixpost/api/{workspaceUuid}/posts), Credenciais de Conta Social, Fluxo de Contexto, Hierarquia (+7 more)
-
-### Community 170 - "Community 170"
-Cohesion: 0.28
-Nodes (9): useFormatting(), RedditFlairDto, RedditSettingsDto, RedditSettingsDtoInner, RedditSettingsValueDto, RedditPreview(), RedditSettings(), RenderRedditComponent() (+1 more)
-
-### Community 171 - "Community 171"
+### Community 158 - "Community 158"
 Cohesion: 0.16
 Nodes (6): localProfiles, profiles, repo, rows, service, StatusEventService
 
-### Community 172 - "Community 172"
+### Community 159 - "Community 159"
+Cohesion: 0.25
+Nodes (13): body, mockMemberDeleteMany, mockOrgCreate, mockOrgFindFirst, mockOrgFindUnique, mockOrgModel, mockOrgUpdate, mockProfileMemberModel (+5 more)
+
+### Community 160 - "Community 160"
+Cohesion: 0.22
+Nodes (4): makeSecureId(), makeSecureId(), a, b
+
+### Community 161 - "Community 161"
+Cohesion: 0.25
+Nodes (12): body, commentBody(), ENV_KEYS, integration(), makeReq(), orgs, postbackBody(), rawBody (+4 more)
+
+### Community 164 - "Community 164"
+Cohesion: 0.13
+Nodes (13): Client Login (Fase Futura), code:prisma (enum ProfileRole {), code:block2 (POST /profiles/:id/invite       — Enviar convite para client), Consideracoes de Seguranca, Endpoints Necessarios, Estimativa de Escopo, Fluxo de Autenticacao, Implementacao Frontend (+5 more)
+
+### Community 165 - "Community 165"
+Cohesion: 0.13
+Nodes (15): 5. MIXPOST — Referencia de Social Media com Workspaces, Autenticacao e Acesso, Autenticacao e Acesso, code:block8 (Installation), code:block9 (HTTP Request → Route: /mixpost/api/{workspaceUuid}/posts), Credenciais de Conta Social, Fluxo de Contexto, Hierarquia (+7 more)
+
+### Community 166 - "Community 166"
+Cohesion: 0.13
+Nodes (15): 4. N8N — Referencia de Gestao de Credenciais Criptografadas, Algoritmo: AES-256-CBC, code:block7 ([UI cria credencial] → [API encrypta] → [DB armazena encrypt), Compartilhamento de Credenciais, External Secrets (Enterprise), Licoes para o MultiPost, Licoes para o MultiPost, Projects (Multi-Workspace) (+7 more)
+
+### Community 167 - "Community 167"
 Cohesion: 0.14
 Nodes (15): clearAlarmIfEmpty, extractCookies, getStoredEntries, refreshAllCookies, Cookie refresh alarm (1440min), CookieDefinition interface, CookieProvider interface, GetCookiesResponse (+7 more)
 
-### Community 173 - "Community 173"
+### Community 168 - "Community 168"
 Cohesion: 0.22
 Nodes (15): useSettings Hook Pattern, GithubOnboarding, Remote Resource Dropdown Loader Pattern, SkoolGroupSelect, SkoolLabelSelect, Skool Provider (withProvider), SkoolComponent, SlackChannelSelect (+7 more)
 
-### Community 174 - "Community 174"
+### Community 169 - "Community 169"
 Cohesion: 0.14
 Nodes (15): AgenciesRepository, AgenciesService, AnnouncementsRepository, AnnouncementsService, AutopostRepository, AutopostService, IntegrationRepository, KnowledgeRepository (+7 more)
 
-### Community 175 - "Community 175"
+### Community 170 - "Community 170"
+Cohesion: 0.25
+Nodes (8): als, Ctx, getAuth(), getContext(), getProfileId(), getRequestId(), runWithContext(), IntegrationListTool
+
+### Community 173 - "Community 173"
+Cohesion: 0.29
+Nodes (6): AuthLayout(), ReturnUrlComponent, TestimonialComponent(), Testimonial(), testimonials1, testimonials2
+
+### Community 174 - "Community 174"
 Cohesion: 0.34
 Nodes (12): API_URL, commands, ensureConfig(), fail(), fs, main(), out(), parseFlags() (+4 more)
 
-### Community 176 - "Community 176"
+### Community 175 - "Community 175"
 Cohesion: 0.14
 Nodes (12): 1. Correction, 2. Warning, 3. Temporary Ban, 4. Permanent Ban, Attribution, Contributor Covenant Code of Conduct, Enforcement, Enforcement Guidelines (+4 more)
+
+### Community 176 - "Community 176"
+Cohesion: 0.15
+Nodes (12): code:bash (# Desenvolvimento), Comandos Uteis, Desenvolvimento, Dica, Ferramentas de Debug/Admin, Indice, pgAdmin (Gerenciar PostgreSQL), Postiz - Guia de Setup Local (Desenvolvimento e Producao) (+4 more)
 
 ### Community 177 - "Community 177"
 Cohesion: 0.14
@@ -1683,115 +1648,107 @@ Nodes (14): 12) Fluxo de Branches e Releases (GitLab Flow), code:block1 (upstrea
 
 ### Community 178 - "Community 178"
 Cohesion: 0.14
-Nodes (12): 10. Duvidas em aberto, 11. Arquivos criticos para consultar durante implementacao, 1. Objetivo, 2.1 O que ja existe, 2.2 O que NAO existe, 2. Estado atual do codigo (referencia), 8. Ordem de entrega sugerida, 9. Metricas de sucesso (+4 more)
+Nodes (12): Arquivos Novos, Arquivos Principais (existentes a modificar), Caso 1: Usuario Simples, Caso 2: Usuario Avancado com OpenAI, Caso 3: Trocar Modelo sem Deploy, Casos de Uso, Contexto, Feature: Central de Providers de IA (+4 more)
 
 ### Community 179 - "Community 179"
 Cohesion: 0.14
+Nodes (12): 10. Duvidas em aberto, 11. Arquivos criticos para consultar durante implementacao, 1. Objetivo, 2.1 O que ja existe, 2.2 O que NAO existe, 2. Estado atual do codigo (referencia), 8. Ordem de entrega sugerida, 9. Metricas de sucesso (+4 more)
+
+### Community 180 - "Community 180"
+Cohesion: 0.14
 Nodes (14): 2. CHATWOOT — Referencia de Multi-Tenancy Consolidada, Autenticacao e Acesso, code:block3 (Installation (Super Admin)), code:block4 (ApplicationController), code:ruby (current_account.conversations.find(params[:id])), Credenciais de Canal, Feature Flags, Hierarquia de Dados (+6 more)
 
-### Community 182 - "Community 182"
-Cohesion: 0.25
-Nodes (8): als, Ctx, getAuth(), getContext(), getProfileId(), getRequestId(), runWithContext(), IntegrationListTool
-
-### Community 183 - "Community 183"
+### Community 181 - "Community 181"
 Cohesion: 0.14
 Nodes (14): KnowledgeDocument, useKnowledgeDocuments, formatSize, KnowledgeBaseSettingsSection, StatusBadge, ProfilePersona, useProfilePersona, useProfilesList (+6 more)
 
-### Community 184 - "Community 184"
+### Community 182 - "Community 182"
+Cohesion: 0.37
+Nodes (14): AgentToolInterface, AsyncLocalStorage context helpers, checkAuth, MCP Tool Context Propagation via AsyncLocalStorage, IntegrationListTool, IntegrationSchedulePostTool, IntegrationService, IntegrationTriggerTool (+6 more)
+
+### Community 183 - "Community 183"
 Cohesion: 0.15
 Nodes (14): BlueskyProvider, DevToProvider, DiscordProvider, DribbbleProvider, FarcasterProvider, RefreshToken, SocialAbstract, SocialProvider (+6 more)
 
-### Community 185 - "Community 185"
-Cohesion: 0.28
-Nodes (11): buildService(), disconnect, integration, integrations, makeService(), manager, notify, repo (+3 more)
-
-### Community 186 - "Community 186"
+### Community 184 - "Community 184"
 Cohesion: 0.26
 Nodes (8): ProfileSeedService, allSql(), defaultInsert, editorIndex, editorInsert, markerIndex, ownerInserts, sqls
 
-### Community 187 - "Community 187"
+### Community 185 - "Community 185"
 Cohesion: 0.26
 Nodes (3): PublicFlowsController, makeFlowsService(), org
 
-### Community 188 - "Community 188"
-Cohesion: 0.28
-Nodes (9): cases, credential(), fn(), lazy, openAiClientCtorSpy, openaiImageSpy, openaiTextSpy, openrouterImageSpy (+1 more)
-
-### Community 189 - "Community 189"
+### Community 187 - "Community 187"
 Cohesion: 0.15
 Nodes (13): code:bash (pnpm run dev:docker), code:bash (pnpm install), code:bash (NODE_OPTIONS="--max-old-space-size=4096" pnpm run build), code:bash (pnpm run prisma-db-push), code:bash (# Instalar PM2 globalmente (se nao tiver)), code:bash (# Frontend), Opcao A: Build manual + PM2, Passo 1: Subir infraestrutura (+5 more)
 
-### Community 190 - "Community 190"
+### Community 188 - "Community 188"
+Cohesion: 0.15
+Nodes (13): 1. ESTADO ATUAL DO MULTIPOST (Postiz), A. Tokens OAuth de Integracao (por canal social), Arquitetura Existente, B. Credenciais de App OAuth (por org, por provider), C. Criptografia Fixa (Legada), code:block2 (User (conta global)), Como o Contexto de Organizacao e Resolvido, Modelo `Customer` — Base para "Profile" (+5 more)
+
+### Community 189 - "Community 189"
 Cohesion: 0.17
 Nodes (13): 3. TOOLJET — Referencia de Workspace com Credenciais Isoladas, Autenticacao — Modelo de 2 Niveis, code:block6 (Instance (Super Admin)), Credenciais e Data Sources — DESTAQUE, Hierarquia de Dados, Hierarquia de Dados, Licoes para o MultiPost, Licoes para o MultiPost (+5 more)
 
 ### Community 191 - "Community 191"
-Cohesion: 0.15
-Nodes (13): 1. ESTADO ATUAL DO MULTIPOST (Postiz), A. Tokens OAuth de Integracao (por canal social), Arquitetura Existente, B. Credenciais de App OAuth (por org, por provider), C. Criptografia Fixa (Legada), code:block2 (User (conta global)), Como o Contexto de Organizacao e Resolvido, Modelo `Customer` — Base para "Profile" (+5 more)
-
-### Community 193 - "Community 193"
 Cohesion: 0.21
 Nodes (13): AiTextController.caption (POST /ai/text/caption), AiTextService.caption (external), AiWebSearchController.extract, AiWebSearchController.generatePost orchestrator, isTextCredentialError heuristic, AiWebSearchController.runExtractPipeline, AiWebSearchController.runSearchPipeline, AiWebSearchController.search (+5 more)
 
-### Community 194 - "Community 194"
+### Community 192 - "Community 192"
 Cohesion: 0.18
 Nodes (13): AnalyticsComponent, /analytics & /analytics/trending endpoints, /analytics/stars endpoint, Chart, ChartSocial, mergeDataPoints, ForksList, StarsAndForksInterface (+5 more)
 
-### Community 195 - "Community 195"
+### Community 193 - "Community 193"
 Cohesion: 0.21
 Nodes (13): AuthService, decrypt_legacy_using_IV, deriveLegacyKeyIv, encrypt_legacy_using_IV (AES-256-CBC + EVP_BytesToKey MD5), ConfigurationChecker, Agente 2A - Sistema de Credenciais Backend, CredentialService, EncryptionService (AES-256-GCM novo) (+5 more)
 
-### Community 196 - "Community 196"
+### Community 194 - "Community 194"
 Cohesion: 0.19
 Nodes (13): ImportMediaDto, ImportMediaItemDto, SSRF Blocklist Pattern, isBlockedIp, isBlockedIPv4, isBlockedIPv6, isSafePublicHttpsUrl, IsSafeWebhookUrl (+5 more)
 
-### Community 197 - "Community 197"
-Cohesion: 0.3
-Nodes (10): buildClient(), err, existing, fallback, generateObjectMock, generateTextMock, longInput, principal (+2 more)
+### Community 195 - "Community 195"
+Cohesion: 0.18
+Nodes (6): ListStatusEventsParams, RecordStatusEventInput, a, at, ff, StatusEventRepository
 
-### Community 198 - "Community 198"
+### Community 196 - "Community 196"
 Cohesion: 0.3
-Nodes (4): Post, CreateTagDto, GetPostsDto, GetPostsListDto
+Nodes (10): fakeProfile, mockFindFirst, mockFindMany, mockMemberFindMany, mockPersonaModel, mockProfileMemberModel, mockProfileModel, mockUpdate (+2 more)
 
-### Community 199 - "Community 199"
-Cohesion: 0.3
-Nodes (6): Auth(), RenderPreviewDate, RenderPreviewDateClient(), ALLOWED_ATTR, ALLOWED_TAGS, sanitizePostContent()
-
-### Community 200 - "Community 200"
+### Community 202 - "Community 202"
 Cohesion: 0.18
 Nodes (10): AI, code:bash (git clone https://github.com/YOUR_USERNAME/postiz.git), code:bash (git checkout -b feature/your-feature-name), code:bash (git push -u origin feature/your-feature-name), Contributing, How to contribute, Need Help?, Read the developers guide (+2 more)
 
-### Community 201 - "Community 201"
+### Community 203 - "Community 203"
 Cohesion: 0.17
 Nodes (12): 1.1 Setup de testes (backend), 1.2 Implementacao do modo unlimited, 1.3 Testes da Onda 1, 1.4 Documentacao da Onda 1, code:typescript (async checkCredits(organization: Organization, checkType = '), code:typescript (useCredit<T>(organization: Organization, type = 'ai_images',), code:env (# .env.example e docker-compose.yaml), code:block13 (Testes para checkCredits():) (+4 more)
 
-### Community 202 - "Community 202"
+### Community 204 - "Community 204"
 Cohesion: 0.17
 Nodes (12): 3.1 Novo endpoint no settings controller, 3.2 Verificacao de API key antes de consumir credito, 3.3 Testes da Onda 3, 3.4 Documentacao da Onda 3, code:block23 (GET  /settings/profiles/:profileId/ai-credits), code:typescript (// Antes de qualquer geracao), code:block25 (TEST 1: "GET /settings/profiles/:id/ai-credits retorna confi), Criterio de aceite da Onda 3 (+4 more)
 
-### Community 203 - "Community 203"
+### Community 205 - "Community 205"
 Cohesion: 0.17
 Nodes (12): Atualizar para nova versao (latest), Atualizar para versao especifica, code:bash (docker compose up -d), code:bash (docker compose pull postiz), code:bash (# Edite o docker-compose.yml e troque :latest por :0.2.0), code:bash (docker compose logs -f postiz), code:bash (#!/bin/bash), code:bash (# Deploy latest) (+4 more)
 
-### Community 204 - "Community 204"
+### Community 206 - "Community 206"
 Cohesion: 0.17
 Nodes (10): code:bash (export MULTIPOST_API_KEY="sua-chave-de-api"     # org ou per), code:bash (node apps/cli/bin/multipost.js help), code:bash (cd apps/cli && npm link        # cria o binário `multipost` ), code:bash (multipost profiles:list), Como rodar, Configuração, Exemplos, Notas (+2 more)
 
-### Community 211 - "Community 211"
-Cohesion: 0.23
-Nodes (4): ToolReturn, getValidationSchemas(), GenerateVideoOptionsTool, IntegrationValidationTool
-
-### Community 212 - "Community 212"
+### Community 207 - "Community 207"
 Cohesion: 0.2
 Nodes (12): Force-dynamic rendering convention for data-dependent pages, Agents section layout with Agent wrapper, Root AppLayout with VariableContext and providers, force-dynamic rendering for authenticated app layout, Site layout wrapper with LayoutComponent, Agent detail page with AgentChat component, Agents index page (redirects to /agents/new), Analytics page with PlatformAnalytics component (+4 more)
 
-### Community 213 - "Community 213"
+### Community 208 - "Community 208"
+Cohesion: 0.2
+Nodes (12): Agente 1A - Late Backend, LatePinterestProvider, LateTikTokProvider, Temporal Cassandra dynamic config, Temporal SQL dynamic config, API-First Principle, Document-First Principle, GitLab Flow (postiz/main/release) (+4 more)
+
+### Community 209 - "Community 209"
 Cohesion: 0.21
 Nodes (12): Sections enum, SubscriptionException (402), CheckPolicies decorator, PoliciesGuard, PermissionsService, AI_CREDITS_MODE unlimited default, CheckPolicies metadata + PoliciesGuard pattern, Zernio invite-link undocumented endpoint with 501 fallback (+4 more)
 
 ### Community 214 - "Community 214"
-Cohesion: 0.33
-Nodes (5): ContinueIntegration(), SuccessState, TwoStepState, Redirect(), Page()
+Cohesion: 0.36
+Nodes (7): NotificationComponent(), NotificationOpenComponent(), replaceLinks(), ShowNotification(), ALLOWED_ATTR, ALLOWED_TAGS, sanitizePostContent()
 
 ### Community 215 - "Community 215"
 Cohesion: 0.31
@@ -1817,93 +1774,101 @@ Nodes (11): 4.1 Tela de gestao (perfil default), 4.2 Campos na tela de edicao de
 Cohesion: 0.18
 Nodes (11): Arquitetura proposta, Camada de serviço: `CredentialService`, code:prisma (model ProviderCredential {), code:json ({ "clientId": "...", "clientSecret": "...", "botToken": "...), code:json ({ "apiKey": "sk_..." }), code:block26 (Controller (Settings)), code:typescript (const SENTINEL = '__REDACTED__';), code:typescript (// IntegrationManager.getCredentials(provider, organizationI) (+3 more)
 
-### Community 224 - "Community 224"
+### Community 221 - "Community 221"
+Cohesion: 0.25
+Nodes (7): AutoResizingTextarea, AutoResizingTextareaProps, ALLOWED_ATTR, ALLOWED_CLASS_VALUES, ALLOWED_TAGS, sanitizeChatContent(), stripForSchemeCheck()
+
+### Community 222 - "Community 222"
 Cohesion: 0.25
 Nodes (11): AGPL-3.0 license compliance, Robo MultiPost - Fork of Postiz, Temporal as critical scheduler dependency, docker-compose.dev.yaml services, postiz app container (ghcr.io/maiconramos/robo-multipost), postiz-postgres pgvector pg17 service, postiz-redis service, Temporal docker service (temporalio/auto-setup 1.28.1) (+3 more)
 
-### Community 225 - "Community 225"
+### Community 223 - "Community 223"
 Cohesion: 0.18
 Nodes (11): Flow Builder / Node Graph Pattern, ConditionNode Flow Node, DelayNode Flow Node, DeletableEdge Component, Instagram Automation Triggers, NovaAutomacaoModal Component, ReplyCommentNode Flow Node, SendDmNode Flow Node (+3 more)
 
-### Community 226 - "Community 226"
+### Community 224 - "Community 224"
 Cohesion: 0.22
 Nodes (11): BillingAfter, ChangeDir, ChangeDirClient, LayoutComponent, Layout Component Hierarchy, Logo, NotificationComponent, OnboardingModal (+3 more)
+
+### Community 225 - "Community 225"
+Cohesion: 0.2
+Nodes (11): AuthMiddleware, PublicApiModule, PublicAuthMiddleware, PublicIntegrationsController, Profile context resolution from cookie/header, SetsController, SignatureController, StripeController (+3 more)
+
+### Community 226 - "Community 226"
+Cohesion: 0.22
+Nodes (11): Agente 1B - Late Frontend, Agente 2B - Sistema de Credenciais Frontend, Credenciais de Providers por Workspace + Integracao Late, FetchProvider (React Context), FetchWrapperComponent (React Provider), customFetch factory, fetchBackend (server-side fetch), newFetch closure (auth/showorg/showprofile/impersonate cookie injection) (+3 more)
 
 ### Community 227 - "Community 227"
 Cohesion: 0.2
 Nodes (11): Onda 9 - AuditLog, Onda 10 - DNS rebinding SSRF mitigation, Onda 4 - DTO Validation + Sanitization, Onda 5 - Helmet + CSP + Cookie hardening, Onda 3 - IDOR em recursos core, Onda 2 - IDOR em flows, Onda 1 - IG Webhook HMAC fail-closed, Plano de Hardening de Seguranca (+3 more)
 
 ### Community 228 - "Community 228"
-Cohesion: 0.2
-Nodes (11): AuthMiddleware, PublicApiModule, PublicAuthMiddleware, PublicIntegrationsController, Profile context resolution from cookie/header, SetsController, SignatureController, StripeController (+3 more)
+Cohesion: 0.24
+Nodes (11): AiClientFactory, AiModule, AiProviderResolverService, AiProviderTestService, AiTextService, AiTextService (spec), AiVideoService, AiVideoService (spec) (+3 more)
 
 ### Community 229 - "Community 229"
 Cohesion: 0.31
 Nodes (11): useT, useTranslationSettings, getT, defaultNS, fallbackLng, languages, i18n Localization System, i18next instance (+3 more)
 
-### Community 230 - "Community 230"
-Cohesion: 0.4
-Nodes (4): TestimonialComponent(), Testimonial(), testimonials1, testimonials2
-
-### Community 231 - "Community 231"
-Cohesion: 0.2
-Nodes (8): Arquivos Novos, Arquivos Principais (existentes a modificar), Contexto, Feature: Central de Providers de IA, Oportunidade, Problema, Regra Geral de Documentacao, Resumo das Ondas
-
-### Community 232 - "Community 232"
-Cohesion: 0.2
-Nodes (10): 4.1 Novo modelo `ProfilePersona`, 4.2 Novo modelo `ProfileKnowledgeDocument`, 4.3 Migration SQL complementar, 4.4 Valores especiais nos campos, 4. Schema de dados, code:prisma (model ProfilePersona {), code:prisma (persona        ProfilePersona?), code:prisma (model ProfileKnowledgeDocument {) (+2 more)
-
-### Community 233 - "Community 233"
-Cohesion: 0.2
-Nodes (10): AGENTE 2B — Sistema de Credenciais: Frontend, Checklist de segurança (baseado no dossiê n8n), code:block17, code:block18, code:block19 (Você é um agente de desenvolvimento sênior trabalhando no Ro), code:block20, Contexto e motivação, Gere com: openssl rand -base64 32 (+2 more)
-
-### Community 234 - "Community 234"
-Cohesion: 0.22
-Nodes (8): AGENTE 1B — Late: Frontend, Chave mestra para criptografia de credenciais (separada do JWT_SECRET), code:block1 (Onda 1 (rodar em paralelo):), code:block7 (Você é um agente de desenvolvimento sênior trabalhando no Ro), code:block8, Ordem de execução, Plano: Credenciais de Providers por Workspace + Integração Late, Prompts para Multi-Agentes Paralelos
-
 ### Community 235 - "Community 235"
-Cohesion: 0.2
-Nodes (8): code:ts (type AuthenticatedOrganization = Organization & {), Contexto, Cuidados, Dívida técnica — Tipar o retorno de `@GetOrgFromRequest()`, Definição de pronto, Escopo do refactor proposto, Inventário (no momento do registro), Sintoma que motivou o registro
+Cohesion: 0.36
+Nodes (4): Auth(), RenderPreviewDate, RenderPreviewDateClient(), LogoTextComponent()
 
 ### Community 236 - "Community 236"
 Cohesion: 0.2
-Nodes (8): Arquitetura da imagem, code:block1 (Porta 5000 (Nginx)), code:yaml (services:), code:block3 (1. Desenvolve a feature em main), Docker Compose de producao, Fluxo rapido: feature nova ate producao, Indice, Robo MultiPost - Guia de Docker, Release e Deploy
+Nodes (10): 4.1 Novo modelo `ProfilePersona`, 4.2 Novo modelo `ProfileKnowledgeDocument`, 4.3 Migration SQL complementar, 4.4 Valores especiais nos campos, 4. Schema de dados, code:prisma (model ProfilePersona {), code:prisma (persona        ProfilePersona?), code:prisma (model ProfileKnowledgeDocument {) (+2 more)
 
 ### Community 237 - "Community 237"
 Cohesion: 0.2
-Nodes (8): 1. Camada de i18n de e-mail, 2. Idioma por workspace (`Organization.language`), 3. Onde cada e-mail resolve o idioma, 4. Notificações: chave+params + escopo por perfil, 5. Paridade de chaves (backend ↔ frontend), 6. Pontos de mudança comuns, E-mails multi-idioma (i18n) — Agent Reference, Escopo por perfil (autorização)
+Nodes (10): AGENTE 2B — Sistema de Credenciais: Frontend, Checklist de segurança (baseado no dossiê n8n), code:block17, code:block18, code:block19 (Você é um agente de desenvolvimento sênior trabalhando no Ro), code:block20, Contexto e motivação, Gere com: openssl rand -base64 32 (+2 more)
 
 ### Community 238 - "Community 238"
+Cohesion: 0.22
+Nodes (8): AGENTE 1B — Late: Frontend, Chave mestra para criptografia de credenciais (separada do JWT_SECRET), code:block1 (Onda 1 (rodar em paralelo):), code:block7 (Você é um agente de desenvolvimento sênior trabalhando no Ro), code:block8, Ordem de execução, Plano: Credenciais de Providers por Workspace + Integração Late, Prompts para Multi-Agentes Paralelos
+
+### Community 239 - "Community 239"
+Cohesion: 0.2
+Nodes (8): code:ts (type AuthenticatedOrganization = Organization & {), Contexto, Cuidados, Dívida técnica — Tipar o retorno de `@GetOrgFromRequest()`, Definição de pronto, Escopo do refactor proposto, Inventário (no momento do registro), Sintoma que motivou o registro
+
+### Community 240 - "Community 240"
+Cohesion: 0.2
+Nodes (8): Arquitetura da imagem, code:block1 (Porta 5000 (Nginx)), code:yaml (services:), code:block3 (1. Desenvolve a feature em main), Docker Compose de producao, Fluxo rapido: feature nova ate producao, Indice, Robo MultiPost - Guia de Docker, Release e Deploy
+
+### Community 241 - "Community 241"
+Cohesion: 0.2
+Nodes (8): 1. Camada de i18n de e-mail, 2. Idioma por workspace (`Organization.language`), 3. Onde cada e-mail resolve o idioma, 4. Notificações: chave+params + escopo por perfil, 5. Paridade de chaves (backend ↔ frontend), 6. Pontos de mudança comuns, E-mails multi-idioma (i18n) — Agent Reference, Escopo por perfil (autorização)
+
+### Community 242 - "Community 242"
 Cohesion: 0.2
 Nodes (8): API, Arquivos, code:block1 (GET    /settings/profiles/:profileId/persona), Fluxo no agente Mastra, Fluxo no Generator, Injection safety, Modelo, Persona de IA por Perfil
 
-### Community 245 - "Community 245"
-Cohesion: 0.36
-Nodes (6): checkAllTheSameWidthHeight, isMp4, isPicture, loadAll, PinterestSettings(), PinterestSettingsDto
-
-### Community 246 - "Community 246"
+### Community 243 - "Community 243"
 Cohesion: 0.2
 Nodes (10): SlackProvider, AuthTokenDetails Type, ClientInformation Interface, IAuthenticator Interface, OAuth Pattern with ClientInformation, ThreadsProvider, TwitchProvider, XProvider Test Suite (+2 more)
 
-### Community 247 - "Community 247"
+### Community 244 - "Community 244"
 Cohesion: 0.27
 Nodes (10): globalPlugs / processPlug, internalPlugs / processInternalPlug, poke signal, postComment (activity), postSocial (activity), postWorkflowV101, refreshToken (activity), repeat-post startChild pattern (+2 more)
 
+### Community 245 - "Community 245"
+Cohesion: 0.39
+Nodes (7): buildService(), errorSpy, integration, { service }, { service, provider, integrationService }, start, temporal
+
 ### Community 248 - "Community 248"
-Cohesion: 0.27
-Nodes (10): AiModule, AiProviderResolverService, AiProviderTestService, AiTextService, AiTextService (spec), AiVideoService, AiVideoService (spec), AiWebSearchService (+2 more)
+Cohesion: 0.22
+Nodes (9): [0.5.1] - 2026-04-29, Corrigido, Corrigido, Corrigido, Corrigido, Corrigido, Corrigido, Corrigido (+1 more)
 
 ### Community 249 - "Community 249"
-Cohesion: 0.39
-Nodes (7): mockNotifCount, mockNotifCreate, mockNotifFindMany, mockNotifModel, mockUserFindFirst, mockUserModel, mockUserUpdate
-
-### Community 250 - "Community 250"
 Cohesion: 0.22
 Nodes (7): AI Reports, Disclosure Guidelines, Introduction, Reporting Security Vulnerabilities, Security Policy, Security Vulnerability Response Process, Supported Versions
 
-### Community 251 - "Community 251"
+### Community 250 - "Community 250"
 Cohesion: 0.22
 Nodes (9): 1. API key invalida, 2. Provider configurado mas sem credito, 3. Env var e DB key coexistem, 4. Modelo removido pelo provider, 5. Organizacao sem config, 6. Texto/Agente e OpenAI-only (fase 1), 7. Multiplas orgs, uma key, 8. OPENAI_API_KEY vazia (+1 more)
+
+### Community 251 - "Community 251"
+Cohesion: 0.22
+Nodes (9): 3.1 KieAiProvider Service, 3.2 Integracao com Services Existentes, 3.3 Refactor do Veo3, 3.4 Testes, 3.5 Documentacao, code:typescript (@Injectable()), code:block18 (gpt4o-image → /api/v1/gpt4o-image/generate + /record-info), Onda 3 — Client Unificado KIE.AI (backend) (+1 more)
 
 ### Community 252 - "Community 252"
 Cohesion: 0.22
@@ -1918,44 +1883,36 @@ Cohesion: 0.22
 Nodes (9): code:block18 ([Claude Code]                [GitHub]                     [V), code:block19 ([Claude Code]                [GitHub]                     [V), code:block20 ([Claude Code]                [GitHub]                     [V), code:block21 ([Local]                      [GHCR]                       [V), Pre-release RC (`/new-release rc`), Promover RC (`/new-release promote`), Release estavel (recomendado — `/new-release minor`), Resumo do fluxo (+1 more)
 
 ### Community 255 - "Community 255"
-Cohesion: 0.39
-Nodes (7): buildService(), errorSpy, integration, { service }, { service, provider, integrationService }, start, temporal
-
-### Community 257 - "Community 257"
-Cohesion: 0.22
-Nodes (4): a, at, ff, StatusEventRepository
-
-### Community 258 - "Community 258"
-Cohesion: 0.36
-Nodes (5): socialIntegrationList, countCharacters(), IntegrationSchedulePostTool, tryParseJson(), weightedLength()
-
-### Community 259 - "Community 259"
 Cohesion: 0.22
 Nodes (9): withProvider HOC Pattern, TikTokItem, TiktokPreview, TikTok Provider (withProvider), TikTokSettings, Wordpress Provider (withProvider), WordpressSettings, YoutubePreview (+1 more)
 
-### Community 260 - "Community 260"
+### Community 256 - "Community 256"
 Cohesion: 0.25
 Nodes (9): 14 official dotcontext agents, Dotcontext Bootstrap Runbook, Dotcontext Daily Workflow, context.check drift detection, Export targets (.agent, .cursor, AGENTS.md), Dotcontext MCP Server (.mcp.json), PREVC Workflow (Plan/Research/Execute/Verify/Commit), sync.reverseSync (IDE -> .context) (+1 more)
 
-### Community 261 - "Community 261"
+### Community 257 - "Community 257"
 Cohesion: 0.31
 Nodes (9): Fase 4 - Memoria do Workspace (RAG), ENABLE_KNOWLEDGE_BASE feature flag, Per-profile vector index (kb_{profileId}), KnowledgeQueryTool (Mastra), pgvector extension init, Profile AI Persona + Knowledge Base (RAG), ProfileKnowledgeDocument (Prisma model), ProfilePersona (Prisma model) (+1 more)
 
-### Community 262 - "Community 262"
+### Community 258 - "Community 258"
 Cohesion: 0.25
 Nodes (9): AI Prompt Enrichment with 412 Fallback, AiImageService, AiTextService, MediaService.generateAiVideo, MediaService.generateImage, MediaService.generateVideo, PostsRepository, PostsService (+1 more)
 
-### Community 263 - "Community 263"
+### Community 259 - "Community 259"
+Cohesion: 0.43
+Nodes (6): arg, create(), findMany, updateMany, updateManyMock, upsertArg()
+
+### Community 260 - "Community 260"
 Cohesion: 0.46
 Nodes (4): createTestModule(), MockOverride, createMock(), createPrismaRepositoryMock()
 
-### Community 267 - "Community 267"
-Cohesion: 0.25
-Nodes (8): [0.5.2] - 2026-04-29, Corrigido, Corrigido, Corrigido, Corrigido, Corrigido, Corrigido, Corrigido
+### Community 262 - "Community 262"
+Cohesion: 0.36
+Nodes (3): makeFlowsService(), makeOptions(), CreateCommentAutomationTool
 
-### Community 268 - "Community 268"
-Cohesion: 0.25
-Nodes (8): API Key do KIE.AI, code:block11 (GET  /settings/ai-providers), code:block12 (PUT  /settings/ai-providers), code:block13 (GET  /integrations/credentials/kieai → { configured: boolean), code:block14 (GET /settings/ai-providers/kieai/balance), Configuracao de Providers, Endpoints REST (Backend), Saldo KIE.AI
+### Community 263 - "Community 263"
+Cohesion: 0.36
+Nodes (3): makeFlowsService(), makeOptions(), SetCommentAutomationStatusTool
 
 ### Community 269 - "Community 269"
 Cohesion: 0.25
@@ -1963,7 +1920,7 @@ Nodes (8): 2.1 Backend — AiProviderResolver, 2.2 Backend — Endpoints de Conf
 
 ### Community 270 - "Community 270"
 Cohesion: 0.25
-Nodes (6): code:markdown (## Checklist Onda N), Mapeamento onda → release, Índice de Ondas, Nota sobre backward-compatibility, Plano de Hardening de Segurança — Robô MultiPost, Template de validação por onda
+Nodes (8): API Key do KIE.AI, code:block11 (GET  /settings/ai-providers), code:block12 (PUT  /settings/ai-providers), code:block13 (GET  /integrations/credentials/kieai → { configured: boolean), code:block14 (GET /settings/ai-providers/kieai/balance), Configuracao de Providers, Endpoints REST (Backend), Saldo KIE.AI
 
 ### Community 271 - "Community 271"
 Cohesion: 0.25
@@ -1971,7 +1928,7 @@ Nodes (8): 3.1 Criar guard/helper de ownership centralizado, 3.2 Aplicar em cont
 
 ### Community 272 - "Community 272"
 Cohesion: 0.25
-Nodes (8): 4.1 Criar DTOs tipados para endpoints sem validação, 4.2 Endurecer `ValidationPipe` global, 4.3 Sanitizar HTML no preview público, 4.4 Wrap JSON.parse em try-catch com validação de estrutura, 4.5 Sanitizar filenames em uploads, code:typescript (new ValidationPipe({), Onda 4 — Validação de input (ALTA), Testes da Onda 4
+Nodes (8): 7.1 Configurar ENCRYPTION_KEY, 7.2 Implementar AES-256-GCM, 7.3 Migração dual-read, 7.4 Job de migração opcional, code:bash (pnpm test -- --testPathPattern="encryption|credential"), Onda 7 — Encryption key + credenciais (ALTA, com migração), Testes da Onda 7, Validação da Onda 7
 
 ### Community 273 - "Community 273"
 Cohesion: 0.25
@@ -1979,669 +1936,661 @@ Nodes (8): 10.1 Mitigar DNS rebinding em SSRF, 10.2 Open redirect em OAuth, 10.3
 
 ### Community 274 - "Community 274"
 Cohesion: 0.25
-Nodes (8): 7.1 Configurar ENCRYPTION_KEY, 7.2 Implementar AES-256-GCM, 7.3 Migração dual-read, 7.4 Job de migração opcional, code:bash (pnpm test -- --testPathPattern="encryption|credential"), Onda 7 — Encryption key + credenciais (ALTA, com migração), Testes da Onda 7, Validação da Onda 7
+Nodes (8): 4.1 Criar DTOs tipados para endpoints sem validação, 4.2 Endurecer `ValidationPipe` global, 4.3 Sanitizar HTML no preview público, 4.4 Wrap JSON.parse em try-catch com validação de estrutura, 4.5 Sanitizar filenames em uploads, code:typescript (new ValidationPipe({), Onda 4 — Validação de input (ALTA), Testes da Onda 4
 
 ### Community 275 - "Community 275"
 Cohesion: 0.25
-Nodes (8): 1. Nova env var `AI_CREDITS_MODE`, 2. Alterar `checkCredits()` em `subscription.service.ts`, 3. Alterar `useCredit()` para respeitar modo ilimitado, 4. Endpoint de gestao (modo managed), code:env (AI_CREDITS_MODE="unlimited"  # "unlimited" ou "managed"), code:typescript (async checkCredits(organization: Organization, checkType = '), code:block6 (GET    /settings/ai-credits              → retorna config da), Implementacao: Backend
+Nodes (6): code:markdown (## Checklist Onda N), Mapeamento onda → release, Índice de Ondas, Nota sobre backward-compatibility, Plano de Hardening de Segurança — Robô MultiPost, Template de validação por onda
 
 ### Community 276 - "Community 276"
 Cohesion: 0.25
-Nodes (8): code:env (# Modo de creditos de IA), code:block2 (checkCredits(organization, type) {), code:prisma (model Profile {), Logica de Decisao (fluxo `checkCredits`), Modelo de Dados (nova tabela ou campo), Proposta de Arquitetura, Valores Especiais, Variaveis de Ambiente
+Nodes (8): 1. Nova env var `AI_CREDITS_MODE`, 2. Alterar `checkCredits()` em `subscription.service.ts`, 3. Alterar `useCredit()` para respeitar modo ilimitado, 4. Endpoint de gestao (modo managed), code:env (AI_CREDITS_MODE="unlimited"  # "unlimited" ou "managed"), code:typescript (async checkCredits(organization: Organization, checkType = '), code:block6 (GET    /settings/ai-credits              → retorna config da), Implementacao: Backend
 
 ### Community 277 - "Community 277"
 Cohesion: 0.25
-Nodes (8): 5.1 Persona endpoints, 5.2 Knowledge Base endpoints, 5.3 Erros padronizados, 5. Contratos de API (API-First), code:json ({), code:block7 (GET    /settings/profiles/:profileId/persona), code:json ({), code:block9 (GET    /settings/profiles/:profileId/knowledge)
+Nodes (8): code:env (# Modo de creditos de IA), code:block2 (checkCredits(organization, type) {), code:prisma (model Profile {), Logica de Decisao (fluxo `checkCredits`), Modelo de Dados (nova tabela ou campo), Proposta de Arquitetura, Valores Especiais, Variaveis de Ambiente
 
 ### Community 278 - "Community 278"
 Cohesion: 0.25
-Nodes (8): code:bash (docker push ${GHCR_IMAGE}:${VERSION}), code:bash (echo "SEU_TOKEN" | docker login ghcr.io -u maiconramos --pas), code:bash (export GHCR_IMAGE="ghcr.io/maiconramos/robo-multipost"), Passo 1: Login no GHCR, Passo 2: Build e tag, Passo 3: Push, Publicar manualmente no GHCR, Verificar
+Nodes (8): 5.1 Persona endpoints, 5.2 Knowledge Base endpoints, 5.3 Erros padronizados, 5. Contratos de API (API-First), code:json ({), code:block7 (GET    /settings/profiles/:profileId/persona), code:json ({), code:block9 (GET    /settings/profiles/:profileId/knowledge)
 
 ### Community 279 - "Community 279"
 Cohesion: 0.25
-Nodes (8): Arquivos a criar/modificar (referência de implementação futura), Backend, Frontend, i18n, Integrações existentes usadas (não modifica), Orchestrator, Prisma, Testes sugeridos
+Nodes (8): code:bash (docker push ${GHCR_IMAGE}:${VERSION}), code:bash (echo "SEU_TOKEN" | docker login ghcr.io -u maiconramos --pas), code:bash (export GHCR_IMAGE="ghcr.io/maiconramos/robo-multipost"), Passo 1: Login no GHCR, Passo 2: Build e tag, Passo 3: Push, Publicar manualmente no GHCR, Verificar
 
 ### Community 280 - "Community 280"
 Cohesion: 0.25
-Nodes (8): Ciclo de vida do workflow, code:block2 (repostWorkflow({ ruleId }):), Download da mídia, Fluxo detalhado (Temporal), Idempotência, Publicação nos destinos, Respeito a rate limits, Short-circuit (importante)
+Nodes (8): Arquivos a criar/modificar (referência de implementação futura), Backend, Frontend, i18n, Integrações existentes usadas (não modifica), Orchestrator, Prisma, Testes sugeridos
 
 ### Community 281 - "Community 281"
+Cohesion: 0.25
+Nodes (8): Ciclo de vida do workflow, code:block2 (repostWorkflow({ ruleId }):), Download da mídia, Fluxo detalhado (Temporal), Idempotência, Publicação nos destinos, Respeito a rate limits, Short-circuit (importante)
+
+### Community 282 - "Community 282"
 Cohesion: 0.25
 Nodes (6): code:bash (npm install @postiz/node), code:typescript (import Postiz from '@postiz/node';), code:typescript (// "When someone comments EU QUERO on my next Instagram post), Instagram comment automations (Flows), Postiz NodeJS SDK, Usage
 
 ### Community 283 - "Community 283"
-Cohesion: 0.36
-Nodes (3): makeFlowsService(), makeOptions(), CreateCommentAutomationTool
-
-### Community 284 - "Community 284"
-Cohesion: 0.36
-Nodes (3): makeFlowsService(), makeOptions(), SetCommentAutomationStatusTool
-
-### Community 285 - "Community 285"
-Cohesion: 0.36
-Nodes (3): makeFlowsService(), makeOptions(), ListCommentAutomationsTool
-
-### Community 286 - "Community 286"
 Cohesion: 0.32
 Nodes (8): EventEmitter pattern for decoupled UI signals, useExpend EventEmitter (module-scoped), useExpend, useHideTopEditor EventEmitter (module-scoped), useHideTopEditor, useMoveToIntegration EventEmitter (module-scoped, event=moveToIntegration), useMoveToIntegration, useMoveToIntegrationListener
 
-### Community 287 - "Community 287"
-Cohesion: 0.36
-Nodes (8): ManageModal Component, PicksSocialsComponent, SelectCurrent Component, ShowAllProviders Component, Internal Interface, SelectedIntegrations Interface, useLaunchStore Hook, Values Interface
-
-### Community 288 - "Community 288"
-Cohesion: 0.32
-Nodes (8): Hashnode Settings DTO, Hashnode Settings Component, HashnodePublications Component, HashnodeTags Component, useCustomProviderFunction Hook, Listmonk Settings Component, SelectList Component, SelectTemplates Component
-
-### Community 289 - "Community 289"
+### Community 284 - "Community 284"
 Cohesion: 0.32
 Nodes (8): Reddit Provider (withProvider), RedditSettings, Debounced Search Autocomplete Picker Pattern, RenderOptions (Reddit Subreddit), Subreddit, Subreddit (Warpcast Channel picker), Warpcast Provider (withProvider), WrapcastProvider
 
-### Community 290 - "Community 290"
+### Community 285 - "Community 285"
+Cohesion: 0.36
+Nodes (8): ManageModal Component, PicksSocialsComponent, SelectCurrent Component, ShowAllProviders Component, Internal Interface, SelectedIntegrations Interface, useLaunchStore Hook, Values Interface
+
+### Community 286 - "Community 286"
+Cohesion: 0.32
+Nodes (8): Hashnode Settings DTO, Hashnode Settings Component, HashnodePublications Component, HashnodeTags Component, useCustomProviderFunction Hook, Listmonk Settings Component, SelectList Component, SelectTemplates Component
+
+### Community 287 - "Community 287"
 Cohesion: 0.25
 Nodes (8): AiKindCard, CardBody, CardHeader, CredentialForm, DynamicOptions, InheritedView, AiProviderSettingsSection, SearchableModelSelect
 
-### Community 291 - "Community 291"
+### Community 288 - "Community 288"
 Cohesion: 0.25
 Nodes (8): Postiz.deletePost, Postiz.integrations, Postiz.post (CreatePostDto), Postiz NodeJS SDK class, Postiz.postList (GetPostsDto), Postiz.upload, Postiz NodeJS SDK README, SDK tsup build config
 
-### Community 292 - "Community 292"
+### Community 289 - "Community 289"
 Cohesion: 0.29
 Nodes (8): ProviderCredential (Prisma model), AiProviderConfig (Prisma model), AiProviderResolver, KIE.AI API (async pattern, taskId, /record-info), KieAiProvider (hub unificado), AI_MODEL_REGISTRY, Central de Providers de IA, Fase 3 - IA Configuravel
 
-### Community 293 - "Community 293"
+### Community 290 - "Community 290"
 Cohesion: 0.46
 Nodes (8): expandPostItem, expandPosts, expandPostsList, mapKeys, minifyPostItem, minifyPosts, minifyPostsList, reverseMap
 
-### Community 294 - "Community 294"
+### Community 291 - "Community 291"
 Cohesion: 0.36
 Nodes (8): HeygenProvider, ReelFarmProvider, ThirdParty Decorator, ThirdPartyAbstract, ThirdPartyParams, ThirdPartyManager, ThirdPartyModule, timer
 
-### Community 295 - "Community 295"
+### Community 292 - "Community 292"
 Cohesion: 0.29
 Nodes (8): ImagesSlides, loadFromUrlOrDataUrl, UploadFactory.createStorage, IUploadProvider interface, UploadModule, VideoAbstract, VideoManager, VideoModule
 
-### Community 296 - "Community 296"
+### Community 293 - "Community 293"
 Cohesion: 0.32
 Nodes (8): Button component, Canonical component, Checkbox component, ColorPicker component, CustomSelect component, Input component, React Shared Libraries, Select component
 
-### Community 297 - "Community 297"
+### Community 294 - "Community 294"
 Cohesion: 0.32
 Nodes (8): Gray Area Rug, Caramel-Colored Fabric Chair, Modern Living Room Interior Design, Minimalist Interior Design Aesthetic, Potted Green Plant, Wall-Mounted Decorative Art, Warm Neutral Color Palette, Wooden Side Table
 
-### Community 298 - "Community 298"
-Cohesion: 0.48
-Nodes (5): data, evaluateCondition(), interpolateVariables(), parseDuration(), result
-
-### Community 299 - "Community 299"
+### Community 295 - "Community 295"
 Cohesion: 0.29
 Nodes (4): ERROR_ROW, repo, service, statusEvent
 
-### Community 303 - "Community 303"
-Cohesion: 0.48
-Nodes (5): ALLOWED_ATTR, ALLOWED_CLASS_VALUES, ALLOWED_TAGS, sanitizeChatContent(), stripForSchemeCheck()
-
-### Community 304 - "Community 304"
-Cohesion: 0.48
-Nodes (3): metadata, Page(), MediaLayoutComponent()
-
-### Community 305 - "Community 305"
-Cohesion: 0.29
-Nodes (7): code:bash (docker compose up -d), code:bash (# Build da imagem), Configurar variaveis, Opcao B: Docker Compose completo (producao containerizada), Opcao C: Build Docker manual (Dockerfile.dev), Passo 1: Subir tudo com Docker Compose, Setup para Producao Local
-
-### Community 306 - "Community 306"
-Cohesion: 0.29
-Nodes (7): 9.1 Português BR como padrão, 9.2 Branding e Identidade Visual, 9.3 Landing page em pt-BR, 9.4 Integração com Late, 9.5 Decisões de Produto sobre Features Existentes, 9.6 README e Documentação, Fase 1 — Base do Produto (Robô MultiPost)
-
-### Community 307 - "Community 307"
-Cohesion: 0.29
-Nodes (7): 4.1 Saldo KIE.AI no Settings, 4.2 Indicador de Modelo na Geracao, 4.3 Modelo no Agent (Mastra), 4.4 Erro Amigavel por Provider, 4.5 Testes, 4.6 Documentacao, Onda 4 — UX, Saldo e Polish (frontend + backend)
-
-### Community 308 - "Community 308"
-Cohesion: 0.29
-Nodes (7): API Keys: Prioridade, Arquitetura Proposta, Cadeia de Resolucao de Provider, code:prisma (model AiProviderConfig {), code:block2 (1. AiProviderConfig da org → se existe config para a categor), code:block3 (1. ProviderCredential no DB (per-org, criptografado) → prior), Modelo de Dados
-
-### Community 309 - "Community 309"
-Cohesion: 0.29
-Nodes (7): 9.1 Tabela `AuditLog`, 9.2 Decorator `@Audit('action.name')`, 9.3 Aplicar em operações sensíveis, 9.4 Retenção configurável, code:prisma (model AuditLog {), Onda 9 — Audit log + observabilidade (MÉDIA), Testes da Onda 9
-
-### Community 310 - "Community 310"
-Cohesion: 0.29
-Nodes (7): 5.1 Adicionar helmet, 5.2 Feature flag para CSP, 5.3 Hardening de cookie, 5.4 Mover `localhost:6274` do main.ts para env, code:typescript (import helmet from 'helmet';), Onda 5 — Security headers + CORS (ALTA), Testes da Onda 5
-
-### Community 311 - "Community 311"
-Cohesion: 0.29
-Nodes (7): 8.1 Tabela `Session` no Prisma, 8.2 Gerar `jti` em cada JWT, 8.3 Endpoint `/auth/logout-all`, 8.4 Reduzir expiração default, code:prisma (model Session {), Onda 8 — JWT lifecycle + session revocation (MÉDIA, opt-in), Testes da Onda 8
-
-### Community 312 - "Community 312"
-Cohesion: 0.29
-Nodes (7): 1.1 Rotacionar credenciais expostas, 1.2 Corrigir webhook Instagram (fail-closed + raw body), 1.3 Remover vazamento de API key em social-connect, 1.4 Proteger `/webhooks/send`, code:bash (pnpm test -- --testPathPattern="ig-webhook|webhooks|no.auth.), Onda 1 — Contenção imediata (CRÍTICA), Validação da Onda 1
-
-### Community 313 - "Community 313"
-Cohesion: 0.29
-Nodes (7): 7.1 Multi-tenancy e isolamento, 7.2 Degradacao graciosa, 7.3 Performance e limites, 7.4 Seguranca, 7.5 Experiencia do usuario, 7.6 Migracao e rollback, 7. Checklist de Edge Cases Globais
-
-### Community 314 - "Community 314"
-Cohesion: 0.29
-Nodes (7): code:block4 (/new-release minor        # Release estavel (merge em releas), Dispatch manual (alternativa), O que o CI/CD faz apos o push da tag, Pre-release RC, Promover RC para estavel, Release automatizado (recomendado), Release estavel (major/minor/patch)
-
-### Community 315 - "Community 315"
-Cohesion: 0.29
-Nodes (7): Build com versao, Build local da imagem, Build simples, code:bash (# Para rodar em VPS x86_64 (padrao)), code:bash (docker build -f Dockerfile.dev \), code:bash (docker run --rm -p 5000:5000 \), Testar a imagem localmente
-
-### Community 316 - "Community 316"
-Cohesion: 0.29
-Nodes (7): code:block4 (+-----------------------------------------------------------), Listagem de regras, Navegação, Tela de Histórico (por regra), Traduções (obrigatório), UI proposta, Wizard "Nova regra de Repost"
-
-### Community 317 - "Community 317"
-Cohesion: 0.29
-Nodes (5): code:block1 (Workspace (agencia)), Dossie Tecnico: Arquitetura Multi-Workspace/Multi-Perfil para o Robo MultiPost, Hierarquia de 3 niveis vs 2 niveis, Modelo Proposto para o MultiPost, Objetivo
-
-### Community 318 - "Community 318"
+### Community 296 - "Community 296"
 Cohesion: 0.48
 Nodes (5): build(), flows, integ, org, posts
 
-### Community 319 - "Community 319"
+### Community 297 - "Community 297"
 Cohesion: 0.48
-Nodes (7): Zernio two-step UX: profile selection then account/platform selection with auto-select when single profile, ConnectNewAccountSection, PLATFORM_NAMES, PlatformIcon, ZernioAccountModal, ZernioInviteModal, Zernio Multi-Profile Pattern
+Nodes (5): data, evaluateCondition(), interpolateVariables(), parseDuration(), result
 
-### Community 320 - "Community 320"
+### Community 298 - "Community 298"
+Cohesion: 0.48
+Nodes (3): metadata, Page(), MediaLayoutComponent()
+
+### Community 299 - "Community 299"
+Cohesion: 0.38
+Nodes (3): fetchUploadApiEndpoint(), getUppyUploadPlugin(), CompressionWrapper
+
+### Community 300 - "Community 300"
+Cohesion: 0.29
+Nodes (7): code:bash (docker compose up -d), code:bash (# Build da imagem), Configurar variaveis, Opcao B: Docker Compose completo (producao containerizada), Opcao C: Build Docker manual (Dockerfile.dev), Passo 1: Subir tudo com Docker Compose, Setup para Producao Local
+
+### Community 301 - "Community 301"
+Cohesion: 0.29
+Nodes (7): 9.1 Português BR como padrão, 9.2 Branding e Identidade Visual, 9.3 Landing page em pt-BR, 9.4 Integração com Late, 9.5 Decisões de Produto sobre Features Existentes, 9.6 README e Documentação, Fase 1 — Base do Produto (Robô MultiPost)
+
+### Community 302 - "Community 302"
+Cohesion: 0.29
+Nodes (7): API Keys: Prioridade, Arquitetura Proposta, Cadeia de Resolucao de Provider, code:prisma (model AiProviderConfig {), code:block2 (1. AiProviderConfig da org → se existe config para a categor), code:block3 (1. ProviderCredential no DB (per-org, criptografado) → prior), Modelo de Dados
+
+### Community 303 - "Community 303"
+Cohesion: 0.29
+Nodes (7): 4.1 Saldo KIE.AI no Settings, 4.2 Indicador de Modelo na Geracao, 4.3 Modelo no Agent (Mastra), 4.4 Erro Amigavel por Provider, 4.5 Testes, 4.6 Documentacao, Onda 4 — UX, Saldo e Polish (frontend + backend)
+
+### Community 304 - "Community 304"
+Cohesion: 0.29
+Nodes (7): 9.1 Tabela `AuditLog`, 9.2 Decorator `@Audit('action.name')`, 9.3 Aplicar em operações sensíveis, 9.4 Retenção configurável, code:prisma (model AuditLog {), Onda 9 — Audit log + observabilidade (MÉDIA), Testes da Onda 9
+
+### Community 305 - "Community 305"
+Cohesion: 0.29
+Nodes (7): 8.1 Tabela `Session` no Prisma, 8.2 Gerar `jti` em cada JWT, 8.3 Endpoint `/auth/logout-all`, 8.4 Reduzir expiração default, code:prisma (model Session {), Onda 8 — JWT lifecycle + session revocation (MÉDIA, opt-in), Testes da Onda 8
+
+### Community 306 - "Community 306"
+Cohesion: 0.29
+Nodes (7): 1.1 Rotacionar credenciais expostas, 1.2 Corrigir webhook Instagram (fail-closed + raw body), 1.3 Remover vazamento de API key em social-connect, 1.4 Proteger `/webhooks/send`, code:bash (pnpm test -- --testPathPattern="ig-webhook|webhooks|no.auth.), Onda 1 — Contenção imediata (CRÍTICA), Validação da Onda 1
+
+### Community 307 - "Community 307"
+Cohesion: 0.29
+Nodes (7): 5.1 Adicionar helmet, 5.2 Feature flag para CSP, 5.3 Hardening de cookie, 5.4 Mover `localhost:6274` do main.ts para env, code:typescript (import helmet from 'helmet';), Onda 5 — Security headers + CORS (ALTA), Testes da Onda 5
+
+### Community 308 - "Community 308"
+Cohesion: 0.29
+Nodes (7): 7.1 Multi-tenancy e isolamento, 7.2 Degradacao graciosa, 7.3 Performance e limites, 7.4 Seguranca, 7.5 Experiencia do usuario, 7.6 Migracao e rollback, 7. Checklist de Edge Cases Globais
+
+### Community 309 - "Community 309"
+Cohesion: 0.29
+Nodes (7): Build com versao, Build local da imagem, Build simples, code:bash (# Para rodar em VPS x86_64 (padrao)), code:bash (docker build -f Dockerfile.dev \), code:bash (docker run --rm -p 5000:5000 \), Testar a imagem localmente
+
+### Community 310 - "Community 310"
+Cohesion: 0.29
+Nodes (7): code:block4 (/new-release minor        # Release estavel (merge em releas), Dispatch manual (alternativa), O que o CI/CD faz apos o push da tag, Pre-release RC, Promover RC para estavel, Release automatizado (recomendado), Release estavel (major/minor/patch)
+
+### Community 311 - "Community 311"
+Cohesion: 0.29
+Nodes (7): code:block4 (+-----------------------------------------------------------), Listagem de regras, Navegação, Tela de Histórico (por regra), Traduções (obrigatório), UI proposta, Wizard "Nova regra de Repost"
+
+### Community 312 - "Community 312"
+Cohesion: 0.29
+Nodes (5): code:block1 (Workspace (agencia)), Dossie Tecnico: Arquitetura Multi-Workspace/Multi-Perfil para o Robo MultiPost, Hierarquia de 3 niveis vs 2 niveis, Modelo Proposto para o MultiPost, Objetivo
+
+### Community 314 - "Community 314"
 Cohesion: 0.33
 Nodes (7): ContinueModal, ContinueProvider, ModalContent, Menu (Integration context menu component), IntegrationContext, useIntegrationList, useIntegration
 
-### Community 321 - "Community 321"
+### Community 315 - "Community 315"
+Cohesion: 0.48
+Nodes (7): Zernio two-step UX: profile selection then account/platform selection with auto-select when single profile, ConnectNewAccountSection, PLATFORM_NAMES, PlatformIcon, ZernioAccountModal, ZernioInviteModal, Zernio Multi-Profile Pattern
+
+### Community 316 - "Community 316"
 Cohesion: 0.29
 Nodes (7): convertBackRegex, Plug, PlugItem, PlugPop, TextArea, PlugsInterface, Plugs
 
-### Community 322 - "Community 322"
-Cohesion: 0.38
-Nodes (7): AgentModelResolver, AgentModelResolver (spec), AiClientFactory, ChatModule, LoadToolsService, MastraService, Mastra Store (PostgresStore + PgVector)
-
-### Community 323 - "Community 323"
+### Community 317 - "Community 317"
 Cohesion: 0.38
 Nodes (7): BeehiivProvider, EmailEmptyProvider, EmailService, ListmonkProvider, NewsletterInterface, NewsletterService.getProvider, NewsletterService.register
 
-### Community 324 - "Community 324"
+### Community 318 - "Community 318"
 Cohesion: 0.52
 Nodes (7): Dub provider, Empty provider, Kutt provider, LinkDrip provider, ShortIo provider, ShortLinkService, ShortLinking interface
 
-### Community 325 - "Community 325"
+### Community 319 - "Community 319"
+Cohesion: 0.53
+Nodes (4): mockPersonaModel, mockProfileMemberModel, mockProfileModel, mockUserOrgModel
+
+### Community 320 - "Community 320"
 Cohesion: 0.33
 Nodes (4): CTX, repo, service, statusEvent
 
-### Community 327 - "Community 327"
-Cohesion: 0.6
-Nodes (4): debounce(), MentionList(), suggestion(), updatePosition()
-
-### Community 328 - "Community 328"
+### Community 323 - "Community 323"
 Cohesion: 0.33
 Nodes (6): 13) Critérios de Aceite por Fase, Fase 0, Fase 1 (MVP), Fase 2 (Multi-Workspace), Fase 3 (IA), Fase 4 (RAG)
 
-### Community 329 - "Community 329"
+### Community 324 - "Community 324"
+Cohesion: 0.33
+Nodes (6): 1.1 Schema Prisma, 1.2 Backend — KIE.AI Credential, 1.3 Frontend — Secao API Keys na tab IA, 1.4 Testes, 1.5 Documentacao, Onda 1 — Infraestrutura e API Key via UI (backend + frontend)
+
+### Community 325 - "Community 325"
 Cohesion: 0.33
 Nodes (6): 6.1 Throttler específico em auth, 6.2 Throttle por IP+email combinado, 6.3 CAPTCHA opcional após N falhas, code:typescript (@Throttle({ default: { ttl: 900_000, limit: 5 } }) // 5 req ), Onda 6 — Rate limiting granular (ALTA), Testes da Onda 6
 
-### Community 330 - "Community 330"
+### Community 326 - "Community 326"
 Cohesion: 0.33
-Nodes (6): code:block7 (Container start), code:sql (ALTER TABLE "Organization" ADD COLUMN "aiImageCredits" INTEG), Como funciona o deploy de schema neste projeto, Migracao de Dados, Para instancias existentes em producao, Riscos
+Nodes (6): code:bash (pnpm add @mastra/rag), code:sql (CREATE EXTENSION IF NOT EXISTS vector;), code:typescript (@Injectable()), code:typescript (import { PostgresStore, PgVector } from '@mastra/pg';), code:typescript (MastraService.mastra = new Mastra({), Onda 7 - pgvector + @mastra/rag (infraestrutura)
 
-### Community 331 - "Community 331"
+### Community 327 - "Community 327"
 Cohesion: 0.33
 Nodes (5): code:block21 (ProfilePersonaSettingsSection (componente principal)), code:typescript (// profile-persona.hooks.ts), code:block23 (persona_title = "AI Persona" / "Persona de IA"), code:typescript (if (user?.role !== 'USER') {), Onda 6 - UI de configuracao de Persona
 
-### Community 332 - "Community 332"
+### Community 328 - "Community 328"
 Cohesion: 0.33
 Nodes (6): AGENTE 1A — Late: Backend, code:block2 (Você é um agente de desenvolvimento sênior trabalhando no Ro), code:block3, code:block4, code:block5, code:block6
 
-### Community 333 - "Community 333"
+### Community 329 - "Community 329"
 Cohesion: 0.33
 Nodes (6): Activity (`repost.activity.ts`), Matriz de compatibilidade, Migração automática (`StartupMigrationService.backfillRepostDestinations`), Schema atualizado, UI, V2 — matriz de formatos origem × destino (2026-04-22)
 
-### Community 334 - "Community 334"
+### Community 330 - "Community 330"
 Cohesion: 0.33
 Nodes (6): 6. ANALISE COMPARATIVA, Autenticacao e SSO, Criptografia de Credenciais, Modelo de Tenancy, RBAC, RBAC
 
-### Community 335 - "Community 335"
-Cohesion: 0.33
-Nodes (6): 9. FONTES E REFERENCIAS, Chatwoot, Mixpost, MultiPost/Postiz, n8n, ToolJet
-
-### Community 336 - "Community 336"
+### Community 331 - "Community 331"
 Cohesion: 0.33
 Nodes (6): 8.1. Complexidade da Migracao, 8.2. Performance, 8.3. Seguranca, 8.4. Compatibilidade com Upstream, 8.5. Billing Futuro, 8. RISCOS E CONSIDERACOES
 
-### Community 337 - "Community 337"
+### Community 332 - "Community 332"
+Cohesion: 0.33
+Nodes (6): 9. FONTES E REFERENCIAS, Chatwoot, Mixpost, MultiPost/Postiz, n8n, ToolJet
+
+### Community 333 - "Community 333"
 Cohesion: 0.47
 Nodes (4): code:bash (npm run dev), Deploy on Vercel, Getting Started, Learn More
 
-### Community 338 - "Community 338"
+### Community 334 - "Community 334"
 Cohesion: 0.53
 Nodes (4): compat, __dirname, eslintConfig, __filename
 
-### Community 340 - "Community 340"
+### Community 335 - "Community 335"
 Cohesion: 0.33
 Nodes (5): body, isValid, mockRes, payload, results
 
-### Community 341 - "Community 341"
-Cohesion: 0.33
-Nodes (6): crxI18n, stripDevIcons, baseBuildOptions, baseManifest, vite.config.base default export, vite.config.chrome default export
-
-### Community 342 - "Community 342"
+### Community 336 - "Community 336"
 Cohesion: 0.53
 Nodes (6): MoltbookProvider, Web3 provider registry pattern (identifier-to-component map), TelegramProvider, web3List, Web3ProviderInterface, WrapcasterProvider
 
-### Community 343 - "Community 343"
+### Community 337 - "Community 337"
+Cohesion: 0.33
+Nodes (6): crxI18n, stripDevIcons, baseBuildOptions, baseManifest, vite.config.base default export, vite.config.chrome default export
+
+### Community 338 - "Community 338"
 Cohesion: 0.4
 Nodes (6): Automation/Flow Builder with visual node-graph composition and execution tracking, FlowEditorComponent, FlowEditorInner, ExecutionDetail, FlowExecutionsComponent, FlowSummaryComponent
 
-### Community 344 - "Community 344"
+### Community 339 - "Community 339"
 Cohesion: 0.47
 Nodes (6): RepostEditComponent, RepostListComponent, RepostRuleForm Component, Repost Rule Scheduling System, RepostWizardComponent, useRepostRules Hook
 
-### Community 345 - "Community 345"
+### Community 340 - "Community 340"
 Cohesion: 0.6
 Nodes (6): GET/POST/PUT/DELETE /posts/tags, ConfirmDeleteModal, Tag ShowModal (create/edit tag), TagsComponent, TagsComponentA (legacy ReactTags), TagsComponentInner
 
-### Community 346 - "Community 346"
+### Community 341 - "Community 341"
 Cohesion: 0.33
 Nodes (6): PickPlatforms, getPlatformFromIdentifier, getPlatformIconPath, PlatformIconBadge, ZernioBadge, Zernio identifier prefix split convention
 
-### Community 347 - "Community 347"
+### Community 342 - "Community 342"
 Cohesion: 0.4
 Nodes (6): ImportDebugPost, Modal Management with Zustand, Component, useDecisionModal, useModals, WrapcasterProvider
 
-### Community 348 - "Community 348"
+### Community 343 - "Community 343"
 Cohesion: 0.4
 Nodes (6): ThreadFinisher, Threads Provider (withProvider), Threads SettingsComponent, checkVideoDuration, X Provider (withProvider), SettingsComponent (X Provider)
 
-### Community 349 - "Community 349"
+### Community 344 - "Community 344"
 Cohesion: 0.33
 Nodes (6): CliSection, CopyButton, getMcpConfig, McpSection, PublicApiContent, PublicComponent
 
-### Community 350 - "Community 350"
+### Community 345 - "Community 345"
 Cohesion: 0.47
 Nodes (6): checkCredits precedence chain, Perfil default sempre ilimitado, AI_CREDITS_MODE env var (unlimited/managed), Sistema de Creditos de IA Configuravel, Profile.aiImageCredits / aiVideoCredits, useCredit rollback pattern
 
-### Community 351 - "Community 351"
-Cohesion: 0.4
-Nodes (6): FetchProvider (React Context), FetchWrapperComponent (React Provider), customFetch factory, fetchBackend (server-side fetch), newFetch closure (auth/showorg/showprofile/impersonate cookie injection), internalFetch (server-side cookie-aware)
-
-### Community 352 - "Community 352"
+### Community 346 - "Community 346"
 Cohesion: 0.33
 Nodes (6): afterLinkedinCompanyPreventRemove, linkedinCompanyPreventRemove, removeMarkdown, convertMention, convertToAscii, stripHtmlValidation
 
-### Community 353 - "Community 353"
+### Community 347 - "Community 347"
 Cohesion: 0.47
 Nodes (6): HeygenProvider - AI Avatar Video Generation, ReelFarmProvider - Media Library Integration, ThirdPartyAbstract and ThirdPartyParams Interface, ThirdPartyManager Service, ThirdPartyModule NestJS Module, Third-Party Provider Plugin Architecture
 
-### Community 354 - "Community 354"
+### Community 348 - "Community 348"
 Cohesion: 0.53
 Nodes (6): Agent Categories List, AgentGraphInsertService - LangGraph Post Categorization, AgentGraphService - LangGraph Content Generation Pipeline, AgentModule NestJS Module, Agent Topics List, LangGraph Workflow Pattern for Post Generation
 
-### Community 355 - "Community 355"
+### Community 349 - "Community 349"
+Cohesion: 0.47
+Nodes (6): AgentModelResolver, AgentModelResolver (spec), ChatModule, LoadToolsService, MastraService, Mastra Store (PostgresStore + PgVector)
+
+### Community 350 - "Community 350"
+Cohesion: 0.33
+Nodes (6): IntegrationManager.getAllIntegrations, IntegrationManager, socialIntegrationList, IntegrationSettingsTransformer, IntegrationSettingsTransformer.transformPost, RefreshIntegrationService
+
+### Community 351 - "Community 351"
 Cohesion: 0.33
 Nodes (6): IgMessagingTokenEntry Interface, Instagram Route Resolution Priority, InstagramDmButton Type Union, InstagramMessagingService, resolveIgRoute Function, InstagramStandaloneProvider
 
-### Community 356 - "Community 356"
+### Community 352 - "Community 352"
 Cohesion: 0.4
 Nodes (6): Error Monitoring via Sentry, initializeSentryClient, initializeSentryBasic, initializeSentryBasic, initializeSentryServer, Dynamic @sentry/react Import for Report Dialog
 
-### Community 357 - "Community 357"
-Cohesion: 0.4
-Nodes (5): code:bash (# Via nvm (recomendado)), code:bash (# Via corepack (recomendado, ja vem com Node.js)), Instalar Node.js 22, Instalar pnpm, Pre-requisitos
-
-### Community 358 - "Community 358"
-Cohesion: 0.4
-Nodes (5): 9) Requisitos Funcionais por Fase, Fase 0 — Ambiente de Desenvolvimento, Fase 2 — Multi-Workspace (Agências), Fase 3 — IA (Expor infraestrutura existente + novos providers), Fase 4 — Agente + Memória do Workspace (RAG)
-
-### Community 359 - "Community 359"
-Cohesion: 0.4
-Nodes (5): Consideracoes, Custos, Relacao com DISABLE_BILLING, Retrocompatibilidade, Seguranca
-
-### Community 360 - "Community 360"
-Cohesion: 0.4
-Nodes (5): 3.1 Separacao de responsabilidades, 3.2 Feature flags, 3.3 Isolamento por perfil, 3. Arquitetura, code:env (# Habilita/desabilita Knowledge Base. Default: true (se nao )
-
-### Community 361 - "Community 361"
-Cohesion: 0.4
-Nodes (5): code:typescript (export type ChannelsContext = {), code:typescript (if (profile?.id) {), code:typescript (export interface PersonaData {), code:typescript (const personaRaw = runtimeContext.get('persona' as never);), Onda 4 - Injecao de Persona no Mastra Agent
-
-### Community 362 - "Community 362"
-Cohesion: 0.4
-Nodes (5): code:block21 (X_API_KEY / X_API_SECRET), Diagnóstico do estado atual, O que está em env vars (precisamos mover para DB), O que Postiz já tem, Problema de segurança identificado
-
-### Community 363 - "Community 363"
-Cohesion: 0.4
-Nodes (5): Etapa 0 — Já em andamento (Fase 1 do PRD), Etapa 1 — Sistema de credenciais (pré-requisito para multi-tenant), Etapa 2 — Multi-tenant, Etapa 3 — Migração de env vars (opcional, gradual), Sequenciamento: o que fazer e quando
-
-### Community 364 - "Community 364"
-Cohesion: 0.4
-Nodes (5): Avaliação do modelo n8n, code:block22 ([versão:1 byte][nonce:12 bytes][tag:16 bytes][ciphertext:N b), O que aproveitamos do n8n, O que simplificamos (sem perder segurança), Upgrade de criptografia necessário
-
-### Community 365 - "Community 365"
-Cohesion: 0.4
-Nodes (5): Arquitetura proposta, code:block1 ([Usuário publica story no app do Instagram]), Componentes, Fluxo de alto nível, Onde vive a feature no produto
-
-### Community 366 - "Community 366"
-Cohesion: 0.4
-Nodes (5): Edge cases e limitações, Limitações da Meta Graph API, Limitações de conteúdo, Limitações do sistema, Limitações dos destinos
-
-### Community 367 - "Community 367"
+### Community 353 - "Community 353"
 Cohesion: 0.6
 Nodes (3): a, arg(), call
 
-### Community 368 - "Community 368"
+### Community 354 - "Community 354"
+Cohesion: 0.4
+Nodes (3): decrypt_legacy_using_IV(), deriveLegacyKeyIv(), encrypt_legacy_using_IV()
+
+### Community 355 - "Community 355"
+Cohesion: 0.4
+Nodes (5): code:bash (# Via nvm (recomendado)), code:bash (# Via corepack (recomendado, ja vem com Node.js)), Instalar Node.js 22, Instalar pnpm, Pre-requisitos
+
+### Community 356 - "Community 356"
+Cohesion: 0.4
+Nodes (5): 9) Requisitos Funcionais por Fase, Fase 0 — Ambiente de Desenvolvimento, Fase 2 — Multi-Workspace (Agências), Fase 3 — IA (Expor infraestrutura existente + novos providers), Fase 4 — Agente + Memória do Workspace (RAG)
+
+### Community 357 - "Community 357"
+Cohesion: 0.4
+Nodes (5): code:typescript (export type ChannelsContext = {), code:typescript (if (profile?.id) {), code:typescript (export interface PersonaData {), code:typescript (const personaRaw = runtimeContext.get('persona' as never);), Onda 4 - Injecao de Persona no Mastra Agent
+
+### Community 358 - "Community 358"
+Cohesion: 0.4
+Nodes (5): 3.1 Separacao de responsabilidades, 3.2 Feature flags, 3.3 Isolamento por perfil, 3. Arquitetura, code:env (# Habilita/desabilita Knowledge Base. Default: true (se nao )
+
+### Community 359 - "Community 359"
+Cohesion: 0.4
+Nodes (5): Etapa 0 — Já em andamento (Fase 1 do PRD), Etapa 1 — Sistema de credenciais (pré-requisito para multi-tenant), Etapa 2 — Multi-tenant, Etapa 3 — Migração de env vars (opcional, gradual), Sequenciamento: o que fazer e quando
+
+### Community 360 - "Community 360"
+Cohesion: 0.4
+Nodes (5): code:block21 (X_API_KEY / X_API_SECRET), Diagnóstico do estado atual, O que está em env vars (precisamos mover para DB), O que Postiz já tem, Problema de segurança identificado
+
+### Community 361 - "Community 361"
+Cohesion: 0.4
+Nodes (5): Avaliação do modelo n8n, code:block22 ([versão:1 byte][nonce:12 bytes][tag:16 bytes][ciphertext:N b), O que aproveitamos do n8n, O que simplificamos (sem perder segurança), Upgrade de criptografia necessário
+
+### Community 362 - "Community 362"
+Cohesion: 0.4
+Nodes (5): Arquitetura proposta, code:block1 ([Usuário publica story no app do Instagram]), Componentes, Fluxo de alto nível, Onde vive a feature no produto
+
+### Community 363 - "Community 363"
+Cohesion: 0.4
+Nodes (5): Edge cases e limitações, Limitações da Meta Graph API, Limitações de conteúdo, Limitações do sistema, Limitações dos destinos
+
+### Community 365 - "Community 365"
 Cohesion: 0.4
 Nodes (5): AiCatalogController.getCatalog, parseKindParam helper, AiCatalogService.getCatalog (external), AiVideoController.generate (POST /ai/video/generate), MediaService.generateAiVideo (external)
 
-### Community 369 - "Community 369"
+### Community 366 - "Community 366"
 Cohesion: 0.5
 Nodes (5): Per-runtime Sentry initialization (nodejs vs edge), GlobalError boundary component with Sentry reporting, Next.js instrumentation register hook, Sentry initialization for edge runtime, Sentry initialization for nodejs runtime
 
-### Community 370 - "Community 370"
+### Community 367 - "Community 367"
 Cohesion: 0.4
 Nodes (5): Module-scoped finalInformation registry as cross-component form aggregator, finalInformation (module-scoped per-integration form registry), getValues (exported global store accessor), resetValues, useValues
 
-### Community 371 - "Community 371"
+### Community 368 - "Community 368"
 Cohesion: 0.4
 Nodes (5): PlatformAnalytics, AnalyticsCard, EmptyState, RenderAnalytics, TrendIndicator
 
-### Community 372 - "Community 372"
+### Community 369 - "Community 369"
 Cohesion: 0.5
 Nodes (5): CommentItem, CommentsComponents, CommentsList, GuestRenderComponents, LoggedRenderComponents
 
-### Community 373 - "Community 373"
+### Community 370 - "Community 370"
 Cohesion: 0.5
 Nodes (5): useZernioAccounts hook, ZernioAccount interface, useZernioProfiles hook, useZernioSettings hook, ZernioSettings interface
 
-### Community 374 - "Community 374"
+### Community 371 - "Community 371"
 Cohesion: 0.4
 Nodes (5): NotificationService, NotificationsRepository, OrganizationRepository, OrganizationService, Zernio API Integration Pattern
 
-### Community 375 - "Community 375"
+### Community 372 - "Community 372"
 Cohesion: 0.6
 Nodes (5): EmailInterface, EmptyProvider, NodeMailerProvider, NodeMailerProvider, ResendProvider
 
-### Community 376 - "Community 376"
+### Community 373 - "Community 373"
 Cohesion: 0.4
 Nodes (5): Facebook Pixel Tracking with Server Event ID, useTrack, useVariables, VariableContext, VariableContextComponent
 
-### Community 377 - "Community 377"
+### Community 374 - "Community 374"
 Cohesion: 0.7
 Nodes (5): Notification (Toast) System, EventEmitter (toaster instance), Toaster EventEmitter Singleton, Toaster, useToaster
 
-### Community 387 - "Community 387"
-Cohesion: 0.5
-Nodes (4): Ferramentas de Debug/Admin, pgAdmin (Gerenciar PostgreSQL), RedisInsight (Gerenciar Redis), Temporal UI (Monitorar Workflows)
-
-### Community 388 - "Community 388"
+### Community 382 - "Community 382"
 Cohesion: 0.5
 Nodes (4): code:block15 (Settings > IA (nova tab)), Comportamento, Layout da Pagina, UI — Settings > IA
 
-### Community 389 - "Community 389"
+### Community 383 - "Community 383"
 Cohesion: 0.5
 Nodes (4): Audio (futuro), Imagem, Providers e Modelos Suportados (Fase 1 — KIE.AI), Video
 
-### Community 390 - "Community 390"
+### Community 384 - "Community 384"
 Cohesion: 0.5
-Nodes (4): Caso 1: Usuario Simples, Caso 2: Usuario Avancado com OpenAI, Caso 3: Trocar Modelo sem Deploy, Casos de Uso
+Nodes (4): 1. Tela de Settings (modo managed), 2. Feedback no componente de geracao, 3. Painel Admin (modo SaaS), Implementacao: Frontend
 
-### Community 391 - "Community 391"
+### Community 385 - "Community 385"
+Cohesion: 0.5
+Nodes (4): Caso 1: Self-Hosted Pessoal (Ilimitado), Caso 2: SaaS Multi-Tenant (Creditos Gerenciados), Caso 3: Hibrido (Admin Ilimitado, Clientes Limitados), Casos de Uso
+
+### Community 386 - "Community 386"
+Cohesion: 0.5
+Nodes (4): code:block37 (ProfileKnowledgeSettingsSection), code:typescript (const formData = new FormData();), code:typescript (if (user?.role !== 'USER') {), Onda 11 - UI de Knowledge Base
+
+### Community 387 - "Community 387"
 Cohesion: 0.5
 Nodes (4): code:typescript (@Injectable()), code:typescript (import { KnowledgeQueryTool } from '@gitroom/nestjs-librarie), code:block36 (- Before generating content that mentions specific products,), Onda 10 - Vector Query Tool para o Agente
 
-### Community 392 - "Community 392"
+### Community 388 - "Community 388"
 Cohesion: 0.5
 Nodes (4): code:markdown (### Adicionado), code:markdown (## Atualizacao para v{proxima-versao}), code:block42, Onda 12 - Documentacao e Changelog
 
-### Community 393 - "Community 393"
-Cohesion: 0.5
-Nodes (4): code:typescript (interface WorkflowChannelsState {), code:typescript (persona: null,), code:typescript (async start(orgId: string, body: GeneratorDto, profileId?: s), Onda 5 - Injecao de Persona no Generator LangGraph
-
-### Community 394 - "Community 394"
+### Community 389 - "Community 389"
 Cohesion: 0.5
 Nodes (4): code:block29 (GET    /api/credentials                    → lista providers), code:json ({), Contratos de API (API-First), Endpoints de credencial
 
-### Community 395 - "Community 395"
+### Community 390 - "Community 390"
 Cohesion: 0.5
 Nodes (4): code:yaml (# Canal estavel), Convencao de versoes, Regras de incremento, Tags flutuantes
 
-### Community 396 - "Community 396"
+### Community 391 - "Community 391"
 Cohesion: 0.5
 Nodes (4): Logs estruturados, Métricas (opcional, se Prometheus for adicionado), Observabilidade, UI de histórico
 
-### Community 399 - "Community 399"
+### Community 395 - "Community 395"
 Cohesion: 0.5
 Nodes (4): OauthProvider.generateLink, OauthProvider.getConfig, OauthProvider.getToken, OauthProvider.getUser
 
-### Community 400 - "Community 400"
+### Community 396 - "Community 396"
 Cohesion: 0.5
 Nodes (4): Document-Policy header for browser profiling, Experimental proxyTimeout 90s configuration, Sentry production sourcemap configuration, withSentryConfig wrapper for Next.js config
 
-### Community 401 - "Community 401"
+### Community 397 - "Community 397"
 Cohesion: 0.5
 Nodes (4): Activate (resend activation), AfterActivate, /auth/activate backend endpoint, /auth/resend-activation backend endpoint
 
-### Community 402 - "Community 402"
+### Community 398 - "Community 398"
 Cohesion: 0.67
 Nodes (4): Story Reply Automation Flow, StoryWizardComponent, useIntegrationStories Hook, WizardPhonePreview Component
 
-### Community 403 - "Community 403"
+### Community 399 - "Community 399"
 Cohesion: 0.5
 Nodes (4): AiCaption Component, AiImage Component, AiSearch Component, AiVideo Component
 
-### Community 404 - "Community 404"
+### Community 400 - "Community 400"
 Cohesion: 0.5
 Nodes (4): POST /integrations/:id/settings, SelectCustomer, SettingsModal.Element, SettingsModal
 
-### Community 405 - "Community 405"
+### Community 401 - "Community 401"
 Cohesion: 0.5
 Nodes (4): POST /posts/generator (streaming), Generator FirstStep, GeneratorComponent, GeneratorPopup
 
-### Community 406 - "Community 406"
+### Community 402 - "Community 402"
 Cohesion: 0.5
 Nodes (4): Payment Validation Flow, CheckPayment, CheckPaymentInner, DropFiles
 
-### Community 407 - "Community 407"
+### Community 403 - "Community 403"
 Cohesion: 0.5
 Nodes (4): PinterestBoard, PinterestPreview, Pinterest Provider (withProvider), PinterestSettings
 
-### Community 408 - "Community 408"
+### Community 404 - "Community 404"
 Cohesion: 0.5
 Nodes (4): AiCreditsSettingsSection, CreditCell, EditRow, ProfileSummary
 
-### Community 409 - "Community 409"
+### Community 405 - "Community 405"
 Cohesion: 0.5
 Nodes (4): getUserOrgs (activity), sendEmailAsync (activity), setStreak (activity), streakWorkflow
 
-### Community 410 - "Community 410"
+### Community 406 - "Community 406"
 Cohesion: 0.5
 Nodes (4): Docker Release and Deploy Guide, RC promote: re-tag without rebuild, SemVer convention for tags + floating :latest/:prerelease tags, Local Development Setup Guide
 
-### Community 411 - "Community 411"
+### Community 407 - "Community 407"
 Cohesion: 0.5
 Nodes (4): Reflect metadata key 'custom:plug', @Plug decorator, Reflect metadata key 'custom:internal_plug', @PostPlug decorator
 
-### Community 412 - "Community 412"
+### Community 408 - "Community 408"
 Cohesion: 0.5
 Nodes (4): useFireEvents, useWaitForClass, useUtmUrl, UtmSaver
 
-### Community 413 - "Community 413"
+### Community 409 - "Community 409"
 Cohesion: 0.67
 Nodes (4): AiCatalogService - Model Catalog with Redis Caching, AiCatalogService Specifications, AI Catalog Static Models - OpenAI, OpenRouter, Tavily, KieAI, AI Catalog Type Definitions
 
-### Community 414 - "Community 414"
+### Community 410 - "Community 410"
 Cohesion: 0.5
 Nodes (4): Profile Multi-Tenancy Data Migration, ProfileRepository, ProfileSeedService, ProfileService
 
-### Community 415 - "Community 415"
+### Community 411 - "Community 411"
 Cohesion: 0.5
 Nodes (4): SetsRepository, SetsRepository Spec, SetsService, SetsService Spec
 
-### Community 416 - "Community 416"
+### Community 412 - "Community 412"
 Cohesion: 0.5
 Nodes (4): CreateGeneratedPostsDto, InnerPost, PostGroup, GeneratorDto
 
-### Community 417 - "Community 417"
+### Community 413 - "Community 413"
 Cohesion: 0.67
 Nodes (4): DTO Pagination Pattern, GetNotificationsDto, GetPostsDto, GetPostsListDto
 
-### Community 418 - "Community 418"
+### Community 414 - "Community 414"
 Cohesion: 0.5
 Nodes (4): ZernioBaseProvider.checkUsage, ZernioBaseProvider.getPostErrorMessage, ZernioBaseProvider.pollPostStatus, ZernioBaseProvider.post
 
-### Community 419 - "Community 419"
+### Community 415 - "Community 415"
 Cohesion: 0.67
 Nodes (4): createTestModule, createMock, createPrismaRepositoryMock, test exports
 
-### Community 420 - "Community 420"
+### Community 416 - "Community 416"
 Cohesion: 0.67
 Nodes (4): CloudflareStorage, LocalStorage, handleR2Upload, loadFromUrlOrDataUrl test
 
-### Community 440 - "Community 440"
+### Community 436 - "Community 436"
 Cohesion: 0.67
-Nodes (3): 3) Princípios de Desenvolvimento, API-First, Document-First
+Nodes (3): Ferramentas Necessarias, Obrigatorias, Opcionais (mas recomendadas)
 
-### Community 441 - "Community 441"
+### Community 437 - "Community 437"
 Cohesion: 0.67
-Nodes (3): 6) Público-alvo, Primário, Secundário
+Nodes (3): Obrigatorias, Opcionais Importantes, Variaveis de Ambiente
 
-### Community 442 - "Community 442"
+### Community 438 - "Community 438"
 Cohesion: 0.67
 Nodes (3): 4) Objetivos (Outcomes), Objetivo principal, Roadmap de fases
 
-### Community 443 - "Community 443"
+### Community 439 - "Community 439"
 Cohesion: 0.67
-Nodes (3): code:bash (pnpm prisma-generate), code:typescript (@Injectable()), Onda 8 - Schema de Knowledge Documents + Service
+Nodes (3): 3) Princípios de Desenvolvimento, API-First, Document-First
 
-### Community 444 - "Community 444"
+### Community 440 - "Community 440"
 Cohesion: 0.67
-Nodes (3): code:typescript (getPersona(profileId: string)), code:typescript (getPersona(orgId: string, profileId: string)), Onda 2 - Repository + Service de Persona (TDD)
+Nodes (3): 6) Público-alvo, Primário, Secundário
 
-### Community 445 - "Community 445"
+### Community 441 - "Community 441"
 Cohesion: 0.67
 Nodes (3): Modelo de dados (Prisma), `RepostLog`, `RepostRule`
 
-### Community 446 - "Community 446"
+### Community 442 - "Community 442"
 Cohesion: 0.67
 Nodes (3): AiTextController, AiWebSearchController, ProfileService (external)
 
-### Community 447 - "Community 447"
+### Community 443 - "Community 443"
 Cohesion: 0.67
 Nodes (3): WalletProvider.getToken, WalletProvider.getUser, hexToUint8Array
 
-### Community 448 - "Community 448"
+### Community 444 - "Community 444"
 Cohesion: 0.67
 Nodes (3): Auth cookie extraction and redirect logic, Accept-Language header negotiation via accept-language lib, Next.js middleware proxy with auth and language logic
 
-### Community 449 - "Community 449"
+### Community 445 - "Community 445"
 Cohesion: 0.67
 Nodes (3): Preview wrapper layout for public post preview, Public post preview page with server-side post fetching, Token-based review authorization on preview
 
-### Community 450 - "Community 450"
+### Community 446 - "Community 446"
 Cohesion: 0.67
 Nodes (3): OAuthLayout, /oauth/authorize backend endpoint, OAuthAuthorizePage
 
-### Community 451 - "Community 451"
+### Community 447 - "Community 447"
 Cohesion: 0.67
 Nodes (3): ApprovedAppsComponent, useApprovedApps, /user/approved-apps endpoint
 
-### Community 452 - "Community 452"
+### Community 448 - "Community 448"
 Cohesion: 0.67
 Nodes (3): BillingComponent, EmbeddedBilling Component, FaqComponent
 
-### Community 453 - "Community 453"
+### Community 449 - "Community 449"
 Cohesion: 0.67
 Nodes (3): GET /analytics/post/:id, GET /posts/:id/statistics, StatisticsModal
 
-### Community 454 - "Community 454"
+### Community 450 - "Community 450"
 Cohesion: 0.67
 Nodes (3): AnnouncementBanner, AnnouncementDetailModal, useAnnouncements (isolated SWR hook)
 
-### Community 455 - "Community 455"
+### Community 451 - "Community 451"
 Cohesion: 0.67
 Nodes (3): AddEditModal orchestrator, AddEditModalInner integration selector, AddEditModalInnerInner state setup
 
-### Community 456 - "Community 456"
-Cohesion: 0.67
-Nodes (3): MeweGroupSelect, Mewe Provider (withProvider), MeweComponent
-
-### Community 457 - "Community 457"
+### Community 452 - "Community 452"
 Cohesion: 0.67
 Nodes (3): EmailNotificationsComponent, useEmailNotifications, GlobalSettings
 
-### Community 458 - "Community 458"
+### Community 453 - "Community 453"
 Cohesion: 0.67
 Nodes (3): ConnectComponent, ConnectedComponent, GithubComponent
 
-### Community 459 - "Community 459"
+### Community 454 - "Community 454"
 Cohesion: 0.67
 Nodes (3): CreateEditProfileModal, ManageMembersModal, ProfilesSettingsComponent
 
-### Community 460 - "Community 460"
+### Community 455 - "Community 455"
 Cohesion: 0.67
 Nodes (3): useThirdPartyFunction, useThirdPartyFunctionSWR, useThirdParty
 
-### Community 461 - "Community 461"
+### Community 456 - "Community 456"
 Cohesion: 0.67
 Nodes (3): ThirdPartyMediaLibraryPicker, ThirdPartyMediaLibraryBrowser, ThirdPartyMediaLibrary
 
-### Community 462 - "Community 462"
+### Community 457 - "Community 457"
 Cohesion: 0.67
 Nodes (3): HeygenProviderComponent, SelectAvatarComponent, SelectVoiceComponent
 
-### Community 463 - "Community 463"
+### Community 458 - "Community 458"
 Cohesion: 0.67
 Nodes (3): sendEmail (proxied activity), sendEmailSignal, sendEmailWorkflow
 
-### Community 464 - "Community 464"
+### Community 459 - "Community 459"
 Cohesion: 0.67
 Nodes (3): AGENTS.md project context, GitLab Flow (postiz/main/release branches), SWR rule (1 hook = 1 useSWR)
 
-### Community 465 - "Community 465"
+### Community 460 - "Community 460"
 Cohesion: 0.67
 Nodes (3): DisabledAutoConnect, InnerWallet, WalletUiProvider
 
-### Community 466 - "Community 466"
+### Community 461 - "Community 461"
 Cohesion: 0.67
 Nodes (3): ValidContent, ValidUrlExtension, ValidUrlPath
 
-### Community 467 - "Community 467"
+### Community 462 - "Community 462"
 Cohesion: 0.67
 Nodes (3): AES-256-GCM Versioned Encryption Scheme, EncryptionModule, EncryptionService
 
-### Community 468 - "Community 468"
+### Community 463 - "Community 463"
 Cohesion: 0.67
 Nodes (3): Repost Destination Matrix, RepostRepository, RepostService
 
-### Community 469 - "Community 469"
+### Community 464 - "Community 464"
 Cohesion: 0.67
 Nodes (3): Review Link Token Validation, ReviewLinksRepository, ReviewLinksService
 
-### Community 470 - "Community 470"
+### Community 465 - "Community 465"
 Cohesion: 1.0
 Nodes (3): CreateRepostRuleDto, RepostDestinationDto, UpdateRepostRuleDto
 
-### Community 471 - "Community 471"
+### Community 466 - "Community 466"
 Cohesion: 0.67
 Nodes (3): ValidIn, VideoDto, VideoFunctionDto
 
-### Community 472 - "Community 472"
+### Community 467 - "Community 467"
 Cohesion: 0.67
 Nodes (3): ioRedis, ZernioBaseProvider.authenticate, ZernioBaseProvider.generateAuthUrl
 
-### Community 473 - "Community 473"
+### Community 468 - "Community 468"
 Cohesion: 0.67
 Nodes (3): StripeService, ThrottlerBehindProxyGuard, TrackService
 
-### Community 474 - "Community 474"
+### Community 469 - "Community 469"
 Cohesion: 1.0
 Nodes (3): GetOrgFromRequest decorator, GetProfileFromRequest decorator, GetUserFromRequest decorator
 
-### Community 475 - "Community 475"
+### Community 470 - "Community 470"
 Cohesion: 0.67
 Nodes (3): Fitness Character Icon, Physical Exertion and Effort, Strength Training with Dumbbells
 
-### Community 476 - "Community 476"
+### Community 471 - "Community 471"
 Cohesion: 0.67
 Nodes (3): Real Estate Event Promotion - March 13-15 São Paulo, Feirão Casa Paulista - Real Estate Fair Promotional Image, FGTS and Caixa Partnership Logo
 
@@ -2650,24 +2599,24 @@ Nodes (3): Real Estate Event Promotion - March 13-15 São Paulo, Feirão Casa Pa
   apps/frontend/src/components/launches/select.customer.tsx · relation: references
 
 ## Knowledge Gaps
-- **2273 isolated node(s):** `ERROR_ROW`, `repo`, `statusEvent`, `service`, `repo` (+2268 more)
+- **2317 isolated node(s):** `ERROR_ROW`, `repo`, `statusEvent`, `service`, `repo` (+2312 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **438 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **440 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
 - **What is the exact relationship between `SelectCustomer` and `POST /integrations/:id/settings`?**
   _Edge tagged AMBIGUOUS (relation: references) - confidence is low._
-- **Why does `makeId()` connect `Community 5` to `Community 0`, `Community 256`, `Community 2`, `Community 258`, `Community 4`, `Community 3`, `Community 6`, `Community 7`, `Community 8`, `Community 11`, `Community 397`, `Community 13`, `Community 15`, `Community 14`, `Community 16`, `Community 26`, `Community 282`, `Community 29`, `Community 36`, `Community 169`, `Community 42`, `Community 300`, `Community 180`, `Community 181`, `Community 57`, `Community 59`, `Community 192`, `Community 68`, `Community 205`, `Community 206`, `Community 207`, `Community 208`, `Community 209`, `Community 339`, `Community 90`, `Community 91`, `Community 92`, `Community 221`, `Community 222`, `Community 223`, `Community 98`, `Community 239`, `Community 240`, `Community 241`, `Community 113`, `Community 242`, `Community 243`, `Community 244`?**
-  _High betweenness centrality (0.071) - this node is a cross-community bridge._
-- **Why does `useT()` connect `Community 13` to `Community 1`, `Community 132`, `Community 6`, `Community 9`, `Community 10`, `Community 11`, `Community 15`, `Community 16`, `Community 19`, `Community 20`, `Community 23`, `Community 24`, `Community 25`, `Community 27`, `Community 31`, `Community 34`, `Community 35`, `Community 170`, `Community 48`, `Community 56`, `Community 59`, `Community 69`, `Community 74`, `Community 214`, `Community 104`, `Community 112`, `Community 123`, `Community 124`?**
-  _High betweenness centrality (0.065) - this node is a cross-community bridge._
-- **Why does `useFetch()` connect `Community 25` to `Community 1`, `Community 6`, `Community 9`, `Community 10`, `Community 11`, `Community 13`, `Community 15`, `Community 16`, `Community 20`, `Community 23`, `Community 24`, `Community 27`, `Community 34`, `Community 35`, `Community 48`, `Community 59`, `Community 69`, `Community 74`, `Community 214`, `Community 104`, `Community 123`?**
-  _High betweenness centrality (0.048) - this node is a cross-community bridge._
+- **Why does `makeId()` connect `Community 13` to `Community 1`, `Community 2`, `Community 3`, `Community 5`, `Community 6`, `Community 7`, `Community 264`, `Community 265`, `Community 11`, `Community 21`, `Community 22`, `Community 23`, `Community 26`, `Community 28`, `Community 29`, `Community 160`, `Community 32`, `Community 162`, `Community 35`, `Community 171`, `Community 172`, `Community 46`, `Community 52`, `Community 54`, `Community 58`, `Community 186`, `Community 62`, `Community 64`, `Community 65`, `Community 321`, `Community 69`, `Community 197`, `Community 199`, `Community 200`, `Community 198`, `Community 201`, `Community 80`, `Community 211`, `Community 212`, `Community 213`, `Community 119`, `Community 247`, `Community 95`, `Community 99`, `Community 100`, `Community 230`, `Community 231`, `Community 232`, `Community 233`, `Community 234`, `Community 114`, `Community 246`, `Community 375`?**
+  _High betweenness centrality (0.067) - this node is a cross-community bridge._
+- **Why does `useT()` connect `Community 7` to `Community 4`, `Community 5`, `Community 6`, `Community 8`, `Community 9`, `Community 11`, `Community 15`, `Community 145`, `Community 18`, `Community 19`, `Community 24`, `Community 28`, `Community 31`, `Community 32`, `Community 37`, `Community 38`, `Community 299`, `Community 55`, `Community 70`, `Community 214`, `Community 102`, `Community 103`, `Community 115`, `Community 377`?**
+  _High betweenness centrality (0.067) - this node is a cross-community bridge._
+- **Why does `useFetch()` connect `Community 24` to `Community 4`, `Community 5`, `Community 6`, `Community 7`, `Community 8`, `Community 9`, `Community 11`, `Community 15`, `Community 144`, `Community 145`, `Community 18`, `Community 19`, `Community 28`, `Community 32`, `Community 37`, `Community 38`, `Community 299`, `Community 214`, `Community 102`, `Community 103`?**
+  _High betweenness centrality (0.044) - this node is a cross-community bridge._
 - **Are the 3 inferred relationships involving `useT()` (e.g. with `GithubProvider` and `GoogleProvider`) actually correct?**
   _`useT()` has 3 INFERRED edges - model-reasoned connections that need verification._
 - **Are the 3 inferred relationships involving `useFetch()` (e.g. with `GithubProvider` and `GoogleProvider`) actually correct?**
   _`useFetch()` has 3 INFERRED edges - model-reasoned connections that need verification._
 - **What connects `ERROR_ROW`, `repo`, `statusEvent` to the rest of the system?**
-  _2273 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _2317 weakly-connected nodes found - possible documentation gaps or missing edges._
