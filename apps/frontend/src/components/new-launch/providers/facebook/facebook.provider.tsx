@@ -28,13 +28,7 @@ export const FacebookSettings = () => {
 
   return (
     <>
-      <Select
-        label={t('post_type', 'Post Type')}
-        {...register('post_type', {
-          value: 'post',
-        })}
-      >
-        <option value="">{t('select_post_type', 'Select Post Type...')}</option>
+      <Select label={t('post_type', 'Post Type')} {...register('post_type')}>
         {postType.map((item) => (
           <option key={item.value} value={item.value}>
             {item.label}
@@ -61,6 +55,7 @@ export default withProvider<FacebookDto>({
   SettingsComponent: FacebookSettings,
   CustomPreviewComponent: FacebookPreview,
   dto: FacebookDto,
+  defaults: { post_type: 'post' },
   checkValidity: async ([firstPost, ...otherPosts] = [], settings) => {
     if (settings?.post_type !== 'story') {
       return true;
