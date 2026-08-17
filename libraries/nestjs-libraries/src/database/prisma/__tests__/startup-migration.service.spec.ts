@@ -8,6 +8,15 @@ jest.mock('@gitroom/nestjs-libraries/integrations/integration.manager', () => ({
 jest.mock('@gitroom/nestjs-libraries/redis/redis.service', () => ({
   ioRedis: {},
 }));
+// Sem este mock a suite nem carrega no CI: o import chega em
+// nestjs-temporal-core -> @temporalio/client -> @temporalio/common, que instancia
+// um ProtobufJsonPayloadConverter no topo do modulo e estoura
+// "TypeError: root must be an instance of a protobufjs Root". E o mesmo motivo
+// dos dois mocks acima. O teste nunca usa a classe real — o terceiro argumento
+// do construtor e sempre um dublê.
+jest.mock('nestjs-temporal-core', () => ({
+  TemporalService: class {},
+}));
 
 import { StartupMigrationService } from '../startup-migration.service';
 
