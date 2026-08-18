@@ -1886,5 +1886,8 @@
   "notif_streak": "<p>Você está prestes a perder sua sequência em duas horas! Agende uma publicação agora para mantê-la!</p>",
   "send_for_approval": "Enviar para aprovação",
   "approval_requested": "Cliente avisado. Post aguardando aprovação.",
-  "awaiting_client_approval": "Aguardando aprovação do cliente"
+  "awaiting_client_approval": "Aguardando aprovação do cliente",
+  "client_whatsapp": "WhatsApp do cliente",
+  "client_whatsapp_placeholder": "55 11 99999-8888",
+  "client_whatsapp_hint": "Usado no aviso de post aguardando aprovação. Deixe vazio para não avisar."
 }

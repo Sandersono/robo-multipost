@@ -60,7 +60,13 @@ export class ProfilesController {
   async updateProfile(
     @GetOrgFromRequest() org: Organization,
     @Param('id') id: string,
-    @Body() body: { name?: string; description?: string; avatarUrl?: string }
+    @Body()
+    body: {
+      name?: string;
+      description?: string;
+      avatarUrl?: string;
+      whatsappPhone?: string | null;
+    }
   ) {
     return this._profileService.updateProfile(org.id, id, body);
   }

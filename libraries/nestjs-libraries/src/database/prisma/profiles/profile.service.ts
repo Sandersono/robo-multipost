@@ -42,9 +42,22 @@ export class ProfileService {
   updateProfile(
     orgId: string,
     profileId: string,
-    data: { name?: string; description?: string; avatarUrl?: string }
+    data: {
+      name?: string;
+      description?: string;
+      avatarUrl?: string;
+      whatsappPhone?: string | null;
+    }
   ) {
     const updateData: any = { ...data };
+    // O endpoint recebe o corpo com tipo inline, sem DTO validando — e este
+    // valor vai parar no payload do webhook de aprovacao. Normaliza aqui:
+    // so digitos, vazio vira null (limpar o campo e uma acao valida) e
+    // comprimento limitado ao maior E.164 possivel (15 digitos).
+    if (data.whatsappPhone !== undefined) {
+      const digits = (data.whatsappPhone || '').replace(/[^0-9]/g, '');
+      updateData.whatsappPhone = digits ? digits.slice(0, 15) : null;
+    }
     if (data.name) {
       updateData.slug = data.name
         .toLowerCase()

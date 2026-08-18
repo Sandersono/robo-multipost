@@ -1886,5 +1886,8 @@
   "notif_streak": "<p>You are about to lose your streak in two hours! schedule a post now to keep it!</p>",
   "send_for_approval": "Send for approval",
   "approval_requested": "Client notified. Post awaiting approval.",
-  "awaiting_client_approval": "Awaiting client approval"
+  "awaiting_client_approval": "Awaiting client approval",
+  "client_whatsapp": "Client WhatsApp",
+  "client_whatsapp_placeholder": "55 11 99999-8888",
+  "client_whatsapp_hint": "Used in the awaiting-approval notice. Leave empty to skip notifying."
 }

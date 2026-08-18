@@ -94,7 +94,13 @@ export class ProfileRepository {
   updateProfile(
     orgId: string,
     profileId: string,
-    data: { name?: string; slug?: string; description?: string; avatarUrl?: string }
+    data: {
+      name?: string;
+      slug?: string;
+      description?: string;
+      avatarUrl?: string;
+      whatsappPhone?: string | null;
+    }
   ) {
     return this._profile.model.profile.update({
       where: { id: profileId, organizationId: orgId },

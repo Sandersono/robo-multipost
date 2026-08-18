@@ -458,3 +458,59 @@ describe('ProfileService', () => {
     });
   });
 });
+
+// O endpoint de atualizar perfil recebe o corpo com tipo inline, sem DTO
+// validando, e o telefone vai parar no payload do webhook de aprovacao
+// (n8n -> WhatsApp). A normalizacao mora aqui.
+describe('ProfileService.updateProfile — telefone do cliente', () => {
+  const build = () => {
+    const repo = { updateProfile: jest.fn().mockResolvedValue({}) } as any;
+    return { repo, service: new ProfileService(repo) };
+  };
+
+  const dataSent = (repo: any) => repo.updateProfile.mock.calls[0][2];
+
+  it('guarda so os digitos, descartando mascara', async () => {
+    const { repo, service } = build();
+
+    await service.updateProfile('org-1', 'prof-1', {
+      whatsappPhone: '+55 (11) 99999-8888',
+    });
+
+    expect(dataSent(repo).whatsappPhone).toBe('5511999998888');
+  });
+
+  it('campo vazio limpa o telefone (null), nao grava string vazia', async () => {
+    const { repo, service } = build();
+
+    await service.updateProfile('org-1', 'prof-1', { whatsappPhone: '' });
+
+    expect(dataSent(repo).whatsappPhone).toBeNull();
+  });
+
+  it('texto sem digito nenhum tambem limpa', async () => {
+    const { repo, service } = build();
+
+    await service.updateProfile('org-1', 'prof-1', { whatsappPhone: 'abc' });
+
+    expect(dataSent(repo).whatsappPhone).toBeNull();
+  });
+
+  it('trunca em 15 digitos (maior E.164 possivel)', async () => {
+    const { repo, service } = build();
+
+    await service.updateProfile('org-1', 'prof-1', {
+      whatsappPhone: '1'.repeat(40),
+    });
+
+    expect(dataSent(repo).whatsappPhone).toHaveLength(15);
+  });
+
+  it('nao mexe no telefone quando o campo nao vem no corpo', async () => {
+    const { repo, service } = build();
+
+    await service.updateProfile('org-1', 'prof-1', { name: 'Cliente A' });
+
+    expect(dataSent(repo).whatsappPhone).toBeUndefined();
+  });
+});

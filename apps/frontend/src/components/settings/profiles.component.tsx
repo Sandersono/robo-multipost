@@ -1,5 +1,6 @@
 'use client';
 
+import { useT } from '@gitroom/react/translation/get.transation.service.client';
 import { Button } from '@gitroom/react/form/button';
 import { useFetch } from '@gitroom/helpers/utils/custom.fetch';
 import useSWR from 'swr';
@@ -14,6 +15,7 @@ interface Profile {
   name: string;
   slug: string;
   description: string | null;
+  whatsappPhone?: string | null;
   isDefault: boolean;
   members: Array<{ userId: string; role: string }>;
   _count: { integrations: number };
@@ -46,6 +48,10 @@ const CreateEditProfileModal: React.FC<{
   const toast = useToaster();
   const [name, setName] = useState(profile?.name || '');
   const [description, setDescription] = useState(profile?.description || '');
+  const [whatsappPhone, setWhatsappPhone] = useState(
+    profile?.whatsappPhone || ''
+  );
+  const t = useT();
   const [saving, setSaving] = useState(false);
 
   const handleSubmit = useCallback(
@@ -57,7 +63,11 @@ const CreateEditProfileModal: React.FC<{
         if (profile) {
           await fetch(`/profiles/${profile.id}`, {
             method: 'PUT',
-            body: JSON.stringify({ name: name.trim(), description: description.trim() || undefined }),
+            body: JSON.stringify({
+              name: name.trim(),
+              description: description.trim() || undefined,
+              whatsappPhone: whatsappPhone.trim(),
+            }),
           });
           toast.show('Perfil atualizado');
         } else {
@@ -75,7 +85,7 @@ const CreateEditProfileModal: React.FC<{
         setSaving(false);
       }
     },
-    [name, description, profile]
+    [name, description, whatsappPhone, profile]
   );
 
   return (
@@ -101,6 +111,26 @@ const CreateEditProfileModal: React.FC<{
           className="bg-input border border-tableBorder rounded-[4px] px-[12px] py-[8px] text-[14px] outline-none"
         />
       </div>
+      {profile && (
+        <div className="flex flex-col gap-[4px]">
+          <label className="text-[14px]">
+            {t('client_whatsapp', 'WhatsApp do cliente')}
+          </label>
+          <input
+            type="tel"
+            value={whatsappPhone}
+            onChange={(e) => setWhatsappPhone(e.target.value)}
+            placeholder={t('client_whatsapp_placeholder', '55 11 99999-8888')}
+            className="bg-input border border-tableBorder rounded-[4px] px-[12px] py-[8px] text-[14px] outline-none"
+          />
+          <span className="text-[12px] opacity-70">
+            {t(
+              'client_whatsapp_hint',
+              'Usado no aviso de post aguardando aprovação. Deixe vazio para não avisar.'
+            )}
+          </span>
+        </div>
+      )}
       <Button type="submit" disabled={saving || !name.trim()}>
         {saving ? 'Salvando...' : profile ? 'Atualizar' : 'Criar Perfil'}
       </Button>
