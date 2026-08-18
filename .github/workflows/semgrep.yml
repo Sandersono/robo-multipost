@@ -1,0 +1,34 @@
+# Roda as regras custom de .semgrep/, derivadas da auditoria de seguranca
+# (SECURITY_AUDIT.md). Elas existiam no repositorio desde a auditoria mas nao
+# eram executadas em lugar nenhum — o .semgrep/README.md ja descrevia este
+# workflow como "exemplo" e ele nunca foi criado.
+#
+# Usa `semgrep scan` (autocontido) e nao `semgrep ci`, que espera token da
+# plataforma Semgrep AppSec e degrada em silencio quando ele nao existe.
+name: Semgrep
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+      - release
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  semgrep:
+    name: Regras custom de seguranca
+    runs-on: ubuntu-latest
+    container:
+      image: semgrep/semgrep
+    steps:
+      - uses: actions/checkout@v4
+
+      # --error faz o job falhar quando ha achado; sem isso o semgrep sai 0 e o
+      # check fica verde reportando problema, que e pior que nao ter check.
+      # node_modules/dist ficam de fora via .gitignore, respeitado por padrao.
+      - name: Rodar .semgrep/
+        run: semgrep scan --config .semgrep/ --error --metrics=off
