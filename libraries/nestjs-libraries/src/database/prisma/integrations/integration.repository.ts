@@ -19,6 +19,7 @@ export class IntegrationRepository {
     private _exisingPlugData: PrismaRepository<'exisingPlugData'>,
     private _customers: PrismaRepository<'customer'>,
     private _mentions: PrismaRepository<'mentions'>,
+    private _profiles: PrismaRepository<'profile'>,
     private _encryption: EncryptionService
   ) {}
 
@@ -323,6 +324,22 @@ export class IntegrationRepository {
           ]),
         }
       : {};
+    // Nunca deixa o canal nascer sem perfil. Um profileId nulo era tratado
+    // como "recurso compartilhado do workspace" e ficava visivel a TODOS os
+    // perfis — vazamento entre clientes de uma agencia. Quando a conexao vem
+    // sem perfil (chave de API de organizacao), cai no perfil Default da org,
+    // mesmo destino que migrateProfileScope e backfillFlowsToDefaultProfile ja
+    // usam para orfaos. Se a org nao tiver Default, mantem nulo em vez de
+    // inventar um perfil: mascarar isso esconderia uma org mal formada.
+    const resolvedProfileId =
+      profileId ??
+      (
+        await this._profiles.model.profile.findFirst({
+          where: { organizationId: org, isDefault: true, deletedAt: null },
+          select: { id: true },
+        })
+      )?.id;
+
     const upsert = await this._integration.model.integration.upsert({
       where: {
         organizationId_internalId: {
@@ -351,7 +368,7 @@ export class IntegrationRepository {
         refreshErrorAt: null,
         rootInternalId: internalId.split('_').pop(),
         ...(customInstanceDetails ? { customInstanceDetails } : {}),
-        ...(profileId ? { profileId } : {}),
+        ...(resolvedProfileId ? { profileId: resolvedProfileId } : {}),
         additionalSettings: additionalSettings
           ? JSON.stringify(additionalSettings)
           : '[]',
@@ -472,7 +489,7 @@ export class IntegrationRepository {
       where: {
         organizationId: org,
         id,
-        ...(profileId ? { OR: [{ profileId }, { profileId: null }] } : {}),
+        ...(profileId ? { profileId } : {}),
       },
     });
   }
@@ -610,7 +627,7 @@ export class IntegrationRepository {
       where: {
         organizationId: org,
         deletedAt: null,
-        ...(profileId ? { OR: [{ profileId }, { profileId: null }] } : {}),
+        ...(profileId ? { profileId } : {}),
       },
       include: {
         customer: true,

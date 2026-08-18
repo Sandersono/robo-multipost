@@ -30,6 +30,12 @@ describe('IntegrationRepository (B1 Etapa 2 - criptografia na escrita)', () => {
     encryption = createMock<EncryptionService>();
     encryption.encrypt.mockImplementation((plain: string) => `CIPHER(${plain})`);
 
+    // createOrUpdateIntegration passou a resolver o perfil Default da org
+    // quando nenhum perfil e informado; null mantem estes testes com o
+    // mesmo comportamento de antes (canal sem perfil atribuido).
+    const profilesMock = createPrismaRepositoryMock('profile');
+    profilesMock.model.profile.findFirst.mockResolvedValue(null as any);
+
     repo = new IntegrationRepository(
       prismaMock as any,
       {} as any,
@@ -37,6 +43,7 @@ describe('IntegrationRepository (B1 Etapa 2 - criptografia na escrita)', () => {
       {} as any,
       {} as any,
       {} as any,
+      profilesMock as any,
       encryption
     );
   });
@@ -258,6 +265,119 @@ describe('IntegrationRepository (B1 Etapa 2 - criptografia na escrita)', () => {
 
       const arg = prismaMock.model.integration.update.mock.calls[0][0] as any;
       expect(arg.data.picture).toBe('https://provider.example/avatar.jpg');
+    });
+  });
+});
+
+// Isolamento por perfil (Fase 2): antes, `profileId` nulo significava "canal
+// compartilhado do workspace, visivel a TODOS os perfis" — o que para uma
+// agencia com clientes concorrentes e um vazamento, nao uma feature. A leitura
+// usava `OR: [{ profileId }, { profileId: null }]` enquanto getProblemChannels
+// (tela de Status) ja filtrava estrito: o proprio repositorio se contradizia.
+describe('IntegrationRepository — isolamento estrito por perfil', () => {
+  let repo: IntegrationRepository;
+  let prismaMock: ReturnType<typeof createPrismaRepositoryMock<'integration'>>;
+  let profilesMock: ReturnType<typeof createPrismaRepositoryMock<'profile'>>;
+
+  beforeEach(() => {
+    prismaMock = createPrismaRepositoryMock('integration');
+    prismaMock.model.integration.findMany.mockResolvedValue([] as any);
+    prismaMock.model.integration.findFirst.mockResolvedValue(null as any);
+    prismaMock.model.integration.upsert.mockResolvedValue({ id: 'int-1' } as any);
+
+    profilesMock = createPrismaRepositoryMock('profile');
+    profilesMock.model.profile.findFirst.mockResolvedValue({
+      id: 'prof-default',
+    } as any);
+
+    repo = new IntegrationRepository(
+      prismaMock as any,
+      {} as any,
+      {} as any,
+      {} as any,
+      {} as any,
+      {} as any,
+      profilesMock as any,
+      createMock<EncryptionService>()
+    );
+  });
+
+  describe('getIntegrationsList', () => {
+    it('filtra estritamente pelo perfil, sem incluir canal orfao', async () => {
+      await repo.getIntegrationsList('org-1', 'prof-A');
+
+      const where = prismaMock.model.integration.findMany.mock.calls[0][0].where;
+      expect(where.profileId).toBe('prof-A');
+      expect(where.OR).toBeUndefined();
+    });
+
+    it('sem perfil informado, nao restringe (chave de API de organizacao)', async () => {
+      await repo.getIntegrationsList('org-1');
+
+      const where = prismaMock.model.integration.findMany.mock.calls[0][0].where;
+      expect(where.profileId).toBeUndefined();
+      expect(where.OR).toBeUndefined();
+    });
+  });
+
+  describe('getIntegrationById', () => {
+    it('filtra estritamente pelo perfil, sem incluir canal orfao', async () => {
+      await repo.getIntegrationById('org-1', 'int-9', 'prof-A');
+
+      const where = prismaMock.model.integration.findFirst.mock.calls[0][0].where;
+      expect(where.profileId).toBe('prof-A');
+      expect(where.OR).toBeUndefined();
+    });
+  });
+
+  describe('createOrUpdateIntegration', () => {
+    const create = (profileId?: string) =>
+      repo.createOrUpdateIntegration(
+        undefined,
+        false,
+        'org-1',
+        'nome',
+        undefined,
+        'social',
+        'internal-1',
+        'instagram',
+        'TOKEN',
+        'REFRESH',
+        999,
+        undefined,
+        false,
+        undefined,
+        undefined,
+        undefined,
+        profileId
+      );
+
+    it('usa o perfil informado quando ele existe', async () => {
+      await create('prof-A');
+
+      const data = prismaMock.model.integration.upsert.mock.calls[0][0];
+      expect(data.create.profileId).toBe('prof-A');
+      expect(profilesMock.model.profile.findFirst).not.toHaveBeenCalled();
+    });
+
+    it('cai no perfil Default da org quando nenhum perfil e informado', async () => {
+      await create(undefined);
+
+      expect(profilesMock.model.profile.findFirst).toHaveBeenCalledWith({
+        where: { organizationId: 'org-1', isDefault: true, deletedAt: null },
+        select: { id: true },
+      });
+      const data = prismaMock.model.integration.upsert.mock.calls[0][0];
+      expect(data.create.profileId).toBe('prof-default');
+    });
+
+    it('nao inventa perfil quando a org nao tem Default (nao mascara o erro)', async () => {
+      profilesMock.model.profile.findFirst.mockResolvedValue(null as any);
+
+      await create(undefined);
+
+      const data = prismaMock.model.integration.upsert.mock.calls[0][0];
+      expect(data.create.profileId).toBeUndefined();
     });
   });
 });
