@@ -40,6 +40,7 @@ describe('PostsService.separatePosts', () => {
       aiText,
       {} as any, // encryption
       {} as any // statusEventService
+      , { notifyApprovalRequested: jest.fn() } as any
     );
 
     const result = await service.separatePosts('org-1', 'texto', 280);
@@ -68,6 +69,7 @@ describe('PostsService.separatePosts', () => {
       aiText,
       {} as any, // encryption
       {} as any // statusEventService
+      , { notifyApprovalRequested: jest.fn() } as any
     );
 
     await service.separatePosts('org-1', 'conteudo', 240, 'profile-9');

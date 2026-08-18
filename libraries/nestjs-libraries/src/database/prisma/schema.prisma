@@ -499,6 +499,7 @@ model Post {
   lastMessageId              String?
   intervalInDays             Int?
   error                      String?
+  approvalRequestedAt        DateTime?
   createdAt                  DateTime                  @default(now())
   updatedAt                  DateTime                  @updatedAt
   deletedAt                  DateTime?
@@ -526,6 +527,7 @@ model Post {
   @@index([submittedForOrderId])
   @@index([intervalInDays])
   @@index([approvedSubmitForOrder])
+  @@index([approvalRequestedAt])
   @@index([lastMessageId])
   @@index([createdAt])
   @@index([updatedAt])
@@ -1120,6 +1122,7 @@ model Profile {
   lateApiKey     String?
   zernioApiKey   String?
   apiKey         String?
+  whatsappPhone  String?
   shortlink      ShortLinkPreference @default(ASK)
   createdAt      DateTime            @default(now())
   updatedAt      DateTime            @updatedAt

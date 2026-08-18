@@ -106,6 +106,26 @@ export class PostsController {
     );
   }
 
+  // "Enviar para aprovacao": marca o post e avisa o cliente pelos webhooks do
+  // perfil (tipicamente n8n -> WhatsApp). NAO trava a publicacao — o aviso e
+  // informativo e o agendamento segue valendo.
+  //
+  // Sem @AllowViewer de proposito: quem envia para aprovacao e a EQUIPE, nao o
+  // cliente. Visualizador so aprova/comenta, via /:id/comments.
+  @Post('/:id/request-approval')
+  async requestApproval(
+    @GetOrgFromRequest() org: Organization,
+    @GetProfileFromRequest() profile: Profile | null,
+    @Param('id') id: string,
+    @Body() body: { reviewUrl?: string }
+  ) {
+    return this._postsService.requestApproval(org.id, id, {
+      requireProfileId:
+        getOrgRole(org) === 'USER' ? profile?.id ?? null : undefined,
+      reviewUrl: body?.reviewUrl ?? null,
+    });
+  }
+
   @Post('/:id/review-links')
   async createReviewLink(
     @GetOrgFromRequest() org: Organization,

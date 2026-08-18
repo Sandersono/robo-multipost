@@ -33,6 +33,7 @@ const buildService = (repo: ReturnType<typeof createMock<PostsRepository>>) =>
     null as any,
     {} as any,
     {} as any
+    , { notifyApprovalRequested: jest.fn() } as any
   );
 
 describe('PostsService - revisao (aprovar/comentar por perfil)', () => {
