@@ -11,14 +11,14 @@ rules:
       cwe: "CWE-79: Cross-site Scripting (XSS)"
       audit-finding: C2,C3,C4
     patterns:
-      - pattern: |
-          dangerouslySetInnerHTML={{ __html: $HTML }}
-      - pattern-not: |
-          dangerouslySetInnerHTML={{ __html: sanitizePostContent(...) }}
-      - pattern-not: |
-          dangerouslySetInnerHTML={{ __html: sanitizeChatContent(...) }}
-      - pattern-not: |
-          dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(...) }}
+      # O atributo precisa vir dentro de um elemento JSX: um atributo solto
+      # nao e expressao valida e o semgrep recusa a regra inteira com
+      # PatternParseError — foi o que manteve esta regra morta desde que
+      # foi escrita (validado em CI, ver o workflow Semgrep).
+      - pattern: <$EL dangerouslySetInnerHTML={{ __html: $HTML }} />
+      - pattern-not: <$EL dangerouslySetInnerHTML={{ __html: sanitizePostContent(...) }} />
+      - pattern-not: <$EL dangerouslySetInnerHTML={{ __html: sanitizeChatContent(...) }} />
+      - pattern-not: <$EL dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(...) }} />
     paths:
       include:
         - "apps/frontend/**"
