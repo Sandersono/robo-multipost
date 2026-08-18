@@ -1,6 +1,6 @@
 rules:
   - id: dangerously-set-inner-html-unsanitized
-    languages: [typescript, javascript]
+    languages: [tsx, jsx]
     severity: WARNING
     message: >
       dangerouslySetInnerHTML com conteúdo possivelmente não sanitizado. Conteúdo que pode vir de
