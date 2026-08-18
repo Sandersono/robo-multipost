@@ -1021,6 +1021,31 @@ const CalendarItem: FC<{
   }, [post.id, modals, t]);
   const reviewStatus: 'APPROVAL' | 'CHANGE_REQUEST' | null =
     (post as any)?.comments?.[0]?.kind ?? null;
+  // "Aguardando" so vale se o pedido for MAIS NOVO que a ultima resposta do
+  // cliente. Sem essa comparacao, reenviar um post ja aprovado continuaria
+  // mostrando "Aprovado" e a equipe acharia que o cliente ja respondeu.
+  const approvalRequestedAt = (post as any)?.approvalRequestedAt ?? null;
+  const lastReviewAt = (post as any)?.comments?.[0]?.createdAt ?? null;
+  const awaitingApproval =
+    !!approvalRequestedAt &&
+    (!lastReviewAt ||
+      new Date(approvalRequestedAt) > new Date(lastReviewAt));
+  const fetchApi = useFetch();
+  const toasterLocal = useToaster();
+  const { reloadCalendarView } = useCalendar();
+  const requestApproval = useCallback(async () => {
+    await fetchApi(`/posts/${post.id}/request-approval`, {
+      method: 'POST',
+      body: JSON.stringify({
+        reviewUrl: `${window.location.origin}/p/${post.id}`,
+      }),
+    });
+    toasterLocal.show(
+      t('approval_requested', 'Cliente avisado. Post aguardando aprovação.'),
+      'success'
+    );
+    reloadCalendarView();
+  }, [fetchApi, post.id, toasterLocal, t, reloadCalendarView]);
   const [{ opacity }, dragRef] = useDrag(
     () => ({
       type: 'post',
@@ -1115,6 +1140,17 @@ const CalendarItem: FC<{
             <ReviewShare />
           </div>
         )}{' '}
+        {canWrite && (
+          <div
+            className={clsx(
+              'hidden group-hover:block hover:underline cursor-pointer',
+              post?.tags?.[0]?.tag?.color && 'mix-blend-difference'
+            )}
+            onClick={requestApproval}
+          >
+            <SendForApproval />
+          </div>
+        )}{' '}
         {((post.integration.providerIdentifier === 'x' && disableXAnalytics) || !post.releaseId) ? (
           <></>
         ) : post.releaseId === 'missing' && missingRelease ? (
@@ -1152,6 +1188,23 @@ const CalendarItem: FC<{
           </div>
         )}
       </div>
+      {!reviewStatus && awaitingApproval && (
+        <div
+          className="absolute -top-[6px] -right-[6px] z-20 w-[16px] h-[16px] rounded-full flex items-center justify-center text-white text-[10px] cursor-pointer"
+          style={{ backgroundColor: '#3b82f6' }}
+          data-tooltip-id="tooltip"
+          data-tooltip-content={t(
+            'awaiting_client_approval',
+            'Aguardando aprovação do cliente'
+          )}
+          onClick={(e) => {
+            e.stopPropagation();
+            preview();
+          }}
+        >
+          ⏳
+        </div>
+      )}
       {reviewStatus && (
         <div
           className="absolute -top-[6px] -right-[6px] z-20 w-[16px] h-[16px] rounded-full flex items-center justify-center text-white text-[10px] cursor-pointer"
@@ -1250,6 +1303,28 @@ const Duplicate = () => {
     </svg>
   );
 };
+const SendForApproval = () => {
+  const t = useT();
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="15"
+      height="15"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      data-tooltip-id="tooltip"
+      data-tooltip-content={t('send_for_approval', 'Enviar para aprovação')}
+    >
+      <path d="m22 2-7 20-4-9-9-4Z" />
+      <path d="M22 2 11 13" />
+    </svg>
+  );
+};
+
 const ReviewShare = () => {
   const t = useT();
   return (

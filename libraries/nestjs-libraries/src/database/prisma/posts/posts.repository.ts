@@ -240,6 +240,7 @@ export class PostsRepository {
         state: true,
         intervalInDays: true,
         group: true,
+        approvalRequestedAt: true,
         tags: {
           select: {
             tag: true,
