@@ -1,5 +1,31 @@
 # Client Login (Fase Futura)
 
+> **Estado (2026-08): a maior parte disto já existe — via `VIEWER`, não via um papel `CLIENT`.**
+>
+> Um cliente convidado como org `USER` + perfil `VIEWER` já loga restrito ao próprio
+> perfil, não vê os demais clientes nem Configurações, e aprova/comenta post in-app
+> (`POST /posts/:id/review`, liberado ao Visualizador por `@AllowViewer`). A casca
+> reduzida está em `apps/frontend/src/components/layout/top.menu.tsx`, no gate
+> `isViewer` — que esconde tudo menos o Calendário.
+>
+> O que a tabela de restrições abaixo pedia está atendido, com uma diferença de
+> desenho: **não há área `/client` separada**; é o mesmo layout com o menu reduzido.
+>
+> **O único gap real:** cliente que também precisa *criar e agendar* post. `VIEWER`
+> é somente-leitura; `EDITOR` escreve mas recebe o menu completo (escopado ao perfil
+> dele — não vaza outro cliente, só mostra mais superfície do que um cliente precisa).
+> Enquanto o papel `CLIENT` não existir, o caminho é promover `VIEWER → EDITOR` em
+> Configurações → Perfis.
+>
+> **Nunca** resolver isso dando org `ADMIN` ao cliente: admin tem acesso implícito a
+> TODOS os perfis (`ProfileAccessGuard` e `getAccessibleProfiles`), o que derruba o
+> isolamento inteiro. Ver a golden rule em [`CLAUDE.md`](../../CLAUDE.md).
+>
+> Se um dia o `CLIENT` for construído, o escopo real é pequeno (~6-8 arquivos):
+> enum, guard tratando `CLIENT` como quem escreve, separar no `use-profile-permissions`
+> os conceitos hoje unificados de "quem escreve" e "quem vê a casca reduzida", trocar
+> o gate do menu, e permitir escolher o papel no convite.
+
 ## Objetivo
 
 Permitir que clientes de agencias acessem o Robo MultiPost com visao restrita ao seu perfil, sem ver dados de outros clientes ou configuracoes da agencia.
