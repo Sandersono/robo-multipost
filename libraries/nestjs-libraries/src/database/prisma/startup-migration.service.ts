@@ -1,10 +1,17 @@
-import { Injectable, Logger, OnModuleInit } from '@nestjs/common';
+import {
+  Injectable,
+  Logger,
+  OnApplicationBootstrap,
+  OnModuleInit,
+} from '@nestjs/common';
 import { PrismaService } from './prisma.service';
 import { RepostService } from './repost/repost.service';
 import { RefreshIntegrationService } from '@gitroom/nestjs-libraries/integrations/refresh.integration.service';
 
 @Injectable()
-export class StartupMigrationService implements OnModuleInit {
+export class StartupMigrationService
+  implements OnModuleInit, OnApplicationBootstrap
+{
   private readonly logger = new Logger(StartupMigrationService.name);
 
   constructor(
@@ -13,6 +20,9 @@ export class StartupMigrationService implements OnModuleInit {
     private readonly refreshIntegrationService: RefreshIntegrationService
   ) {}
 
+  /**
+   * Migracoes de dados puras — so tocam o banco. Seguras em onModuleInit.
+   */
   async onModuleInit() {
     await this.migrateProfileScope();
     await this.migrateLateToZernio();
@@ -20,6 +30,25 @@ export class StartupMigrationService implements OnModuleInit {
     await this.cleanupExpiredUnmatchedComments();
     await this.cleanupExpiredStatusEvents();
     await this.backfillFlowsToDefaultProfile();
+  }
+
+  /**
+   * Reconciliacoes que INICIAM workflows Temporal. Ficam aqui, e nao em
+   * onModuleInit, porque o `TemporalService` (nestjs-temporal-core) so marca
+   * `isInitialized` dentro do PROPRIO `onModuleInit`, e o getter `client` lanca
+   * `Temporal Service is not initialized` antes disso. Como o Nest dispara os
+   * `onModuleInit` de um modulo em `Promise.all`, chamar Temporal de la e uma
+   * corrida — que em producao perdemos: o boot logava
+   * `reconcileRefreshTokensCron falhou: Temporal Service is not initialized`
+   * e o cron de refresh proativo de tokens nunca subia (canal caindo em
+   * silencio quando o token expirasse). `reconcileRepostWorkflows` tinha o
+   * mesmo defeito latente — so nao aparecia porque, sem nenhuma RepostRule
+   * habilitada, ele retorna antes de tocar no Temporal.
+   *
+   * `onApplicationBootstrap` so roda depois que TODOS os `onModuleInit` da
+   * aplicacao resolveram, o que da a ordem garantida sem polling nem retry.
+   */
+  async onApplicationBootstrap() {
     await this.reconcileRepostWorkflows();
     await this.reconcileRefreshTokensCron();
   }

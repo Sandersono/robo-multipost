@@ -8,6 +8,15 @@ jest.mock('@gitroom/nestjs-libraries/integrations/integration.manager', () => ({
 jest.mock('@gitroom/nestjs-libraries/redis/redis.service', () => ({
   ioRedis: {},
 }));
+// Sem este mock a suite nem carrega no CI: o import chega em
+// nestjs-temporal-core -> @temporalio/client -> @temporalio/common, que instancia
+// um ProtobufJsonPayloadConverter no topo do modulo e estoura
+// "TypeError: root must be an instance of a protobufjs Root". E o mesmo motivo
+// dos dois mocks acima. O teste nunca usa a classe real — o terceiro argumento
+// do construtor e sempre um dublê.
+jest.mock('nestjs-temporal-core', () => ({
+  TemporalService: class {},
+}));
 
 import { StartupMigrationService } from '../startup-migration.service';
 
@@ -149,7 +158,7 @@ describe('StartupMigrationService.backfillFlowsToDefaultProfile', () => {
   });
 });
 
-describe('StartupMigrationService.reconcileRefreshTokensCron', () => {
+describe('StartupMigrationService — reconciliacoes que dependem do Temporal', () => {
   const buildPrisma = () => ({
     providerCredential: { count: jest.fn().mockResolvedValue(0) },
     organization: { count: jest.fn().mockResolvedValue(0) },
@@ -171,24 +180,75 @@ describe('StartupMigrationService.reconcileRefreshTokensCron', () => {
     $executeRawUnsafe: jest.fn(),
   });
 
-  const buildService = (ensure: jest.Mock) =>
-    new StartupMigrationService(
+  const buildService = (
+    ensure: jest.Mock,
+    reconcileWorkflows: jest.Mock = jest
+      .fn()
+      .mockResolvedValue({ total: 0, reconciled: 0 })
+  ) => ({
+    service: new StartupMigrationService(
       buildPrisma() as any,
-      { reconcileWorkflows: jest.fn().mockResolvedValue({ started: 0 }) } as any,
+      { reconcileWorkflows } as any,
       { ensureRefreshTokensCronWorkflow: ensure } as any
-    );
-
-  it('garante o workflow cron de refresh (singleton) no boot', async () => {
-    const ensure = jest.fn().mockResolvedValue(undefined);
-
-    await buildService(ensure).onModuleInit();
-
-    expect(ensure).toHaveBeenCalledTimes(1);
+    ),
+    ensure,
+    reconcileWorkflows,
   });
 
-  it('nao derruba o boot quando o start do cron falha', async () => {
-    const ensure = jest.fn().mockRejectedValue(new Error('temporal down'));
+  // Regressao: o TemporalService (nestjs-temporal-core) so marca isInitialized
+  // no PROPRIO onModuleInit, e o getter `client` lanca "Temporal Service is not
+  // initialized" antes disso. Como o Nest dispara os onModuleInit de um modulo
+  // em Promise.all, chamar Temporal daqui e uma corrida — em producao ela perdeu
+  // e o cron de refresh nunca subiu. onApplicationBootstrap so roda depois de
+  // TODOS os onModuleInit da aplicacao, entao a ordem fica garantida.
+  describe('onModuleInit', () => {
+    it('nao toca no Temporal (ele ainda pode nao ter inicializado)', async () => {
+      const { service, ensure, reconcileWorkflows } = buildService(jest.fn());
 
-    await expect(buildService(ensure).onModuleInit()).resolves.toBeUndefined();
+      await service.onModuleInit();
+
+      expect(ensure).not.toHaveBeenCalled();
+      expect(reconcileWorkflows).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('onApplicationBootstrap', () => {
+    it('garante o workflow cron de refresh (singleton)', async () => {
+      const { service, ensure } = buildService(
+        jest.fn().mockResolvedValue(undefined)
+      );
+
+      await service.onApplicationBootstrap();
+
+      expect(ensure).toHaveBeenCalledTimes(1);
+    });
+
+    it('reconcilia os workflows de repost', async () => {
+      const { service, reconcileWorkflows } = buildService(
+        jest.fn().mockResolvedValue(undefined)
+      );
+
+      await service.onApplicationBootstrap();
+
+      expect(reconcileWorkflows).toHaveBeenCalledTimes(1);
+    });
+
+    it('nao derruba o boot quando o start do cron falha', async () => {
+      const { service } = buildService(
+        jest.fn().mockRejectedValue(new Error('temporal down'))
+      );
+
+      await expect(service.onApplicationBootstrap()).resolves.toBeUndefined();
+    });
+
+    it('falha no repost nao impede o cron de refresh de subir', async () => {
+      const { service, ensure } = buildService(
+        jest.fn().mockResolvedValue(undefined),
+        jest.fn().mockRejectedValue(new Error('temporal down'))
+      );
+
+      await expect(service.onApplicationBootstrap()).resolves.toBeUndefined();
+      expect(ensure).toHaveBeenCalledTimes(1);
+    });
   });
 });
