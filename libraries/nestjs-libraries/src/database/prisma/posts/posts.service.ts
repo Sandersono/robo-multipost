@@ -47,6 +47,7 @@ import { ioRedis } from '@gitroom/nestjs-libraries/redis/redis.service';
 import { RefreshToken } from '@gitroom/nestjs-libraries/integrations/social.abstract';
 import { RefreshIntegrationService } from '@gitroom/nestjs-libraries/integrations/refresh.integration.service';
 import { StatusEventService } from '@gitroom/nestjs-libraries/database/prisma/status/status-event.service';
+import { ApprovalNotifierService } from '@gitroom/nestjs-libraries/services/approval-notifier.service';
 import { EncryptionService } from '@gitroom/nestjs-libraries/crypto/encryption.service';
 import { decryptIntegrationToken } from '@gitroom/nestjs-libraries/crypto/integration-token.helper';
 
@@ -69,7 +70,8 @@ export class PostsService {
     private _refreshIntegrationService: RefreshIntegrationService,
     private _aiTextService: AiTextService,
     private _encryption: EncryptionService,
-    private _statusEventService: StatusEventService
+    private _statusEventService: StatusEventService,
+    private _approvalNotifier: ApprovalNotifierService
   ) {}
 
   searchForMissingThreeHoursPosts() {
@@ -1085,6 +1087,47 @@ export class PostsService {
     if (requireProfileId !== undefined && post.profileId !== requireProfileId) {
       throw new HttpException('Post is not in your profile', 403);
     }
+  }
+
+  /**
+   * "Enviar para aprovacao": marca o post e avisa o cliente pelos webhooks do
+   * perfil (tipicamente n8n -> WhatsApp). NAO trava a publicacao — decisao de
+   * produto: o aviso e informativo, o agendamento segue valendo.
+   *
+   * O aviso e fail-soft: webhook fora do ar nao pode impedir a equipe de enviar
+   * o post para aprovacao. Falha some no log, o marcador fica gravado.
+   */
+  async requestApproval(
+    orgId: string,
+    postId: string,
+    params: { requireProfileId?: string | null; reviewUrl?: string | null } = {}
+  ) {
+    await this.assertPostReviewAccess(orgId, postId, params.requireProfileId);
+
+    const post = await this._postRepository.markApprovalRequested(orgId, postId);
+
+    try {
+      await this._approvalNotifier.notifyApprovalRequested({
+        organizationId: orgId,
+        profileId: post.profileId ?? null,
+        post: {
+          id: post.id,
+          content: post.content,
+          publishDate: post.publishDate,
+          integrationId: post.integrationId,
+          integrationName: post.integration?.name ?? null,
+        },
+        reviewUrl: params.reviewUrl ?? null,
+      });
+    } catch (err) {
+      console.error(
+        `[request-approval] aviso falhou para o post ${postId}: ${
+          (err as Error)?.name || 'Error'
+        }: ${(err as Error)?.message || 'sem detalhe'}`
+      );
+    }
+
+    return { approvalRequestedAt: post.approvalRequestedAt };
   }
 
   async createReview(

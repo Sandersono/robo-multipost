@@ -45,6 +45,7 @@ const buildService = (repo: any, statusEvent: any) =>
     null as any, // aiTextService
     {} as any, // encryption
     statusEvent as any
+    , { notifyApprovalRequested: jest.fn() } as any
   );
 
 describe('PostsService.changeState (StatusEvent POST_FAILED)', () => {

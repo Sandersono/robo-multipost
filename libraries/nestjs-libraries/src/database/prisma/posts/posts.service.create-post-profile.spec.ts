@@ -54,6 +54,7 @@ const buildService = (
     null as any, // aiTextService
     {} as any, // encryption
     {} as any // statusEventService
+    , { notifyApprovalRequested: jest.fn() } as any
   );
   // startWorkflow dispara Temporal (fire-and-forget); neutraliza no teste.
   jest.spyOn(service as any, 'startWorkflow').mockResolvedValue(undefined);

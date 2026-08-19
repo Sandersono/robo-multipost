@@ -33,6 +33,28 @@ export class PostsRepository {
     private _errors: PrismaRepository<'errors'>
   ) {}
 
+  /**
+   * Marca o post como enviado para aprovacao. Idempotente de proposito: reenviar
+   * atualiza o timestamp em vez de recusar — a equipe pode legitimamente cobrar
+   * o cliente de novo. Escopado por org; o escopo por perfil e validado na
+   * service via assertPostReviewAccess.
+   */
+  markApprovalRequested(orgId: string, postId: string) {
+    return this._post.model.post.update({
+      where: { id: postId, organizationId: orgId },
+      data: { approvalRequestedAt: new Date() },
+      select: {
+        id: true,
+        content: true,
+        publishDate: true,
+        profileId: true,
+        integrationId: true,
+        approvalRequestedAt: true,
+        integration: { select: { name: true } },
+      },
+    });
+  }
+
   searchForMissingThreeHoursPosts() {
     return this._post.model.post.findMany({
       where: {
@@ -218,6 +240,7 @@ export class PostsRepository {
         state: true,
         intervalInDays: true,
         group: true,
+        approvalRequestedAt: true,
         tags: {
           select: {
             tag: true,

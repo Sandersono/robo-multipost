@@ -60,6 +60,7 @@ import { RepostRepository } from '@gitroom/nestjs-libraries/database/prisma/repo
 import { RepostService } from '@gitroom/nestjs-libraries/database/prisma/repost/repost.service';
 import { StatusService } from '@gitroom/nestjs-libraries/database/prisma/status/status.service';
 import { StatusEventService } from '@gitroom/nestjs-libraries/database/prisma/status/status-event.service';
+import { ApprovalNotifierService } from '@gitroom/nestjs-libraries/services/approval-notifier.service';
 import { StatusEventRepository } from '@gitroom/nestjs-libraries/database/prisma/status/status-event.repository';
 import { InfraHealthService } from '@gitroom/nestjs-libraries/database/prisma/status/infra-health.service';
 import { InfraHealthRepository } from '@gitroom/nestjs-libraries/database/prisma/status/infra-health.repository';
@@ -133,6 +134,7 @@ import { AiModule } from '@gitroom/nestjs-libraries/ai/ai.module';
     RepostService,
     StatusService,
     StatusEventService,
+    ApprovalNotifierService,
     StatusEventRepository,
     InfraHealthService,
     InfraHealthRepository,
