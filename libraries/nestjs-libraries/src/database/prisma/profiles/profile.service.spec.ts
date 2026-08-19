@@ -514,3 +514,83 @@ describe('ProfileService.updateProfile — telefone do cliente', () => {
     expect(dataSent(repo).whatsappPhone).toBeUndefined();
   });
 });
+
+// Vazamento de credencial no GET /profiles.
+//
+// getProfilesByOrgId usa `include`, que traz TODOS os campos escalares —
+// inclusive apiKey, lateApiKey e zernioApiKey. getAccessibleProfiles filtrava
+// apenas LINHAS (quais perfis o usuario ve), nunca CAMPOS, e o controller
+// devolve o retorno cru.
+//
+// Impacto: escalonamento de privilegio, nao so exposicao. Um cliente convidado
+// como VISUALIZADOR e somente-leitura na interface, mas Profile.apiKey da acesso
+// a /public/v1/*, que cria e exclui post. lateApiKey/zernioApiKey sao da conta
+// paga da agencia.
+//
+// A limpeza fica AQUI e nao no select do repositorio de proposito:
+// public.profiles.controller le p.apiKey para calcular `hasApiKey: !!p.apiKey`
+// (booleano, seguro). Tirar o campo do select faria esse booleano virar sempre
+// false — regressao silenciosa.
+describe('ProfileService.getAccessibleProfiles — nao vaza credenciais', () => {
+  const SECRETS = ['apiKey', 'lateApiKey', 'zernioApiKey'];
+
+  const profileWithSecrets = (id: string, extra: any = {}) => ({
+    id,
+    name: 'Cliente ' + id,
+    slug: id,
+    isDefault: false,
+    whatsappPhone: '5511999998888',
+    apiKey: 'pk_secreta',
+    lateApiKey: 'late_secreta',
+    zernioApiKey: 'zernio_secreta',
+    ...extra,
+  });
+
+  const build = (profiles: any[], memberships: any[] = []) => {
+    const repo = {
+      getProfilesByOrgId: jest.fn().mockResolvedValue(profiles),
+      getUserProfileIds: jest.fn().mockResolvedValue(memberships),
+    } as any;
+    return new ProfileService(repo);
+  };
+
+  it.each(SECRETS)('remove %s para admin da org', async (field) => {
+    const service = build([profileWithSecrets('p1')]);
+
+    const out = await service.getAccessibleProfiles('org-1', 'u1', 'ADMIN' as any);
+
+    expect((out[0] as any)[field]).toBeUndefined();
+  });
+
+  it.each(SECRETS)('remove %s para membro comum', async (field) => {
+    const service = build(
+      [profileWithSecrets('p1')],
+      [{ profileId: 'p1' }]
+    );
+
+    const out = await service.getAccessibleProfiles('org-1', 'u1', 'USER' as any);
+
+    expect((out[0] as any)[field]).toBeUndefined();
+  });
+
+  it('preserva o que a tela consome', async () => {
+    const service = build([profileWithSecrets('p1')]);
+
+    const out = await service.getAccessibleProfiles('org-1', 'u1', 'ADMIN' as any);
+
+    expect(out[0].id).toBe('p1');
+    expect(out[0].name).toBe('Cliente p1');
+    expect(out[0].whatsappPhone).toBe('5511999998888');
+  });
+
+  it('continua filtrando linhas: membro nao ve perfil de outro cliente', async () => {
+    const service = build(
+      [profileWithSecrets('p1'), profileWithSecrets('p2')],
+      [{ profileId: 'p1' }]
+    );
+
+    const out = await service.getAccessibleProfiles('org-1', 'u1', 'USER' as any);
+
+    expect(out.map((p: any) => p.id)).toEqual(['p1']);
+  });
+});
