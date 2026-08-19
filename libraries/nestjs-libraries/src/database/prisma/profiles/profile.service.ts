@@ -185,17 +185,33 @@ export class ProfileService {
     return this._profileRepository.getUserProfileIds(userId, orgId);
   }
 
+  // Remove as credenciais antes de devolver. getProfilesByOrgId usa "include",
+  // que traz TODOS os campos escalares do modelo, e este retorno vai cru para o
+  // GET /profiles. Sem isso, qualquer membro autenticado recebia apiKey,
+  // lateApiKey e zernioApiKey dos perfis a que tem acesso — e Profile.apiKey da
+  // acesso a /public/v1/*, que CRIA E EXCLUI post, entao um Visualizador
+  // (somente-leitura na interface) ganhava credencial de escrita.
+  //
+  // A limpeza fica aqui e nao num select do repositorio de proposito:
+  // public.profiles.controller le p.apiKey para calcular hasApiKey (booleano,
+  // seguro). Tirar o campo la faria esse booleano virar sempre false.
+  private stripCredentials<T extends Record<string, any>>(profiles: T[]) {
+    return profiles.map(({ apiKey, lateApiKey, zernioApiKey, ...safe }) => safe);
+  }
+
   async getAccessibleProfiles(orgId: string, userId: string, orgRole: Role) {
     const profiles = await this._profileRepository.getProfilesByOrgId(orgId);
     if (orgRole === 'ADMIN' || orgRole === 'SUPERADMIN') {
-      return profiles;
+      return this.stripCredentials(profiles);
     }
     const memberships = await this._profileRepository.getUserProfileIds(
       userId,
       orgId
     );
     const accessibleIds = new Set(memberships.map((m) => m.profileId));
-    return profiles.filter((p) => accessibleIds.has(p.id));
+    return this.stripCredentials(
+      profiles.filter((p) => accessibleIds.has(p.id))
+    );
   }
 
   async getEffectiveProfileRole(
