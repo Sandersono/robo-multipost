@@ -4,9 +4,30 @@ import { SaveMediaInformationDto } from '@gitroom/nestjs-libraries/dtos/media/sa
 
 @Injectable()
 export class MediaRepository {
-  constructor(private _media: PrismaRepository<'media'>) {}
+  constructor(
+    private _media: PrismaRepository<'media'>,
+    private _profiles: PrismaRepository<'profile'>
+  ) {}
 
-  saveFile(org: string, fileName: string, filePath: string, originalName?: string, profileId?: string) {
+  async saveFile(
+    org: string,
+    fileName: string,
+    filePath: string,
+    originalName?: string,
+    profileId?: string
+  ) {
+    // Mesma regra dos canais: midia nunca nasce sem perfil. Um profileId nulo
+    // era exibido em TODOS os perfis, entao um upload feito sem perfil ativo
+    // (chave de API de organizacao) vazava para a biblioteca de cada cliente.
+    const resolvedProfileId =
+      profileId ??
+      (
+        await this._profiles.model.profile.findFirst({
+          where: { organizationId: org, isDefault: true, deletedAt: null },
+          select: { id: true },
+        })
+      )?.id;
+
     return this._media.model.media.create({
       data: {
         organization: {
@@ -14,7 +35,9 @@ export class MediaRepository {
             id: org,
           },
         },
-        ...(profileId ? { profile: { connect: { id: profileId } } } : {}),
+        ...(resolvedProfileId
+          ? { profile: { connect: { id: resolvedProfileId } } }
+          : {}),
         name: fileName,
         path: filePath,
         originalName: originalName || null,
@@ -43,7 +66,7 @@ export class MediaRepository {
       where: {
         id,
         organizationId: org,
-        ...(profileId ? { OR: [{ profileId }, { profileId: null }] } : {}),
+        ...(profileId ? { profileId } : {}),
       },
       data: {
         deletedAt: new Date(),
@@ -76,10 +99,8 @@ export class MediaRepository {
 
   async getMedia(org: string, page: number, profileId?: string) {
     const pageNum = (page || 1) - 1;
-    // Show media for the active profile + unscoped media (profileId is null)
-    const profileFilter = profileId
-      ? { OR: [{ profileId }, { profileId: null }] }
-      : {};
+    // Estrito por perfil: midia de um cliente nunca aparece na biblioteca de outro.
+    const profileFilter = profileId ? { profileId } : {};
     const query = {
       where: {
         organization: {

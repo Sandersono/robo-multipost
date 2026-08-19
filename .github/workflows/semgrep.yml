@@ -1,0 +1,54 @@
+# Roda as regras custom de .semgrep/, derivadas da auditoria de seguranca
+# (SECURITY_AUDIT.md). Elas existiam no repositorio desde a auditoria mas nao
+# eram executadas em lugar nenhum — o .semgrep/README.md ja descrevia este
+# workflow como "exemplo" e ele nunca foi criado.
+#
+# Usa `semgrep scan` (autocontido) e nao `semgrep ci`, que espera token da
+# plataforma Semgrep AppSec e degrada em silencio quando ele nao existe.
+name: Semgrep
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  # Em PR: compara com a base e falha SO com achado NOVO.
+  #
+  # A primeira execucao encontrou 182 achados pre-existentes (50 de SSRF, 21 de
+  # query Prisma sem escopo de org, entre outros). Bloquear tudo de uma vez
+  # pararia o repositorio; ignorar seria teatro de seguranca. O baseline
+  # ratcheteia: a divida legada nao trava o PR, mas nenhuma violacao nova entra.
+  # Para auditar a divida inteira, dispare o job `completo` manualmente.
+  diff:
+    name: Achados novos (bloqueia)
+    runs-on: ubuntu-latest
+    container:
+      image: semgrep/semgrep
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Marcar o repo como seguro para o git do container
+        run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
+
+      - name: Rodar .semgrep/ contra a base do PR
+        run: |
+          BASE="$(git merge-base "origin/${{ github.base_ref }}" HEAD)"
+          echo "baseline: $BASE"
+          semgrep scan --config .semgrep/ --error --metrics=off --baseline-commit "$BASE"
+
+  # Varredura completa, sem baseline: mede a divida acumulada. Nao bloqueia
+  # nada, e so roda quando alguem pede.
+  completo:
+    name: Varredura completa (informativo)
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    container:
+      image: semgrep/semgrep
+    steps:
+      - uses: actions/checkout@v4
+      - run: semgrep scan --config .semgrep/ --metrics=off

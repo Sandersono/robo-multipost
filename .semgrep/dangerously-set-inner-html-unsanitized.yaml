@@ -1,6 +1,6 @@
 rules:
   - id: dangerously-set-inner-html-unsanitized
-    languages: [typescript, javascript]
+    languages: [typescript]
     severity: WARNING
     message: >
       dangerouslySetInnerHTML com conteúdo possivelmente não sanitizado. Conteúdo que pode vir de
@@ -11,14 +11,19 @@ rules:
       cwe: "CWE-79: Cross-site Scripting (XSS)"
       audit-finding: C2,C3,C4
     patterns:
+      # Duas armadilhas ja pagas aqui:
+      # 1. o atributo precisa vir DENTRO de um elemento JSX — atributo solto
+      #    nao e expressao valida e o semgrep recusa a regra (PatternParseError);
+      # 2. tem que ser escalar de BLOCO (|), porque "__html: $HTML" tem
+      #    dois-pontos-espaco e quebraria o YAML se fosse inline.
       - pattern: |
-          dangerouslySetInnerHTML={{ __html: $HTML }}
+          <$EL dangerouslySetInnerHTML={{ __html: $HTML }} />
       - pattern-not: |
-          dangerouslySetInnerHTML={{ __html: sanitizePostContent(...) }}
+          <$EL dangerouslySetInnerHTML={{ __html: sanitizePostContent(...) }} />
       - pattern-not: |
-          dangerouslySetInnerHTML={{ __html: sanitizeChatContent(...) }}
+          <$EL dangerouslySetInnerHTML={{ __html: sanitizeChatContent(...) }} />
       - pattern-not: |
-          dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(...) }}
+          <$EL dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(...) }} />
     paths:
       include:
         - "apps/frontend/**"
