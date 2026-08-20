@@ -48,6 +48,8 @@
     "@atproto/api": "^0.15.15",
     "@aws-sdk/client-s3": "^3.787.0",
     "@aws-sdk/s3-request-presigner": "^3.787.0",
+    "@blueprintjs/core": "^6.10.0",
+    "@blueprintjs/icons": "^6.8.0",
     "@casl/ability": "^6.5.0",
     "@copilotkit/react-core": "1.10.6",
     "@copilotkit/react-textarea": "1.10.6",
@@ -338,7 +340,6 @@
       "handlebars@<4.7.9": "^4.7.9",
       "form-data@<2.5.4": "^2.5.4",
       "happy-dom@<20.0.0": "^20.0.0",
-      "protobufjs@<8.0.1": "^8.0.1",
       "axios@<1.15.1": "^1.15.1",
       "multer@<2.1.1": "^2.1.1",
       "fast-xml-parser@<5.5.6": "^5.5.6",
@@ -351,7 +352,9 @@
       "path-to-regexp@>=8 <8.4.0": "^8.4.0",
       "picomatch@>=4 <4.0.4": "^4.0.4",
       "cross-spawn@<7": "^7.0.5",
-      "tar@<7": "^7.5.11"
+      "tar@<7": "^7.5.11",
+      "protobufjs@<8.6.6": "^8.6.6",
+      "@temporalio/proto>protobufjs": "^7.6.5"
     },
     "onlyBuiltDependencies": [
       "bcrypt"

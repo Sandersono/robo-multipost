@@ -25,9 +25,12 @@ jobs:
           node-version: ${{ matrix.node-version }}
 
       - name: Install pnpm
-        uses: pnpm/action-setup@v2
+        # Sem `version`: o action le o campo packageManager do package.json.
+        # Fixar `version: 8` fazia o runner usar pnpm 8, que nao le o lockfile
+        # gerado pelo pnpm 10 — ele ignorava o lockfile e re-resolvia tudo,
+        # instalando versoes diferentes das fixadas a cada execucao.
+        uses: pnpm/action-setup@v4
         with:
-          version: 8
           run_install: false
 
       - name: Get pnpm store directory
