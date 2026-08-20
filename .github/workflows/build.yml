@@ -44,9 +44,16 @@ jobs:
           path: |
             ${{ env.STORE_PATH }}
             ${{ github.workspace }}/.next/cache
-          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}-${{ hashFiles('**/*.js', '**/*.jsx', '**/*.ts', '**/*.tsx') }}
+          # A chave depende SO do lockfile: o que esta em cache e o store do
+          # pnpm, que muda quando as dependencias mudam — nao quando o codigo
+          # muda. Hashear os fontes fazia duas coisas ruins: (1) a chave mudava
+          # a cada edicao, entao o cache nunca era reaproveitado; e (2) o
+          # hashFiles varria todo .js/.ts/.tsx do repo, node_modules incluso, e
+          # estourava o limite de 120s do runner — quebrando o post-step que
+          # salva o cache e marcando como falha um job que passou inteiro.
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
-            ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}-
+            ${{ runner.os }}-pnpm-
 
       - name: Install dependencies
         run: pnpm install
