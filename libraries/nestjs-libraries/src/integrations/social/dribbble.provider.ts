@@ -85,7 +85,7 @@ export class DribbbleProvider extends SocialAbstract implements SocialProvider {
   }
 
   async generateAuthUrl() {
-    const state = makeSecureId(6);
+    const state = makeSecureId(32);
     return {
       url: `https://dribbble.com/oauth/authorize?client_id=${
         process.env.DRIBBBLE_CLIENT_ID

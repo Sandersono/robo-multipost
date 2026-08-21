@@ -60,7 +60,7 @@ export class DiscordProvider extends SocialAbstract implements SocialProvider {
     };
   }
   async generateAuthUrl() {
-    const state = makeSecureId(6);
+    const state = makeSecureId(32);
     return {
       url: `https://discord.com/oauth2/authorize?client_id=${
         process.env.DISCORD_CLIENT_ID

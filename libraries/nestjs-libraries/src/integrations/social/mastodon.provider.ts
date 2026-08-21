@@ -43,7 +43,7 @@ export class MastodonProvider extends SocialAbstract implements SocialProvider {
   }
 
   async generateAuthUrl() {
-    const state = makeSecureId(6);
+    const state = makeSecureId(32);
     const url = this.generateUrlDynamic(
       process.env.MASTODON_URL || 'https://mastodon.social',
       state,

@@ -42,7 +42,7 @@ export class MastodonCustomProvider extends MastodonProvider {
     refresh?: string,
     external?: ClientInformation
   ) {
-    const state = makeSecureId(6);
+    const state = makeSecureId(32);
     const url = this.generateUrlDynamic(
       external?.instanceUrl!,
       state,

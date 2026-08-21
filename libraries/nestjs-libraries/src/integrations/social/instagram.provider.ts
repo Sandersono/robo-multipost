@@ -380,7 +380,7 @@ export class InstagramProvider
 
   async generateAuthUrl(clientInformation?: ClientInformation) {
     const clientId = clientInformation?.client_id || process.env.FACEBOOK_APP_ID;
-    const state = makeSecureId(6);
+    const state = makeSecureId(32);
     return {
       url:
         'https://www.facebook.com/v25.0/dialog/oauth' +

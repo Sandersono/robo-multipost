@@ -63,7 +63,7 @@ export class NostrProvider extends SocialAbstract implements SocialProvider {
   }
 
   async generateAuthUrl() {
-    const state = makeSecureId(17);
+    const state = makeSecureId(32);
     return {
       url: state,
       codeVerifier: makeSecureId(10),

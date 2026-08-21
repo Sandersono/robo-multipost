@@ -45,7 +45,7 @@ export class ZernioBaseProvider
   async generateAuthUrl(
     clientInformation?: ClientInformation
   ): Promise<GenerateAuthUrlResponse> {
-    const state = makeSecureId(20);
+    const state = makeSecureId(32);
     const codeVerifier = makeSecureId(10);
     const zernioApiKey = clientInformation?.instanceUrl;
 

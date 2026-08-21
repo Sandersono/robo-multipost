@@ -26,7 +26,7 @@ export class HashnodeProvider extends SocialAbstract implements SocialProvider {
   dto = HashnodeSettingsDto;
 
   async generateAuthUrl() {
-    const state = makeSecureId(6);
+    const state = makeSecureId(32);
     return {
       url: state,
       codeVerifier: makeSecureId(10),

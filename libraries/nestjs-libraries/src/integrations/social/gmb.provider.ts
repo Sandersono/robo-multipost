@@ -128,7 +128,7 @@ export class GmbProvider extends SocialAbstract implements SocialProvider {
   }
 
   async generateAuthUrl() {
-    const state = makeSecureId(7);
+    const state = makeSecureId(32);
     const { client } = clientAndGmb();
     return {
       url: client.generateAuthUrl({
