@@ -50,14 +50,16 @@ A imagem e `pgvector/pgvector:pg17` porque a base de conhecimento (RAG) exige a 
 
 **O limite de memoria do app e teto, nao reserva.** Os tres processos Node em repouso somam ~100 MB de RSS; o resto do que o `docker stats` mostra e page cache da imagem (5,8 GB de filesystem), que o kernel recupera sozinho. Com 1536M o container vivia a 98% do teto e forcava reclaim continuo — dai os 2560M.
 
-## Em aberto
+## Atualizar a imagem
 
-**O pin da imagem esta desatualizado.** O stack aponta para `ghcr.io/maiconramos/robo-multipost:0.5.6-rc.9` — namespace do repositorio de origem e uma versao atras. O fork ja publicou `v0.5.6-rc.10` e `v0.5.6-rc.11`, e o workflow `build-containers.yml` publica em `ghcr.io/${GITHUB_REPOSITORY,,}`, que neste fork resolve para `ghcr.io/sandersono/robo-multipost`.
+O pin e **fixo de proposito** — nunca `:latest` nem `:prerelease`, que se movem sob os pes.
 
-O pin **nao foi alterado junto com este commit de proposito**: mudar a imagem muda o que sobe na proxima implantacao, e isso precisa ser conferido contra o que roda hoje na VPS antes de valer como verdade versionada. Confira com:
+A imagem sai do `.github/workflows/build-containers.yml`, disparado por tag `v*`. Ele publica em `ghcr.io/${GITHUB_REPOSITORY,,}` (neste fork, `ghcr.io/sandersono/robo-multipost`) e usa a tag **sem o `v` inicial** — `CONTAINERVER="${GITHUB_REF_NAME#v}"`. Ou seja, a tag `v0.5.6-rc.11` produz a imagem `:0.5.6-rc.11`.
+
+Antes de trocar o pin, confira o que esta no ar:
 
 ```bash
 docker service inspect multipost_multipost-app --format '{{.Spec.TaskTemplate.ContainerSpec.Image}}'
 ```
 
-**`.github/workflows/promote-release.yml` tem `ghcr.io/maiconramos/robo-multipost` fixo** em tres pontos (linhas 46, 76 e 79) — mesma classe de configuracao herdada do repositorio de origem que ja foi corrigida em outros arquivos. Promover uma release a partir do fork tentaria publicar e inspecionar imagens num namespace que nao e nosso.
+Depois edite o `image:` do stack e reimplante. Uma release estavel (sem hifen na versao) tambem recebe `:latest`; uma pre-release recebe `:prerelease`.
