@@ -1,6 +1,7 @@
 import { HttpException, Injectable, Logger } from '@nestjs/common';
 import { AiProviderResolverService } from './ai-provider-resolver.service';
 import { ImageOptions } from './ai-credential.schemas';
+import { ssrfSafeDispatcher } from '@gitroom/nestjs-libraries/dtos/webhooks/ssrf.safe.dispatcher';
 
 const OPENAI_IMAGE_GEN_URL = 'https://api.openai.com/v1/images/generations';
 const OPENAI_IMAGE_EDIT_URL = 'https://api.openai.com/v1/images/edits';
@@ -250,7 +251,11 @@ export class AiImageService {
     //    o usuario e responsavel por fornecer URL com formato compativel.
     let refRes: Response;
     try {
-      refRes = await fetch(referenceImageUrl);
+      refRes = await fetch(referenceImageUrl, {
+        // URL de referencia fornecida pelo usuario.
+        // @ts-ignore — undici option, not in lib.dom fetch types
+        dispatcher: ssrfSafeDispatcher,
+      });
     } catch (err) {
       this._logger.error(
         `Falha de rede ao baixar reference image (${referenceImageUrl}): ${(err as Error).message}`

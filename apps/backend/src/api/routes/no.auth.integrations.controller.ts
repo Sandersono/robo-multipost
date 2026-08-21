@@ -26,6 +26,7 @@ import {
 } from '@gitroom/backend/services/auth/permissions/permission.exception.class';
 import { RefreshIntegrationService } from '@gitroom/nestjs-libraries/integrations/refresh.integration.service';
 import { OrganizationService } from '@gitroom/nestjs-libraries/database/prisma/organizations/organization.service';
+import { ssrfSafeDispatcher } from '@gitroom/nestjs-libraries/dtos/webhooks/ssrf.safe.dispatcher';
 
 @ApiTags('Integrations')
 @Controller('/integrations')
@@ -307,6 +308,10 @@ export class NoAuthIntegrationsController {
         await fetch(webhookUrl, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
+          // A URL vem do tenant (gravada em /enterprise/url) e este POST leva
+          // um JWT com a apiKey da org. Pin do IP no connect.
+          // @ts-ignore — undici option, not in lib.dom fetch types
+          dispatcher: ssrfSafeDispatcher,
           body: JSON.stringify({
             params: AuthService.signJWT({
               apiKey: org.apiKey,

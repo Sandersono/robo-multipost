@@ -6,7 +6,7 @@ ocorrência individual).
 
 | Regra | Achados | Triado | Veredito |
 |---|---|---|---|
-| `fetch-user-url-without-ssrf-dispatcher` | 34 | não | pendente |
+| `fetch-user-url-without-ssrf-dispatcher` | 34 | **sim** | **5 reais — corrigidos; 29 falso positivo** |
 | `prisma-query-by-id-without-org-filter` | 17 | **sim** | **todos falso positivo** |
 | `dangerously-set-inner-html-unsanitized` | 10 | **sim** | **13 sites corrigidos, 3 falso positivo** |
 | `weak-random-secret-generation` | 5 | **sim** | **todos reais — corrigidos** |
@@ -102,8 +102,70 @@ backend porque `apps/frontend` nao tem projeto jest — mesmo motivo do
 
 ---
 
-## Ainda não triados
+## `fetch-user-url-without-ssrf-dispatcher` — 34 achados, 5 reais
 
-- **34 de SSRF** — a regra sinaliza `fetch()` sem `ssrfSafeDispatcher`. Boa parte
-  deve ser chamada a host fixo de provider (não URL de usuário), mas precisa ser
-  verificada caso a caso.
+34 arquivos, 77 ocorrências. **A regra casa pelo nome da variável**
+(`url|uri|endpoint|webhook|href|link|picture|image`), não por a URL ser de fato
+controlada pelo usuário — daí o volume. O critério de triagem foi um só: **o
+servidor busca uma URL que o usuário escolhe?**
+
+### Reais — corrigidos
+
+| Onde | Origem da URL |
+|---|---|
+| `no.auth.integrations.controller.ts:307` | webhook do tenant, gravado em `/enterprise/url` |
+| `autopost.service.ts:189` | URL configurada no autopost, carregada e parseada com JSDOM |
+| `extract.content.service.ts:18` | URL do usuário (serviço registrado nos módulos, hoje sem chamador) |
+| `mastodon.custom.provider.ts:26` | instância Mastodon informada ao conectar o canal |
+| `ai-image.service.ts:253` | imagem de referência — o próprio comentário do código diz que a URL é do usuário |
+
+O primeiro é o mais sério: além do SSRF, esse POST leva **um JWT com a `apiKey`
+da organização** para a URL escolhida pelo tenant. Como a chave é a dele
+próprio, não há vazamento entre tenants — mas continua sendo o servidor batendo
+em endereço arbitrário com credencial no corpo.
+
+Todos passaram a usar `{ dispatcher: ssrfSafeDispatcher }`, o mesmo padrão já
+aplicado em `webhooks.controller.ts`, `post.activity.ts`,
+`approval-notifier.service.ts` e `storage.helpers.ts`.
+
+### Falso positivo — 29
+
+- **Host fixo (literal ou constante de módulo):** os providers sociais
+  (LinkedIn, Instagram, Facebook, TikTok, Slack, Reddit, GMB, Zernio, Skool,
+  Whop, MeWe), os serviços de IA (`OPENAI_*`, `OPENROUTER_*`, `TAVILY_*`),
+  short-linking (`DUB_API_ENDPOINT`, `KUTT_API_ENDPOINT`,
+  `LINK_DRIP_API_ENDPOINT`, `api.short.io`), `reelfarm` (`BASE_URL`) e
+  `credential.service.ts` (`graph.facebook.com` literal).
+- **Código de navegador, não de servidor:** `custom.fetch.func.ts` (lê
+  `document.cookie`) e `uppy.upload.ts` (URL relativa `/media/...`). A regra
+  inclui `libraries/**` inteiro e não distingue.
+- **Configuração de ambiente** — mesma fronteira de confiança do `.env`, não do
+  usuário: `oauth.provider.ts` (`tokenUrl`/`userInfoUrl` de `getConfig()`) e
+  `oauth-middleware.ts` (`introspectionEndpoint`).
+- **URL devolvida pela API do provider já autenticado:** `whop.provider.ts:250`
+  (`upload_url`), `skool.provider.ts:234` (`write_url`), `mewe.provider.ts:181`
+  (`nextUrl` de paginação).
+- **Download da própria mídia do app:** `mastodon.provider.ts:118` e
+  `bluesky.provider.ts:77` recebem `media.path`/`videoPath`, gravados pelo
+  app no upload. *Ressalva:* se algum dia existir "adicionar mídia por URL
+  externa", esses dois viram reais e precisam do dispatcher.
+
+### Nota operacional — a overlay do Swarm é bloqueada
+
+`isBlockedIp` rejeita `10.0.0.0/8`, `127.0.0.0/8`, `169.254.0.0/16`,
+`172.16.0.0/12`, `192.168.0.0/16`, `::1` e `fc00::/7`. A rede overlay do Docker
+Swarm fica em `10.0.0.0/8`.
+
+Consequência para a Fase 3 do plano multiempresa: o webhook de "post aguardando
+aprovação" (`approval-notifier.service.ts:96`) **já** usa o dispatcher, então
+apontá-lo para o endereço interno do n8n na overlay `network_public` vai falhar
+com `Blocked IP`. O destino precisa ser um hostname público (via Traefik) — ou
+o dispatcher precisa de uma allowlist explícita para esse salto interno.
+
+---
+
+## Estado da triagem
+
+As quatro categorias foram triadas. Segue pendente apenas o **B3** (JWT de
+sessão sem expiração) — que não é triagem, e sim decisão de produto: ver a
+seção de JWT acima.
