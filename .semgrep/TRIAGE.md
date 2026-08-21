@@ -9,7 +9,7 @@ ocorrência individual).
 | `fetch-user-url-without-ssrf-dispatcher` | 34 | não | pendente |
 | `prisma-query-by-id-without-org-filter` | 17 | **sim** | **todos falso positivo** |
 | `dangerously-set-inner-html-unsanitized` | 10 | não | pendente |
-| `weak-random-secret-generation` | 5 | não | pendente |
+| `weak-random-secret-generation` | 5 | **sim** | **todos reais — corrigidos** |
 | `jwt-sign-without-expiry` | 2 | **sim** | **1 corrigido, 1 é o B3 (pendente)** |
 | `jwt-verify-without-algorithm-pin` | 1 | **sim** | **corrigido** |
 
