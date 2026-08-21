@@ -86,7 +86,7 @@ export class ThreadsProvider extends SocialAbstract implements SocialProvider {
 
   async generateAuthUrl(clientInformation?: ClientInformation) {
     const clientId = clientInformation?.client_id || process.env.THREADS_APP_ID;
-    const state = makeSecureId(6);
+    const state = makeSecureId(32);
     return {
       url:
         'https://www.threads.net/oauth/authorize' +

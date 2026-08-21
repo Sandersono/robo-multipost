@@ -172,7 +172,7 @@ export class YoutubeProvider extends SocialAbstract implements SocialProvider {
   }
 
   async generateAuthUrl(clientInformation?: ClientInformation) {
-    const state = makeSecureId(7);
+    const state = makeSecureId(32);
     const { client } = clientAndYoutube(clientInformation);
     return {
       url: client.generateAuthUrl({

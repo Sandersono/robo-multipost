@@ -82,7 +82,7 @@ export class InstagramStandaloneProvider
   async generateAuthUrl(clientInformation?: ClientInformation) {
     const clientId =
       clientInformation?.client_id || process.env.INSTAGRAM_APP_ID;
-    const state = makeSecureId(6);
+    const state = makeSecureId(32);
     return {
       url:
         `https://www.instagram.com/oauth/authorize?enable_fb_login=0&client_id=${clientId}&redirect_uri=${encodeURIComponent(

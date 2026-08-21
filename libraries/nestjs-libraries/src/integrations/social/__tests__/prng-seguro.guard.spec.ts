@@ -30,3 +30,29 @@ describe('Providers sociais — PRNG seguro em valores de OAuth', () => {
     expect(source).not.toMatch(SECURITY_VALUE);
   });
 });
+
+// O `state` nao e so anti-CSRF aqui: ele e a chave do Redis que amarra o fluxo
+// de OAuth a uma organizacao (`organization:${state}` -> org.id), lida de volta
+// num callback SEM autenticacao (no.auth.integrations.controller.ts). Um acerto
+// liga o canal na org errada — o exato tipo de mistura que a camada de perfis
+// existe para impedir.
+//
+// Com 6 chars base62 (~36 bits) isso nao era explorável na pratica: 62^6 e
+// grande demais para forca bruta por HTTP dentro do TTL de 1h. E margem, nao
+// buraco — mas subir para 32 chars (~190 bits) nao custa nada, e e o que kick,
+// vk e whop ja faziam.
+const MIN_STATE_LEN = 32;
+const STATE_LEN =
+  /\bstate\s*[:=]\s*makeSecureId\((\d+)\)|['"]state['"]\s*,\s*makeSecureId\((\d+)\)/g;
+
+describe('Providers sociais — entropia do state de OAuth', () => {
+  it.each(providers)('%s gera state com pelo menos 32 chars', (file) => {
+    const source = readFileSync(join(DIR, file), 'utf8');
+
+    const curtos = [...source.matchAll(STATE_LEN)]
+      .map((m) => Number(m[1] ?? m[2]))
+      .filter((n) => n < MIN_STATE_LEN);
+
+    expect(curtos).toEqual([]);
+  });
+});

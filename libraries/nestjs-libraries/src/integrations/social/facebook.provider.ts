@@ -201,7 +201,7 @@ export class FacebookProvider extends SocialAbstract implements SocialProvider {
 
   async generateAuthUrl(clientInformation?: ClientInformation) {
     const clientId = clientInformation?.client_id || process.env.FACEBOOK_APP_ID;
-    const state = makeSecureId(6);
+    const state = makeSecureId(32);
     return {
       url:
         'https://www.facebook.com/v20.0/dialog/oauth' +

@@ -99,7 +99,7 @@ export class WhopProvider extends SocialAbstract implements SocialProvider {
   }
 
   async generateAuthUrl() {
-    const state = makeSecureId(6);
+    const state = makeSecureId(32);
     const codeVerifier = randomBytes(32).toString('base64url');
     const codeChallenge = this.generateCodeChallenge(codeVerifier);
     const nonce = makeSecureId(16);

@@ -43,7 +43,7 @@ export class SlackProvider extends SocialAbstract implements SocialProvider {
     };
   }
   async generateAuthUrl() {
-    const state = makeSecureId(6);
+    const state = makeSecureId(32);
 
     return {
       url: `https://slack.com/oauth/v2/authorize?client_id=${

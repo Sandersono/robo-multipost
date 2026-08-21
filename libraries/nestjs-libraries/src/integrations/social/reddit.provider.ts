@@ -68,7 +68,7 @@ export class RedditProvider extends SocialAbstract implements SocialProvider {
   }
 
   async generateAuthUrl() {
-    const state = makeSecureId(6);
+    const state = makeSecureId(32);
     const codeVerifier = makeSecureId(30);
     const url = `https://www.reddit.com/api/v1/authorize?client_id=${
       process.env.REDDIT_CLIENT_ID

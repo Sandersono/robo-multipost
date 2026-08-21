@@ -79,7 +79,7 @@ export class MeweProvider extends SocialAbstract implements SocialProvider {
   }
 
   async generateAuthUrl() {
-    const state = makeSecureId(6);
+    const state = makeSecureId(32);
     return {
       url:
         `${this.meweHost}/login` +

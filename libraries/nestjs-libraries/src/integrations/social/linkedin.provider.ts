@@ -117,7 +117,7 @@ export class LinkedinProvider extends SocialAbstract implements SocialProvider {
   }
 
   async generateAuthUrl(clientInformation?: ClientInformation) {
-    const state = makeSecureId(6);
+    const state = makeSecureId(32);
     const codeVerifier = makeSecureId(30);
     const clientId =
       clientInformation?.client_id || process.env.LINKEDIN_CLIENT_ID;

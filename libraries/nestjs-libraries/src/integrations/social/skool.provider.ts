@@ -80,7 +80,7 @@ export class SkoolProvider extends SocialAbstract implements SocialProvider {
   }
 
   async generateAuthUrl() {
-    const state = makeSecureId(6);
+    const state = makeSecureId(32);
     return {
       url: state,
       codeVerifier: makeSecureId(10),
