@@ -61,9 +61,14 @@ export class UsersController {
       throw new HttpException('Agent Media SSO is not configured', 400);
     }
 
+    // Token de handoff de SSO: e usado uma vez, ao abrir a URL logo abaixo.
+    // Sem `expiresIn` ele valia para sempre — a URL vazada em log, historico
+    // de navegador ou header Referer daria acesso indefinido. 15 minutos e
+    // folgado para o clique e limita a janela.
     const token = sign(
       { id: organization.id, displayName: organization.name },
-      process.env.AGENT_MEDIA_SSO_KEY
+      process.env.AGENT_MEDIA_SSO_KEY,
+      { expiresIn: '15m' }
     );
 
     return { url: `https://agent-media.ai/sso/${token}` };

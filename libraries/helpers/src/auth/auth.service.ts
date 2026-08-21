@@ -43,7 +43,11 @@ export class AuthService {
     return sign(value, process.env.JWT_SECRET!);
   }
   static verifyJWT(token: string) {
-    return verify(token, process.env.JWT_SECRET!);
+    // Achado B9: sem fixar `algorithms`, o jsonwebtoken aceita qualquer
+    // algoritmo HMAC que valide com o mesmo segredo — um token forjado em
+    // HS512 passava. signJWT emite HS256 (padrao da lib), entao o pin nao
+    // invalida nenhum token ja emitido.
+    return verify(token, process.env.JWT_SECRET!, { algorithms: ['HS256'] });
   }
 
   static fixedEncryption(value: string) {
