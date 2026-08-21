@@ -94,11 +94,13 @@ services:
           memory: 448M
 
   multipost-app:
-    # Tag FIXA de proposito. A :latest do GHCR estava 2 meses atrasada e nao
-    # contem o isolamento por perfil (85a95e06), as correcoes de IDOR (e2d6aebc)
-    # nem a aprovacao in-app pelo cliente (358f5e39). 0.5.6-rc.9 == HEAD do main
-    # (9c61fce1) e e a base analisada. Ao atualizar, mudar aqui conscientemente.
-    image: ghcr.io/maiconramos/robo-multipost:0.5.6-rc.9
+    # Tag FIXA de proposito — nunca :latest nem :prerelease, que se movem sob
+    # os pes. A imagem sai do build-containers.yml, que publica em
+    # ghcr.io/${GITHUB_REPOSITORY,,} e usa a tag sem o "v" inicial
+    # (CONTAINERVER="${GITHUB_REF_NAME#v}"). Ao atualizar, mude aqui
+    # conscientemente e confira o que esta no ar com:
+    #   docker service inspect multipost_multipost-app     #     --format '{{.Spec.TaskTemplate.ContainerSpec.Image}}'
+    image: ghcr.io/sandersono/robo-multipost:0.5.6-rc.11
     environment:
       # --- URLs (precisam bater exatamente com o dominio de acesso)
       MAIN_URL: https://app.postcast.com.br
