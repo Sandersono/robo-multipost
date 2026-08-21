@@ -1,0 +1,10 @@
+# Dynamic config do Temporal para producao (visibility em SQL, sem Elasticsearch).
+#
+# Derivado de dynamicconfig/development-sql.yaml, com uma diferenca deliberada:
+# o development-sql.yaml liga system.forceSearchAttributesCacheRefreshOnRead, que
+# o proprio arquivo marca como "Dev setup only. Please don't turn this on in
+# production." — ele forca releitura do cache de search attributes a cada leitura,
+# custando latencia e carga no banco. Aqui fica de fora.
+limit.maxIDLength:
+  - value: 255
+    constraints: {}

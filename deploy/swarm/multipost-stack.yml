@@ -1,0 +1,179 @@
+# Robo MultiPost — stack Docker Swarm para a VPS manager01 (72.61.135.63)
+#
+# Diferencas propositais em relacao ao docker-compose.yaml da raiz:
+#   - sem Elasticsearch: Temporal usa visibility em SQL (economiza ~700 MB)
+#   - sem Postgres dedicado ao Temporal: os bancos temporal/temporal_visibility
+#     vivem no mesmo PG17 do app (economiza um container inteiro)
+#   - sem Nginx: quem termina TLS e o Traefik v2.11 que ja roda na maquina
+#   - sem spotlight/admin-tools: ferramentas de dev
+#   - banco e cache ficam numa overlay interna, fora da network_public
+#
+# Deploy:
+#   set -a && . /opt/multipost/.env && set +a
+#   docker stack deploy -c /opt/multipost/multipost-stack.yml multipost --with-registry-auth
+
+version: '3.8'
+
+services:
+  multipost-db:
+    image: pgvector/pgvector:pg17
+    environment:
+      POSTGRES_USER: multipost
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: multipost
+    volumes:
+      - multipost_pgdata:/var/lib/postgresql/data
+    networks:
+      - multipost_internal
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U multipost -d multipost']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: any
+      resources:
+        limits:
+          memory: 512M
+
+  multipost-redis:
+    image: redis:7.2-alpine
+    command: ['redis-server', '--save', '60', '1', '--maxmemory', '48mb', '--maxmemory-policy', 'noeviction']
+    volumes:
+      - multipost_redisdata:/data
+    networks:
+      - multipost_internal
+    healthcheck:
+      test: ['CMD', 'redis-cli', 'ping']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: any
+      resources:
+        limits:
+          memory: 96M
+
+  multipost-temporal:
+    image: temporalio/auto-setup:1.28.1
+    environment:
+      DB: postgres12
+      DB_PORT: '5432'
+      POSTGRES_SEEDS: multipost-db
+      POSTGRES_USER: multipost
+      POSTGRES_PWD: ${POSTGRES_PASSWORD}
+      DBNAME: temporal
+      VISIBILITY_DBNAME: temporal_visibility
+      ENABLE_ES: 'false'
+      TEMPORAL_NAMESPACE: default
+      DYNAMIC_CONFIG_FILE_PATH: config/dynamicconfig/production-sql.yaml
+      # Sem Elasticsearch o visibility roda em SQL, que tem teto FIXO de 3
+      # search attributes do tipo Text. O auto-setup cria por padrao dois
+      # atributos de demonstracao (CustomStringField e CustomTextField, ambos
+      # Text) que ninguem usa — sobrava 1 vaga e o backend precisa de 2
+      # (organizationId e postId, em temporal.register.ts), falhando o boot com
+      # "cannot have more than 3 search attribute of type Text". Desligar a
+      # criacao dos atributos de demo deixa as 3 vagas livres.
+      SKIP_ADD_CUSTOM_SEARCH_ATTRIBUTES: 'true'
+    volumes:
+      - /opt/multipost/dynamicconfig:/etc/temporal/config/dynamicconfig:ro
+    networks:
+      - multipost_internal
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: any
+        delay: 15s
+      resources:
+        limits:
+          memory: 448M
+
+  multipost-app:
+    # Tag FIXA de proposito. A :latest do GHCR estava 2 meses atrasada e nao
+    # contem o isolamento por perfil (85a95e06), as correcoes de IDOR (e2d6aebc)
+    # nem a aprovacao in-app pelo cliente (358f5e39). 0.5.6-rc.9 == HEAD do main
+    # (9c61fce1) e e a base analisada. Ao atualizar, mudar aqui conscientemente.
+    image: ghcr.io/maiconramos/robo-multipost:0.5.6-rc.9
+    environment:
+      # --- URLs (precisam bater exatamente com o dominio de acesso)
+      MAIN_URL: https://app.postcast.com.br
+      FRONTEND_URL: https://app.postcast.com.br
+      NEXT_PUBLIC_BACKEND_URL: https://app.postcast.com.br/api
+      BACKEND_INTERNAL_URL: http://localhost:3000
+
+      # --- Infra
+      DATABASE_URL: postgresql://multipost:${POSTGRES_PASSWORD}@multipost-db:5432/multipost
+      REDIS_URL: redis://multipost-redis:6379
+      TEMPORAL_ADDRESS: multipost-temporal:7233
+      TEMPORAL_NAMESPACE: default
+      TEMPORAL_TLS: 'false'
+
+      # --- Segredos (do /opt/multipost/.env — NUNCA versionar)
+      JWT_SECRET: ${JWT_SECRET}
+      ENCRYPTION_KEY: ${ENCRYPTION_KEY}
+
+      # --- Postura da instancia: fechada, sem billing, sem marketplace
+      # DISABLE_REGISTRATION comeca 'false' para criar a conta da agencia,
+      # e vira 'true' logo depois (entrada so por convite).
+      DISABLE_REGISTRATION: ${DISABLE_REGISTRATION}
+      DISABLE_BILLING: 'true'
+      DISABLE_MARKETPLACE: 'true'
+      IS_GENERAL: 'true'
+      API_LIMIT: '30'
+
+      # --- Storage local (MinIO/R2 podem entrar depois)
+      STORAGE_PROVIDER: local
+      UPLOAD_DIRECTORY: /uploads
+      NEXT_PUBLIC_UPLOAD_DIRECTORY: /uploads
+
+      # --- IA e Knowledge Base (RAG exige pgvector — por isso a imagem pgvector)
+      AI_CREDITS_MODE: unlimited
+      ENABLE_KNOWLEDGE_BASE: 'true'
+
+      NX_ADD_PLUGINS: 'false'
+    volumes:
+      - multipost_config:/config
+      - multipost_uploads:/uploads
+    networks:
+      - multipost_internal
+      - network_public
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: any
+        delay: 15s
+      resources:
+        limits:
+          # Teto, nao reserva. O RSS real dos tres processos Node em repouso e
+          # de ~100 MB somados; o resto do que o `docker stats` mostra e page
+          # cache (a imagem tem 5.8 GB de filesystem), que o kernel recupera
+          # sozinho. Com 1536M o container vivia a 98% do teto, forcando
+          # reclaim continuo. 2560M da folga para carga real sem reservar nada.
+          memory: 2560M
+      labels:
+        - traefik.enable=true
+        - traefik.docker.network=network_public
+        - traefik.http.routers.multipost.rule=Host(`app.postcast.com.br`)
+        - traefik.http.routers.multipost.entrypoints=websecure
+        - traefik.http.routers.multipost.tls.certresolver=letsencryptresolver
+        - traefik.http.routers.multipost.service=multipost
+        - traefik.http.services.multipost.loadbalancer.server.port=5000
+        - traefik.http.services.multipost.loadbalancer.passHostHeader=true
+
+volumes:
+  multipost_pgdata:
+  multipost_redisdata:
+  multipost_config:
+  multipost_uploads:
+
+networks:
+  multipost_internal:
+    driver: overlay
+    attachable: true
+  network_public:
+    external: true
