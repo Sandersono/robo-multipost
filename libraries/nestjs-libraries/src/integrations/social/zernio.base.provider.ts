@@ -7,6 +7,7 @@ import {
   SocialProvider,
 } from '@gitroom/nestjs-libraries/integrations/social/social.integrations.interface';
 import { makeId } from '@gitroom/nestjs-libraries/services/make.is';
+import { makeSecureId } from '@gitroom/nestjs-libraries/services/make.secure.id';
 import { SocialAbstract } from '@gitroom/nestjs-libraries/integrations/social.abstract';
 import { Integration } from '@prisma/client';
 import Zernio from '@zernio/node';
@@ -44,8 +45,8 @@ export class ZernioBaseProvider
   async generateAuthUrl(
     clientInformation?: ClientInformation
   ): Promise<GenerateAuthUrlResponse> {
-    const state = makeId(20);
-    const codeVerifier = makeId(10);
+    const state = makeSecureId(20);
+    const codeVerifier = makeSecureId(10);
     const zernioApiKey = clientInformation?.instanceUrl;
 
     if (!zernioApiKey) {
