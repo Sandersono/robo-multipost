@@ -45,8 +45,10 @@ git describe --tags --abbrev=0 2>/dev/null || echo "Nenhuma tag encontrada"
 
 ### 6. Saude do CI/CD
 ```bash
-grep -c "maiconramos/robo-multipost" .github/workflows/build-containers.yml
-grep -c "gitroomhq" .github/workflows/build-containers.yml
+# O nome da imagem e DERIVADO de github.repository (nao hardcoded), entao o
+# check e o inverso: NENHUM namespace fixo deve aparecer no workflow.
+grep -c "needs.build-containers-common.outputs.image" .github/workflows/build-containers.yml
+grep -cE "gitroomhq|maiconramos" .github/workflows/build-containers.yml
 ```
 
 ### 7. CHANGELOG
@@ -81,7 +83,7 @@ Nao incluidos em release:   N
   - ...
 
 --- Saude ---
-Registry CI/CD:        OK (maiconramos) / ERRO (gitroomhq)
+Registry CI/CD:        OK (derivado de github.repository) / ERRO (namespace fixo)
 CHANGELOG.md:          Existe / Nao existe
 
 --- Prontidao para Release ---
