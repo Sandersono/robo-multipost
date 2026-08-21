@@ -5,6 +5,7 @@ import clsx from 'clsx';
 import { useVariables } from '@gitroom/react/helpers/variable.context';
 import { useUser } from '@gitroom/frontend/components/layout/user.context';
 import { useT } from '@gitroom/react/translation/get.transation.service.client';
+import { sanitizePostContent } from '@gitroom/helpers/utils/sanitize.post.content';
 const useFaqList = () => {
   const { isGeneral } = useVariables();
   const user = useUser();
@@ -120,7 +121,7 @@ export const FAQSection: FC<{
           }}
           className={`mt-[16px] w-full text-wrap font-[400] text-[16px] text-customColor17 select-text max-w-[450px]`}
           dangerouslySetInnerHTML={{
-            __html: description,
+            __html: sanitizePostContent(description),
           }}
         />
       </div>

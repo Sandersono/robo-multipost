@@ -6,6 +6,7 @@ import { stripHtmlValidation } from '@gitroom/helpers/utils/strip.html.validatio
 import { textSlicer } from '@gitroom/helpers/utils/count.length';
 import { VideoOrImage } from '@gitroom/react/helpers/video.or.image';
 import { useT } from '@gitroom/react/translation/get.transation.service.client';
+import { sanitizePostContent } from '@gitroom/helpers/utils/sanitize.post.content';
 
 export const YoutubePreview: FC<{
   maximumCharacters?: number;
@@ -144,7 +145,7 @@ export const YoutubePreview: FC<{
       </div>
       <div
         className="bg-youtubeBgAction rounded-[12px] p-[12px] text-[12px] font-[400] whitespace-pre-line"
-        dangerouslySetInnerHTML={{ __html: renderContent?.[0]?.text }}
+        dangerouslySetInnerHTML={{ __html: sanitizePostContent(renderContent?.[0]?.text) }}
       />
     </div>
   );

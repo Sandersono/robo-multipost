@@ -9,6 +9,7 @@ import { getPlatformIconPath } from '@gitroom/frontend/components/launches/helpe
 import { useLaunchStore } from '@gitroom/frontend/components/new-launch/store';
 import { stripHtmlValidation } from '@gitroom/helpers/utils/strip.html.validation';
 import { useT } from '@gitroom/react/translation/get.transation.service.client';
+import { sanitizePostContent } from '@gitroom/helpers/utils/sanitize.post.content';
 
 export const GeneralPreviewComponent: FC<{
   maximumCharacters?: number;
@@ -116,7 +117,7 @@ export const GeneralPreviewComponent: FC<{
               <div
                 className={clsx('text-wrap whitespace-pre', 'preview')}
                 dangerouslySetInnerHTML={{
-                  __html: value.text,
+                  __html: sanitizePostContent(value.text),
                 }}
               />
               {!!value?.images?.length && (

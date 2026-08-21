@@ -8,7 +8,7 @@ ocorrência individual).
 |---|---|---|---|
 | `fetch-user-url-without-ssrf-dispatcher` | 34 | não | pendente |
 | `prisma-query-by-id-without-org-filter` | 17 | **sim** | **todos falso positivo** |
-| `dangerously-set-inner-html-unsanitized` | 10 | não | pendente |
+| `dangerously-set-inner-html-unsanitized` | 10 | **sim** | **13 sites corrigidos, 3 falso positivo** |
 | `weak-random-secret-generation` | 5 | **sim** | **todos reais — corrigidos** |
 | `jwt-sign-without-expiry` | 2 | **sim** | **1 corrigido, 1 é o B3 (pendente)** |
 | `jwt-verify-without-algorithm-pin` | 1 | **sim** | **corrigido** |
@@ -61,12 +61,49 @@ produto, não do revisor.
 
 ---
 
+## `dangerously-set-inner-html-unsanitized` — 10 achados, 13 sites corrigidos
+
+**A regra sub-detecta.** Ela pega a forma multilinha (`__html:` em linha
+propria) mas deixa passar a forma inline de uma linha
+(`dangerouslySetInnerHTML={{ __html: x }}`) — por isso TikTok e YouTube nao
+aparecem nos 10 achados. Varredura direta encontrou **16 sites** no frontend.
+
+| Situacao | Sites | Quais |
+|---|---|---|
+| Ja sanitizados antes | 2 | `p/[id]/page.tsx`, `notification.component.tsx` |
+| Sanitiza fora da linha do `__html` | 1 | `agent.chat.tsx` — falso positivo |
+| Sem sanitizacao | 13 | **corrigidos** |
+
+**Por que e real, e nao self-XSS.** O conteudo do post e HTML de verdade — o
+editor e TipTap — por isso os previews usam `dangerouslySetInnerHTML`. So que o
+composer nao serve so para criar: ele **abre post ja salvo** (`useExistingData`
+em `new-launch/editor.tsx`). Entao o HTML que a agencia escreveu renderiza no
+navegador do cliente, e o que o cliente escreveu renderiza no da agencia. E XSS
+armazenado atravessando usuarios — contido ao mesmo perfil (um cliente nao
+injeta no perfil de outro), mas agencia <-> cliente dentro do perfil e
+exatamente a fronteira que a camada de perfis existe para proteger.
+
+**A correcao nao custa formatacao.** A allowlist de `sanitizePostContent`
+(`p, br, strong, u, a, ul, li, h1-h3, span` + `data-mention-*`) casa exatamente
+com as extensoes do TipTap registradas no editor: `Paragraph`, `Bold`,
+`Underline`, `BulletList`, `ListItem`, `Link`, `Heading`, `Mention`. Nao ha
+italico. E e o mesmo sanitizador que a pagina de review ja aplicava ao mesmo
+`content` — os previews passam a concordar com o que o cliente ve, em vez de
+divergir dele.
+
+**`faq.component.tsx` e falso positivo:** o `description` vem de `t(...)`,
+string de traducao do proprio repo, e as unicas tags nas traducoes sao `<a>` e
+`<p>`. Sanitizado mesmo assim — custo zero e mantem a regra limpa.
+
+**Guard:** `apps/backend/src/services/security/xss-innerhtml.guard.spec.ts`
+varre todo `.tsx` do frontend e exige sanitizador em cada `__html`. Mora no
+backend porque `apps/frontend` nao tem projeto jest — mesmo motivo do
+`jwt-hardening.spec.ts`; o spec apenas le arquivos.
+
+---
+
 ## Ainda não triados
 
 - **34 de SSRF** — a regra sinaliza `fetch()` sem `ssrfSafeDispatcher`. Boa parte
   deve ser chamada a host fixo de provider (não URL de usuário), mas precisa ser
   verificada caso a caso.
-- **10 de `innerHTML`** — esta regra só passou a funcionar em 2026-08-19 (antes
-  não compilava), então nunca foi revisada.
-- **5 de PRNG fraco** — o achado B2 foi declarado corrigido no CHANGELOG; vale
-  conferir se são resíduos ou pontos que escaparam.
