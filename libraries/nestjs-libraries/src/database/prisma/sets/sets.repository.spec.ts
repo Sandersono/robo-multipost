@@ -110,5 +110,23 @@ describe('SetsRepository', () => {
       );
       expect(result).toEqual({ id: 'new-id' });
     });
+
+    // Isolamento por perfil: o `where` do upsert decide QUAL registro e
+    // sobrescrito. Sem o perfil ali, quem conhecesse o id do set do perfil
+    // vizinho reescrevia o nome e o conteudo dele — `body.id` vem do usuario
+    // (POST/PUT /sets). Mesmo defeito ja corrigido em webhooks, autopost e
+    // assinaturas.
+    it('nao permite sobrescrever set de outro perfil pelo id', async () => {
+      prismaMock.model.sets.upsert.mockResolvedValue({ id: 'set-1' } as any);
+
+      await repository.createSet(
+        'org-123',
+        { id: 'set-do-perfil-B', name: 'n', content: 'c' } as any,
+        'profile-A'
+      );
+
+      const where = prismaMock.model.sets.upsert.mock.calls[0][0].where;
+      expect(where.profileId).toBe('profile-A');
+    });
   });
 });

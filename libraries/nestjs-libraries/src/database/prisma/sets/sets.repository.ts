@@ -43,6 +43,10 @@ export class SetsRepository {
       where: {
         id: body.id || uuidv4(),
         organizationId: orgId,
+        // `body.id` vem do usuario. Sem o perfil aqui, quem conhecesse o id do
+        // set do perfil vizinho reescrevia nome e conteudo dele. Fora do
+        // perfil, o upsert cai no `create`.
+        ...(profileId ? { profileId } : {}),
       },
       create: {
         id: body.id || uuidv4(),
