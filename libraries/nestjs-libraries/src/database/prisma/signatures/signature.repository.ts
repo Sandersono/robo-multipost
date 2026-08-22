@@ -32,15 +32,30 @@ export class SignatureRepository {
       ...(profileId ? { profileId } : {}),
     };
 
-    const { id: updatedId } = await this._signatures.model.signatures.upsert({
-      where: { id: id || uuidv4(), organizationId: orgId },
-      update: values,
-      create: values,
-    });
+    const { id: updatedId, profileId: updatedProfileId } =
+      await this._signatures.model.signatures.upsert({
+        where: {
+          id: id || uuidv4(),
+          organizationId: orgId,
+          // PUT /signatures/:id passa o id da rota, e o ramo `update` grava o
+          // profileId ativo. Sem o perfil aqui, quem conhecesse o id da
+          // assinatura do vizinho a reescrevia e a trazia para si.
+          ...(profileId ? { profileId } : {}),
+        },
+        update: values,
+        create: values,
+      });
 
     if (values.autoAdd) {
       await this._signatures.model.signatures.updateMany({
-        where: { organizationId: orgId, id: { not: updatedId } },
+        where: {
+          organizationId: orgId,
+          id: { not: updatedId },
+          // "Padrao" e por PERFIL. Sem este filtro, um cliente marcando a
+          // propria assinatura como padrao desmarcava a de TODOS os outros
+          // perfis da organizacao — no fluxo normal da tela, sem ataque nenhum.
+          profileId: updatedProfileId ?? null,
+        },
         data: { autoAdd: false },
       });
     }

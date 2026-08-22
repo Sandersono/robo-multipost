@@ -15,7 +15,7 @@ export function createMock<T>(): MockProxy<T> & T {
 /**
  * Cria um mock de PrismaRepository<T> com a estrutura model.[table].
  * Retorna um objeto com model.[tableName] contendo mocks de todos
- * os metodos Prisma (findMany, findFirst, create, update, delete, count, upsert).
+ * os metodos Prisma (findMany, findFirst, create, update, updateMany, delete, count, upsert).
  *
  * Uso:
  *   const prismaMock = createPrismaRepositoryMock('sets');
@@ -29,7 +29,9 @@ export function createPrismaRepositoryMock<TableName extends string>(
     findFirst: jest.fn(),
     findUnique: jest.fn(),
     create: jest.fn(),
+    createMany: jest.fn(),
     update: jest.fn(),
+    updateMany: jest.fn(),
     upsert: jest.fn(),
     delete: jest.fn(),
     deleteMany: jest.fn(),
