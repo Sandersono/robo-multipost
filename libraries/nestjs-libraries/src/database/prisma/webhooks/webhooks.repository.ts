@@ -58,6 +58,10 @@ export class WebhooksRepository {
       where: {
         id: body.id || uuidv4(),
         organizationId: orgId,
+        // Sem o perfil aqui, quem conhecesse o id de um webhook do perfil
+        // vizinho reescrevia a URL dele e o trazia para si — o ramo `update`
+        // grava o profileId ativo. Fora do perfil, o upsert cai no `create`.
+        ...(profileId ? { profileId } : {}),
       },
       create: {
         organizationId: orgId,
