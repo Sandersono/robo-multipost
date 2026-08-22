@@ -83,6 +83,10 @@ export class AutopostRepository {
       where: {
         id: id || uuidv4(),
         organizationId: orgId,
+        // PUT /autoposts/:id passa o id da URL direto. Sem o perfil, dava para
+        // reescrever url/titulo/conteudo do autopost de outro perfil, que
+        // seguiria publicando nos canais DELE com conteudo alheio.
+        ...(profileId ? { profileId } : {}),
       },
       create: {
         organizationId: orgId,
