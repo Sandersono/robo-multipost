@@ -1889,5 +1889,8 @@
   "awaiting_client_approval": "Awaiting client approval",
   "client_whatsapp": "Client WhatsApp",
   "client_whatsapp_placeholder": "55 11 99999-8888",
-  "client_whatsapp_hint": "Used in the awaiting-approval notice. Leave empty to skip notifying."
+  "client_whatsapp_hint": "Used in the awaiting-approval notice. Leave empty to skip notifying.",
+  "generate_invite_link": "Generate link",
+  "invite_send_by_email": "Send invitation by email",
+  "invite_link_hint": "— uncheck to copy the link and send it yourself"
 }

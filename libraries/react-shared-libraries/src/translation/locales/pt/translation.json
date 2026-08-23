@@ -1889,5 +1889,8 @@
   "awaiting_client_approval": "Aguardando aprovação do cliente",
   "client_whatsapp": "WhatsApp do cliente",
   "client_whatsapp_placeholder": "55 11 99999-8888",
-  "client_whatsapp_hint": "Usado no aviso de post aguardando aprovação. Deixe vazio para não avisar."
+  "client_whatsapp_hint": "Usado no aviso de post aguardando aprovação. Deixe vazio para não avisar.",
+  "generate_invite_link": "Gerar link",
+  "invite_send_by_email": "Enviar convite por e-mail",
+  "invite_link_hint": "— desmarque para copiar o link e enviar você mesmo"
 }

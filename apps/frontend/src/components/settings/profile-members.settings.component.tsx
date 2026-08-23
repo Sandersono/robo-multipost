@@ -9,6 +9,7 @@ import { Button } from '@gitroom/react/form/button';
 import { useCurrentProfile } from '@gitroom/frontend/hooks/use-current-profile.hook';
 import { useProfilePermissions } from '@gitroom/frontend/hooks/use-profile-permissions';
 import { deleteDialog } from '@gitroom/react/helpers/delete.dialog';
+import copy from 'copy-to-clipboard';
 
 type ProfileRole = 'OWNER' | 'MANAGER' | 'EDITOR' | 'VIEWER';
 
@@ -38,6 +39,9 @@ export const ProfileMembersSettingsSection: FC = () => {
   const [email, setEmail] = useState('');
   const [inviteRole, setInviteRole] = useState<ProfileRole>('EDITOR');
   const [loading, setLoading] = useState(false);
+  // Entrega do convite: por e-mail (padrao) ou link copiado. Nao muda
+  // quem e o convidado — o e-mail segue obrigatorio nos dois modos.
+  const [sendEmail, setSendEmail] = useState(true);
 
   const roleLabel = useCallback(
     (role: ProfileRole) =>
@@ -67,6 +71,11 @@ export const ProfileMembersSettingsSection: FC = () => {
     { revalidateOnFocus: false }
   );
 
+  // O e-mail e SEMPRE exigido, mesmo quando o link e copiado em vez de
+  // enviado: e ele que fica no token e trava o registro (email-lock). Convite
+  // por link SEM e-mail e recusado quando DISABLE_REGISTRATION=true — veja
+  // AuthService.inviteAllowsRegistration, que nega o bypass sem email casando.
+  // O checkbox decide apenas a ENTREGA, nunca a identidade do convidado.
   const invite = useCallback(async () => {
     if (!profileId || !email.trim()) {
       return;
@@ -77,7 +86,7 @@ export const ProfileMembersSettingsSection: FC = () => {
       body: JSON.stringify({
         email: email.trim(),
         profileRole: inviteRole,
-        sendEmail: true,
+        sendEmail,
       }),
     });
     setLoading(false);
@@ -85,10 +94,23 @@ export const ProfileMembersSettingsSection: FC = () => {
       toast.show(t('profile_member_invite_failed', 'Não foi possível convidar'), 'warning');
       return;
     }
+
+    if (!sendEmail) {
+      const { url } = await res.json();
+      copy(url);
+      setEmail('');
+      toast.show(
+        t('link_copied_to_clipboard', 'Link copiado para a área de transferência'),
+        'success'
+      );
+      await mutate();
+      return;
+    }
+
     setEmail('');
     toast.show(t('profile_member_invited', 'Convite enviado'), 'success');
     await mutate();
-  }, [profileId, email, inviteRole, mutate, t, toast]);
+  }, [profileId, email, inviteRole, sendEmail, mutate, t, toast]);
 
   const remove = useCallback(
     (m: Member) => async () => {
@@ -144,9 +166,28 @@ export const ProfileMembersSettingsSection: FC = () => {
             ))}
           </select>
           <Button loading={loading} onClick={invite}>
-            {t('invite', 'Convidar')}
+            {sendEmail
+              ? t('invite', 'Convidar')
+              : t('generate_invite_link', 'Gerar link')}
           </Button>
         </div>
+
+        <label className="flex items-center gap-[8px] text-[13px] cursor-pointer -mt-[12px]">
+          <input
+            type="checkbox"
+            checked={sendEmail}
+            onChange={(e) => setSendEmail(e.target.checked)}
+          />
+          <span>
+            {t('invite_send_by_email', 'Enviar convite por e-mail')}
+          </span>
+          <span className="text-customColor18">
+            {t(
+              'invite_link_hint',
+              '— desmarque para copiar o link e enviar você mesmo'
+            )}
+          </span>
+        </label>
 
         <div className="flex flex-col gap-[12px]">
           {(data || []).map((m) => (
