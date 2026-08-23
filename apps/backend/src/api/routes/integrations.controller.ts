@@ -570,27 +570,44 @@ export class IntegrationsController {
   @Get('/:id/plugs')
   async getPlugsByIntegrationId(
     @Param('id') id: string,
-    @GetOrgFromRequest() org: Organization
+    @GetOrgFromRequest() org: Organization,
+    @GetProfileFromRequest() profile: Profile | null
   ) {
-    return this._integrationService.getPlugsByIntegrationId(org.id, id);
+    return this._integrationService.getPlugsByIntegrationId(
+      org.id,
+      id,
+      profile?.id
+    );
   }
 
   @Post('/:id/plugs')
   async postPlugsByIntegrationId(
     @Param('id') id: string,
     @GetOrgFromRequest() org: Organization,
+    @GetProfileFromRequest() profile: Profile | null,
     @Body() body: PlugDto
   ) {
-    return this._integrationService.createOrUpdatePlug(org.id, id, body);
+    return this._integrationService.createOrUpdatePlug(
+      org.id,
+      id,
+      body,
+      profile?.id
+    );
   }
 
   @Put('/plugs/:id/activate')
   async changePlugActivation(
     @Param('id') id: string,
     @GetOrgFromRequest() org: Organization,
+    @GetProfileFromRequest() profile: Profile | null,
     @Body('status') status: boolean
   ) {
-    return this._integrationService.changePlugActivation(org.id, id, status);
+    return this._integrationService.changePlugActivation(
+      org.id,
+      id,
+      status,
+      profile?.id
+    );
   }
 
   @Get('/telegram/updates')

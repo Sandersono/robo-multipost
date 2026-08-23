@@ -323,4 +323,78 @@ describe('IntegrationService', () => {
       expect(upsert).toHaveBeenCalledTimes(1);
     });
   });
+
+  // Plugs sao automacoes penduradas num CANAL, e canal pertence a um perfil.
+  // As tres rotas (GET/POST /integrations/:id/plugs e PUT /plugs/:id/activate)
+  // escopavam so por organizacao: quem soubesse o id do canal de outro perfil
+  // lia e criava automacao NO CANAL DELE. O helper validateIntegrationProfile
+  // ja existia e era testado, mas nao tinha nenhum chamador.
+  describe('plugs — escopo por perfil', () => {
+    it('getPlugsByIntegrationId valida o perfil antes de listar', async () => {
+      const repo = {
+        getIntegrationById: jest
+          .fn()
+          .mockResolvedValue({ id: 'int-1', profileId: 'prof-B' }),
+        getPlugsByIntegrationId: jest.fn().mockResolvedValue([]),
+      };
+      const service = makeService(repo);
+
+      await expect(
+        service.getPlugsByIntegrationId('org-1', 'int-1', 'prof-A')
+      ).rejects.toThrow('Integration does not belong to this profile');
+      expect(repo.getPlugsByIntegrationId).not.toHaveBeenCalled();
+    });
+
+    it('createOrUpdatePlug valida o perfil antes de gravar', async () => {
+      const repo = {
+        getIntegrationById: jest
+          .fn()
+          .mockResolvedValue({ id: 'int-1', profileId: 'prof-B' }),
+        createOrUpdatePlug: jest.fn().mockResolvedValue({ activated: true }),
+      };
+      const service = makeService(repo);
+
+      await expect(
+        service.createOrUpdatePlug(
+          'org-1',
+          'int-1',
+          { func: 'f', fields: [] } as any,
+          'prof-A'
+        )
+      ).rejects.toThrow('Integration does not belong to this profile');
+      expect(repo.createOrUpdatePlug).not.toHaveBeenCalled();
+    });
+
+    it('changePlugActivation resolve o canal do plug e valida o perfil', async () => {
+      const repo = {
+        getPlug: jest
+          .fn()
+          .mockResolvedValue({ id: 'plug-1', integrationId: 'int-1' }),
+        getIntegrationById: jest
+          .fn()
+          .mockResolvedValue({ id: 'int-1', profileId: 'prof-B' }),
+        changePlugActivation: jest.fn(),
+      };
+      const service = makeService(repo);
+
+      await expect(
+        service.changePlugActivation('org-1', 'plug-1', true, 'prof-A')
+      ).rejects.toThrow('Integration does not belong to this profile');
+      expect(repo.changePlugActivation).not.toHaveBeenCalled();
+    });
+
+    it('deixa passar quando o canal e do proprio perfil', async () => {
+      const repo = {
+        getIntegrationById: jest
+          .fn()
+          .mockResolvedValue({ id: 'int-1', profileId: 'prof-A' }),
+        getPlugsByIntegrationId: jest.fn().mockResolvedValue([{ id: 'p1' }]),
+      };
+      const service = makeService(repo);
+
+      await expect(
+        service.getPlugsByIntegrationId('org-1', 'int-1', 'prof-A')
+      ).resolves.toEqual([{ id: 'p1' }]);
+    });
+  });
 });
