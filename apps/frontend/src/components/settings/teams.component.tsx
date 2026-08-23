@@ -122,13 +122,17 @@ export const AddMember = () => {
     <FormProvider {...form}>
       <form onSubmit={form.handleSubmit(submit)}>
         <div className="relative flex gap-[10px] flex-col flex-1 p-[16px] pt-0">
-          {sendEmail && (
-            <Input
-              label={t('label_email', 'Email')}
-              placeholder={t('enter_email', 'Enter email')}
-              name="email"
-            />
-          )}
+          {/* O e-mail fica visivel TAMBEM no modo "copiar link": ele vai no
+              token e e o que trava o registro (email-lock). Convite por link
+              sem e-mail e recusado quando DISABLE_REGISTRATION=true — a
+              AuthService.inviteAllowsRegistration nega o bypass sem e-mail
+              casando com o do registrante. Escondendo o campo, o link saia
+              morto justamente na instancia fechada, que e o caso de uso. */}
+          <Input
+            label={t('label_email', 'Email')}
+            placeholder={t('enter_email', 'Enter email')}
+            name="email"
+          />
           <Select label={t('label_role', 'Role')} name="role">
             <option value="">{t('select_role', 'Select Role')}</option>
             {roles.map((role) => (
