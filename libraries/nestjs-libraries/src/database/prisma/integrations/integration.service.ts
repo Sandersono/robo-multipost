@@ -578,7 +578,15 @@ export class IntegrationService {
     return this._integrationRepository.customers(orgId);
   }
 
-  getPlugsByIntegrationId(org: string, integrationId: string) {
+  // Plug e automacao pendurada num CANAL, e canal pertence a um perfil. Sem
+  // esta validacao, GET /integrations/:id/plugs lia as automacoes do canal de
+  // outro cliente para quem soubesse o id.
+  async getPlugsByIntegrationId(
+    org: string,
+    integrationId: string,
+    profileId?: string
+  ) {
+    await this.validateIntegrationProfile(org, integrationId, profileId);
     return this._integrationRepository.getPlugsByIntegrationId(
       org,
       integrationId
@@ -689,8 +697,12 @@ export class IntegrationService {
   async createOrUpdatePlug(
     orgId: string,
     integrationId: string,
-    body: PlugDto
+    body: PlugDto,
+    profileId?: string
   ) {
+    // Escrita: sem isto, dava para criar automacao NO CANAL de outro perfil.
+    await this.validateIntegrationProfile(orgId, integrationId, profileId);
+
     const { activated } = await this._integrationRepository.createOrUpdatePlug(
       orgId,
       integrationId,
@@ -702,7 +714,27 @@ export class IntegrationService {
     };
   }
 
-  async changePlugActivation(orgId: string, plugId: string, status: boolean) {
+  async changePlugActivation(
+    orgId: string,
+    plugId: string,
+    status: boolean,
+    profileId?: string
+  ) {
+    // A rota recebe o id do PLUG, nao o do canal: resolve o canal antes de
+    // validar. `getPlug` busca so por id (sem org), mas quem valida e o
+    // validateIntegrationProfile logo abaixo, que exige org + perfil.
+    if (profileId) {
+      const plug = await this._integrationRepository.getPlug(plugId);
+      if (!plug) {
+        throw new Error('Plug not found');
+      }
+      await this.validateIntegrationProfile(
+        orgId,
+        plug.integrationId,
+        profileId
+      );
+    }
+
     const { id, integrationId, plugFunction } =
       await this._integrationRepository.changePlugActivation(
         orgId,

@@ -42,15 +42,14 @@ const ALLOWLIST: Record<string, string> = {
   'subscriptions/subscription.repository.ts::createOrUpdateSubscription':
     'assinatura/billing e da organizacao; perfil nao se aplica',
 
-  // PENDENTE — nao e excecao legitima, e lacuna conhecida e ainda aberta.
-  // POST /integrations/:id/plugs recebe o id da integracao pela rota e NAO
-  // injeta perfil nenhum (o controller nem usa @GetProfileFromRequest), entao
-  // da para criar automacao no canal de outro perfil sabendo o id. Corrigir
-  // exige escopar as tres rotas de plugs (GET, POST e activate) em
-  // controller + service + repositorio, e nao cabia no mesmo PR que fechou a
-  // classe de upsert. Esta aqui para o guard nao mentir sobre o estado atual.
+  // Plug pendura num canal, e o canal e que tem perfil — a chave do upsert e
+  // composta (plugFunction_integrationId), entao o filtro nao cabe no `where`.
+  // A validacao vive no service: IntegrationService.createOrUpdatePlug chama
+  // validateIntegrationProfile antes de gravar, e o mesmo vale para
+  // getPlugsByIntegrationId e changePlugActivation. Mesmo padrao do
+  // knowledge.service, que checa doc.profileId antes de tocar no documento.
   'integrations/integration.repository.ts::createOrUpdatePlug':
-    'PENDENTE: superficie de plugs sem escopo de perfil',
+    'validado no service por validateIntegrationProfile',
 };
 
 const blocoBalanceado = (src: string, inicio: number): string => {
