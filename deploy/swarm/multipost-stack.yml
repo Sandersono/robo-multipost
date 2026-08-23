@@ -99,8 +99,8 @@ services:
     # ghcr.io/${GITHUB_REPOSITORY,,} e usa a tag sem o "v" inicial
     # (CONTAINERVER="${GITHUB_REF_NAME#v}"). Ao atualizar, mude aqui
     # conscientemente e confira o que esta no ar com:
-    #   docker service inspect multipost_multipost-app     #     --format '{{.Spec.TaskTemplate.ContainerSpec.Image}}'
-    image: ghcr.io/sandersono/robo-multipost:0.5.6-rc.12
+    #   docker service inspect multipost_multipost-app --format '{{.Spec.TaskTemplate.ContainerSpec.Image}}'
+    image: ghcr.io/sandersono/robo-multipost:0.5.6-rc.13
     environment:
       # --- URLs (precisam bater exatamente com o dominio de acesso)
       MAIN_URL: https://app.postcast.com.br
