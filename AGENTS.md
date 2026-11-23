@@ -20,3 +20,11 @@ docs/, translations) stay in pt-BR per project convention.
 
 Product and architecture documentation lives in [`docs/`](docs/),
 referenced by the `CLAUDE.md` files but not the same thing.
+
+## Memória do projeto
+
+Decisões, armadilhas e contexto acumulado vivem fora do repo, em `C:\Dev\memoria\` (git privado, compartilhado entre Claude, Codex e outros agentes).
+
+- No início da sessão, leia `C:\Dev\memoria\multipost\MEMORY.md` (índice) e abra só as memórias relevantes. Preferências gerais estão em `C:\Dev\memoria\_geral\`.
+- Uma decisão com porquê, um defeito medido ou uma regra nova: grave como memória seguindo `C:\Dev\memoria\README.md` e faça commit e push lá (o remoto é o repositório privado `Sandersono/memoria`; sem push, a memória fica só nesta máquina).
+- Memória diz o que era verdade quando foi escrita: se citar arquivo, função ou flag, confira que ainda existe antes de agir.
