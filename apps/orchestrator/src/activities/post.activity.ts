@@ -12,6 +12,7 @@ import {
 import { Integration, Post, State } from '@prisma/client';
 import { stripHtmlValidation } from '@gitroom/helpers/utils/strip.html.validation';
 import { IntegrationManager } from '@gitroom/nestjs-libraries/integrations/integration.manager';
+import { postTaskQueue } from '@gitroom/nestjs-libraries/temporal/post.task.queue';
 import { ssrfSafeDispatcher } from '@gitroom/nestjs-libraries/dtos/webhooks/ssrf.safe.dispatcher';
 import { AuthTokenDetails } from '@gitroom/nestjs-libraries/integrations/social/social.integrations.interface';
 import { RefreshIntegrationService } from '@gitroom/nestjs-libraries/integrations/refresh.integration.service';
@@ -63,11 +64,7 @@ export class PostActivity {
           signalArgs: [],
           args: [
             {
-              taskQueue: post.integration.providerIdentifier.startsWith('zernio-')
-                ? 'main'
-                : post.integration.providerIdentifier
-                    .split('-')[0]
-                    .toLowerCase(),
+              taskQueue: postTaskQueue(post.integration.providerIdentifier),
               postId: post.id,
               organizationId: post.organizationId,
             },

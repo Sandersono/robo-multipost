@@ -1,4 +1,5 @@
 import { TemporalModule } from 'nestjs-temporal-core';
+import { hasOwnWorker } from '@gitroom/nestjs-libraries/temporal/post.task.queue';
 import { socialIntegrationList } from '@gitroom/nestjs-libraries/integrations/integration.manager';
 
 export const getTemporalModule = (
@@ -23,6 +24,7 @@ export const getTemporalModule = (
             ...socialIntegrationList,
           ]
             .filter((f) => f.identifier.indexOf('-') === -1)
+            .filter((f) => hasOwnWorker(f.identifier))
             .map((integration) => ({
               taskQueue: integration.identifier.split('-')[0],
               workflowsPath: path!,

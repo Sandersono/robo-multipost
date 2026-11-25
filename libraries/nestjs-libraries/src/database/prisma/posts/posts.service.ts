@@ -8,6 +8,7 @@ import { PostsRepository } from '@gitroom/nestjs-libraries/database/prisma/posts
 import { CreatePostDto } from '@gitroom/nestjs-libraries/dtos/posts/create.post.dto';
 import dayjs from 'dayjs';
 import { IntegrationManager } from '@gitroom/nestjs-libraries/integrations/integration.manager';
+import { postTaskQueue } from '@gitroom/nestjs-libraries/temporal/post.task.queue';
 import {
   CommentKind,
   Integration,
@@ -808,9 +809,7 @@ export class PostsService {
 
       if (body.type !== 'update') {
         this.startWorkflow(
-          post.settings.__type.startsWith('zernio-')
-            ? 'main'
-            : post.settings.__type.split('-')[0].toLowerCase(),
+          postTaskQueue(post.settings.__type),
           posts[0].id,
           orgId,
           posts[0].state
@@ -903,9 +902,7 @@ export class PostsService {
     if (action === 'schedule') {
       try {
         await this.startWorkflow(
-          getPostById.integration.providerIdentifier.startsWith('zernio-')
-            ? 'main'
-            : getPostById.integration.providerIdentifier.split('-')[0].toLowerCase(),
+          postTaskQueue(getPostById.integration.providerIdentifier),
           getPostById.id,
           orgId,
           getPostById.state === 'DRAFT' ? 'DRAFT' : 'QUEUE'
