@@ -54,7 +54,8 @@ describe('StartupMigrationService.cleanupExpiredUnmatchedComments', () => {
         ensureRefreshTokensCronWorkflow: jest
           .fn()
           .mockResolvedValue(undefined),
-      } as any
+      } as any,
+      { ensureWorkflow: jest.fn().mockResolvedValue(undefined) } as any
     );
   });
 
@@ -125,7 +126,8 @@ describe('StartupMigrationService.backfillFlowsToDefaultProfile', () => {
         ensureRefreshTokensCronWorkflow: jest
           .fn()
           .mockResolvedValue(undefined),
-      } as any
+      } as any,
+      { ensureWorkflow: jest.fn().mockResolvedValue(undefined) } as any
     );
   });
 
@@ -189,7 +191,8 @@ describe('StartupMigrationService — reconciliacoes que dependem do Temporal', 
     service: new StartupMigrationService(
       buildPrisma() as any,
       { reconcileWorkflows } as any,
-      { ensureRefreshTokensCronWorkflow: ensure } as any
+      { ensureRefreshTokensCronWorkflow: ensure } as any,
+      { ensureWorkflow: jest.fn().mockResolvedValue(undefined) } as any
     ),
     ensure,
     reconcileWorkflows,
