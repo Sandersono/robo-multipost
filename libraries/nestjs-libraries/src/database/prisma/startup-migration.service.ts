@@ -7,6 +7,7 @@ import {
 import { PrismaService } from './prisma.service';
 import { RepostService } from './repost/repost.service';
 import { RefreshIntegrationService } from '@gitroom/nestjs-libraries/integrations/refresh.integration.service';
+import { OperationsDigestService } from '@gitroom/nestjs-libraries/services/operations-digest.service';
 
 @Injectable()
 export class StartupMigrationService
@@ -17,7 +18,8 @@ export class StartupMigrationService
   constructor(
     private readonly prisma: PrismaService,
     private readonly repostService: RepostService,
-    private readonly refreshIntegrationService: RefreshIntegrationService
+    private readonly refreshIntegrationService: RefreshIntegrationService,
+    private readonly operationsDigestService: OperationsDigestService
   ) {}
 
   /**
@@ -51,6 +53,29 @@ export class StartupMigrationService
   async onApplicationBootstrap() {
     await this.reconcileRepostWorkflows();
     await this.reconcileRefreshTokensCron();
+    await this.reconcileOperationsDigest();
+  }
+
+  /**
+   * Self-heal do resumo operacional (workflow SINGLETON `operations-digest`).
+   * Idempotente via workflowIdConflictPolicy USE_EXISTING (no-op quando ja
+   * roda). Cadencia por OPERATIONS_DIGEST_INTERVAL_HOURS (default 8h = 3x
+   * por dia). Mesmo swallow-and-log dos demais passos: o resumo nao subir
+   * nao pode derrubar o boot.
+   */
+  private async reconcileOperationsDigest() {
+    try {
+      const intervalHours = Number(
+        process.env.OPERATIONS_DIGEST_INTERVAL_HOURS || 8
+      );
+      await this.operationsDigestService.ensureWorkflow(
+        Number.isFinite(intervalHours) && intervalHours > 0
+          ? intervalHours
+          : 8
+      );
+    } catch (error) {
+      this.logger.error('reconcileOperationsDigest falhou:', error);
+    }
   }
 
   /**
