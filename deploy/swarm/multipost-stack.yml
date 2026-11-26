@@ -157,8 +157,20 @@ services:
           # de ~100 MB somados; o resto do que o `docker stats` mostra e page
           # cache (a imagem tem 5.8 GB de filesystem), que o kernel recupera
           # sozinho. Com 1536M o container vivia a 98% do teto, forcando
-          # reclaim continuo. 2560M da folga para carga real sem reservar nada.
+          # reclaim continuo.
+          #
+          # 1792M + 0.75 CPU e o teto reduzido em 25/11/2026: o manager01 e
+          # COMPARTILHADO com o Chatwoot, que tem prioridade. Com
+          # TEMPORAL_WORKER_PROVIDERS restrito (ver acima) o app estabilizou em
+          # ~1463 MB, entao 1792M da folga real sem disputar RAM com o Chatwoot.
+          # Nao suba este teto sem antes olhar o `free -m` do host.
+          #
+          # O limite de CPU estava aplicado SO em runtime (`docker service
+          # update`), fora deste arquivo — um `stack deploy` o apagava em
+          # silencio e devolvia CPU ilimitada ao app. Declarado aqui para o
+          # arquivo voltar a ser a fonte da verdade.
           memory: 1792M
+          cpus: '0.75'
       labels:
         - traefik.enable=true
         - traefik.docker.network=network_public
