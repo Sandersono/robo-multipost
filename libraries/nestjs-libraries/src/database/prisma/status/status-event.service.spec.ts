@@ -12,8 +12,14 @@ jest.mock('@gitroom/nestjs-libraries/upload/upload.factory', () => ({
 
 import { StatusEventService } from './status-event.service';
 
-const build = (repo: any, profiles: any) =>
-  new StatusEventService(repo as any, profiles as any);
+// Notificador default: resolve sem fazer nada, para os testes de gravacao nao
+// se preocuparem com o alerta. Os testes do alerta passam o proprio dublê.
+const build = (repo: any, profiles: any, notifier?: any) =>
+  new StatusEventService(
+    repo as any,
+    profiles as any,
+    (notifier ?? { notifyStatusEvent: jest.fn().mockResolvedValue(undefined) }) as any
+  );
 
 describe('StatusEventService', () => {
   describe('record (fail-soft)', () => {
@@ -32,6 +38,64 @@ describe('StatusEventService', () => {
       const arg = repo.create.mock.calls[0][0];
       expect(arg.message).toHaveLength(500);
       expect(arg.type).toBe('POST_FAILED');
+    });
+
+    it('avisa para fora com a mesma mensagem capada que foi gravada', async () => {
+      const repo = { create: jest.fn().mockResolvedValue({ id: 'e1' }) };
+      const notifier = {
+        notifyStatusEvent: jest.fn().mockResolvedValue(undefined),
+      };
+      const service = build(repo, {}, notifier);
+
+      await service.record({
+        organizationId: 'org-1',
+        type: 'CHANNEL_DISCONNECT',
+        severity: 'CRITICAL',
+        message: 'y'.repeat(900),
+        integrationId: 'int-1',
+      });
+
+      const avisado = notifier.notifyStatusEvent.mock.calls[0][0];
+      expect(avisado.message).toHaveLength(500);
+      expect(avisado.type).toBe('CHANNEL_DISCONNECT');
+      expect(avisado.integrationId).toBe('int-1');
+    });
+
+    // O aviso e o que chega em quem opera. Se o historico falhou mas o canal
+    // caiu de verdade, o alerta ainda tem de sair.
+    it('avisa mesmo quando o insert do historico falha', async () => {
+      const repo = {
+        create: jest.fn().mockRejectedValue(new Error('db down')),
+      };
+      const notifier = {
+        notifyStatusEvent: jest.fn().mockResolvedValue(undefined),
+      };
+      const service = build(repo, {}, notifier);
+
+      await service.record({
+        organizationId: 'org-1',
+        type: 'CHANNEL_DISCONNECT',
+        severity: 'CRITICAL',
+      });
+
+      expect(notifier.notifyStatusEvent).toHaveBeenCalledTimes(1);
+    });
+
+    it('NAO propaga erro quando o aviso falha', async () => {
+      const repo = { create: jest.fn().mockResolvedValue({ id: 'e1' }) };
+      const notifier = {
+        notifyStatusEvent: jest.fn().mockRejectedValue(new Error('n8n down')),
+      };
+      const service = build(repo, {}, notifier);
+
+      await expect(
+        service.record({
+          organizationId: 'org-1',
+          type: 'POST_FAILED',
+          severity: 'CRITICAL',
+        })
+      ).resolves.toBeUndefined();
+      expect(repo.create).toHaveBeenCalledTimes(1);
     });
 
     it('NAO propaga erro quando o insert falha (nunca derruba a operacao real)', async () => {

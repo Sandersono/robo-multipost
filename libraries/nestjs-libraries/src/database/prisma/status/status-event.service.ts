@@ -5,6 +5,7 @@ import {
   StatusEventRepository,
 } from '@gitroom/nestjs-libraries/database/prisma/status/status-event.repository';
 import { ProfileRepository } from '@gitroom/nestjs-libraries/database/prisma/profiles/profile.repository';
+import { StatusAlertNotifierService } from '@gitroom/nestjs-libraries/services/status-alert-notifier.service';
 import { StatusHistoryQueryDto } from '@gitroom/nestjs-libraries/dtos/status/status-history.query.dto';
 import {
   StatusHistoryItem,
@@ -26,7 +27,8 @@ export class StatusEventService {
 
   constructor(
     private _statusEventRepository: StatusEventRepository,
-    private _profileRepository: ProfileRepository
+    private _profileRepository: ProfileRepository,
+    private _statusAlertNotifier: StatusAlertNotifierService
   ) {}
 
   /**
@@ -37,14 +39,30 @@ export class StatusEventService {
    * cru da exceção.
    */
   async record(input: RecordStatusEventInput): Promise<void> {
+    const message = this.capMessage(input.message);
+
     try {
-      await this._statusEventRepository.create({
-        ...input,
-        message: this.capMessage(input.message),
-      });
+      await this._statusEventRepository.create({ ...input, message });
     } catch (err) {
       this.logger.error(
         `Falha ao registrar StatusEvent (${input.type}): ${
+          (err as Error)?.name
+        }: ${(err as Error)?.message}`
+      );
+    }
+
+    // Alerta para fora (webhook do perfil -> n8n -> WhatsApp). Quem opera a
+    // agencia olha a plataforma 2 ou 3 vezes por dia; sem isto, canal mudo e
+    // post que falhou so aparecem na proxima vez que alguem abrir a tela.
+    //
+    // Try/catch PROPRIO e independente do insert de proposito: se o banco
+    // recusou a linha do historico mas o canal realmente caiu, o aviso ainda
+    // tem de sair — e um alerta que falha nunca pode mascarar o insert.
+    try {
+      await this._statusAlertNotifier.notifyStatusEvent({ ...input, message });
+    } catch (err) {
+      this.logger.error(
+        `Falha ao avisar StatusEvent (${input.type}): ${
           (err as Error)?.name
         }: ${(err as Error)?.message}`
       );
