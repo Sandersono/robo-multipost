@@ -39,6 +39,16 @@ import { StatusEventService } from '@gitroom/nestjs-libraries/database/prisma/st
 import { decryptIntegrationToken } from '@gitroom/nestjs-libraries/crypto/integration-token.helper';
 import * as crypto from 'crypto';
 
+export type WebhookCheckResult = {
+  ok: boolean;
+  error?: string;
+  // Aviso nao bloqueante (ex.: inscricao da Pagina nao pode ser lida).
+  warning?: string;
+  subscribed?: boolean;
+  // true/false = inscricao da Pagina no app confirmada/ausente; null = nao lida.
+  pageSubscribed?: boolean | null;
+};
+
 // Janela de 24h da Meta para trocar mensagens apos interacao do usuario.
 // Usamos 23h para dar margem de seguranca e nao tentar DM expirado.
 const POSTBACK_EXPIRATION_MS = 23 * 60 * 60 * 1000;
@@ -174,10 +184,103 @@ export class FlowsService {
     return this._flowsRepository.createFlow(orgId, body, resolvedProfileId);
   }
 
+  /**
+   * Checagem em duas camadas:
+   *   1. app: o webhook do Instagram esta configurado no app Meta
+   *      (`/{app-id}/subscriptions`) — `checkAppWebhook`;
+   *   2. Pagina: a Pagina ligada ao Instagram esta inscrita no app
+   *      (`/{page-id}/subscribed_apps`) — `checkPageWebhook`.
+   * Sem a camada 2 o indicador dizia "Webhook configurado corretamente" com a
+   * Pagina fora do app, e nenhum comentario chegava (incidente 27/11/2026).
+   */
   async checkIntegrationWebhook(
     orgId: string,
     integrationId: string
-  ): Promise<{ ok: boolean; error?: string; subscribed?: boolean }> {
+  ): Promise<WebhookCheckResult> {
+    const app = await this.checkAppWebhook(orgId, integrationId);
+    if (!app.ok) {
+      return app;
+    }
+    return { ...app, ...(await this.checkPageWebhook(orgId, integrationId)) };
+  }
+
+  private async checkPageWebhook(
+    orgId: string,
+    integrationId: string
+  ): Promise<WebhookCheckResult> {
+    const integration = await this._integrationService.getIntegrationById(
+      orgId,
+      integrationId
+    );
+    const provider = this._integrationManager.getSocialIntegration(
+      'instagram'
+    ) as unknown as InstagramProvider;
+    if (!integration || !provider) {
+      return { ok: true, pageSubscribed: null };
+    }
+
+    // A lista /{page-id}/subscribed_apps traz o id do app Facebook (clientId),
+    // nao o id do produto Instagram Login. Sem ele, nao ha o que procurar.
+    const creds = await this._credentialService.getRawShared(
+      integration.organizationId,
+      'facebook',
+      integration.profileId ?? undefined
+    );
+    const fbAppId = creds?.clientId || process.env.FACEBOOK_APP_ID;
+    if (!fbAppId) {
+      return { ok: true, pageSubscribed: null };
+    }
+
+    const token = decryptIntegrationToken(this._encryption, integration.token);
+    const reconnectHint =
+      'Reconecte o canal em Adicionar canal > Instagram (Facebook Business) e aceite todas as permissões, ' +
+      'inclusive "pages_manage_metadata": ao reconectar, o Multipost inscreve a Página no app.';
+
+    const pageId = await provider.getPageIdForIgAccount(
+      token,
+      integration.internalId
+    );
+    if (!pageId) {
+      return {
+        ok: true,
+        pageSubscribed: null,
+        warning:
+          'Não foi possível identificar a Página do Facebook ligada a este Instagram para conferir a inscrição no app. ' +
+          reconnectHint,
+      };
+    }
+
+    const check = await provider.checkPageSubscription(pageId, token, fbAppId);
+    if (check.subscribed === true) {
+      return { ok: true, pageSubscribed: true };
+    }
+    if (check.subscribed === false) {
+      return {
+        ok: false,
+        pageSubscribed: false,
+        error:
+          `Página ${pageId} não inscrita no app Meta ${fbAppId}: a Meta não entrega os comentários deste Instagram ` +
+          `e a automação não dispara. ${reconnectHint}`,
+      };
+    }
+    // Leitura falhou (tipicamente token antigo sem pages_manage_metadata).
+    // Nao bloqueia: a Pagina pode estar inscrita e so nao conseguimos ler.
+    this._logger.warn(
+      `[checkIntegrationWebhook] nao foi possivel ler subscribed_apps da Pagina ${pageId}: ${check.error}`
+    );
+    return {
+      ok: true,
+      pageSubscribed: null,
+      warning:
+        `Não foi possível confirmar se a Página ${pageId} está inscrita no app (${check.error}). ` +
+        `Se as automações não dispararem: ${reconnectHint}`,
+    };
+  }
+
+  private async checkAppWebhook(
+    orgId: string,
+    integrationId: string
+  ): Promise<WebhookCheckResult> {
     const integration = await this._integrationService.getIntegrationById(
       orgId,
       integrationId

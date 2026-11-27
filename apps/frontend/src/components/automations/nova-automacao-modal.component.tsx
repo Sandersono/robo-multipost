@@ -63,6 +63,7 @@ export const NovaAutomacaoModal: FC<Props> = ({ open, onClose, onCreated }) => {
     loading: boolean;
     ok?: boolean;
     error?: string;
+    warning?: string;
   }>({ loading: false });
 
   useEffect(() => {
@@ -83,7 +84,12 @@ export const NovaAutomacaoModal: FC<Props> = ({ open, onClose, onCreated }) => {
     fetchApi(`/flows/integrations/${integrationId}/webhook-status`)
       .then((r) => r.json())
       .then((data) => {
-        setWebhookCheck({ loading: false, ok: data.ok, error: data.error });
+        setWebhookCheck({
+          loading: false,
+          ok: data.ok,
+          error: data.error,
+          warning: data.warning,
+        });
       })
       .catch(() => {
         setWebhookCheck({
@@ -302,9 +308,16 @@ export const NovaAutomacaoModal: FC<Props> = ({ open, onClose, onCreated }) => {
                       {t('checking_webhook', 'Verificando webhook...')}
                     </p>
                   ) : webhookCheck.ok ? (
-                    <p className="text-[12px] text-customColor42">
-                      {t('webhook_ok', 'Webhook configurado corretamente')}
-                    </p>
+                    <>
+                      <p className="text-[12px] text-customColor42">
+                        {t('webhook_ok', 'Webhook configurado corretamente')}
+                      </p>
+                      {webhookCheck.warning ? (
+                        <p className="text-[12px] text-customColor18 whitespace-pre-wrap leading-[1.5]">
+                          {webhookCheck.warning}
+                        </p>
+                      ) : null}
+                    </>
                   ) : webhookCheck.error ? (
                     <div className="rounded-[4px] border border-customColor13/40 bg-customColor13/10 p-[12px]">
                       <p className="text-[12px] text-customColor13 whitespace-pre-wrap leading-[1.5]">
