@@ -247,3 +247,150 @@ describe('InstagramProvider.getMediaMetadata', () => {
   });
 
 });
+
+
+const jsonRes = (body: any, ok = true, status = 200) => ({
+  ok,
+  status,
+  json: async () => body,
+});
+
+describe('InstagramProvider - inscricao da Pagina no app', () => {
+  let provider: InstagramProvider;
+  let originalFetch: typeof fetch;
+
+  beforeEach(() => {
+    provider = new InstagramProvider();
+    originalFetch = global.fetch;
+    jest.spyOn(console, 'log').mockImplementation(() => undefined);
+    jest.spyOn(console, 'warn').mockImplementation(() => undefined);
+  });
+
+  afterEach(() => {
+    global.fetch = originalFetch;
+    jest.restoreAllMocks();
+  });
+
+  it('deve pedir o escopo pages_manage_metadata', () => {
+    expect(provider.scopes).toContain('pages_manage_metadata');
+  });
+
+  it('subscribePageToApp deve fazer POST com subscribed_fields=feed', async () => {
+    const fetchMock = jest.fn().mockResolvedValue(jsonRes({ success: true }));
+    global.fetch = fetchMock as any;
+
+    const result = await provider.subscribePageToApp('PAGE1', 'PTOKEN');
+
+    expect(result).toEqual({ success: true });
+    const [url, init] = fetchMock.mock.calls[0];
+    expect(url).toContain(
+      'https://graph.facebook.com/v25.0/PAGE1/subscribed_apps?subscribed_fields=feed'
+    );
+    expect(init.method).toBe('POST');
+  });
+
+  it('subscribePageToApp deve devolver o erro da Graph API sem lancar', async () => {
+    global.fetch = jest.fn().mockResolvedValue(
+      jsonRes(
+        { error: { message: '(#200) requires pages_manage_metadata', code: 200 } },
+        false,
+        403
+      )
+    ) as any;
+
+    const result = await provider.subscribePageToApp('PAGE1', 'PTOKEN');
+
+    expect(result.success).toBe(false);
+    expect(result.error).toContain('pages_manage_metadata');
+  });
+
+  it('checkPageSubscription deve achar o app pelo id', async () => {
+    global.fetch = jest.fn().mockResolvedValue(
+      jsonRes({
+        data: [
+          { id: '999', name: 'outro' },
+          { id: '2046', name: 'Conexao', subscribed_fields: ['feed'] },
+        ],
+      })
+    ) as any;
+
+    await expect(
+      provider.checkPageSubscription('PAGE1', 'PTOKEN', '2046')
+    ).resolves.toEqual({ subscribed: true, fields: ['feed'] });
+  });
+
+  it('checkPageSubscription deve dizer nao inscrito quando o app nao esta na lista', async () => {
+    global.fetch = jest.fn().mockResolvedValue(jsonRes({ data: [] })) as any;
+
+    const result = await provider.checkPageSubscription('PAGE1', 'PTOKEN', '2046');
+    expect(result.subscribed).toBe(false);
+  });
+
+  it('checkPageSubscription deve devolver subscribed=null quando a leitura falha', async () => {
+    global.fetch = jest.fn().mockResolvedValue(
+      jsonRes({ error: { message: 'requires pages_manage_metadata', code: 200 } }, false, 403)
+    ) as any;
+
+    const result = await provider.checkPageSubscription('PAGE1', 'PTOKEN', '2046');
+    expect(result.subscribed).toBeNull();
+    expect(result.error).toContain('pages_manage_metadata');
+  });
+
+  it('fetchPageInformation deve inscrever a Pagina com o token da Pagina', async () => {
+    const fetchMock = jest
+      .fn()
+      .mockResolvedValueOnce(jsonRes({ access_token: 'PAGE_TOKEN', name: 'Pag' }))
+      .mockResolvedValueOnce(
+        jsonRes({ id: 'IG1', name: 'ig', username: 'ig', profile_picture_url: 'p' })
+      )
+      .mockResolvedValueOnce(jsonRes({ success: true }));
+    global.fetch = fetchMock as any;
+
+    const info = await provider.fetchPageInformation('USER_TOKEN', {
+      pageId: 'PAGE1',
+      id: 'IG1',
+    });
+
+    expect(info.access_token).toBe('PAGE_TOKEN');
+    const [url, init] = fetchMock.mock.calls[2];
+    expect(url).toContain('/PAGE1/subscribed_apps?subscribed_fields=feed');
+    expect(url).toContain('access_token=PAGE_TOKEN');
+    expect(init.method).toBe('POST');
+  });
+
+  it('fetchPageInformation nao deve falhar quando a inscricao falha', async () => {
+    global.fetch = jest
+      .fn()
+      .mockResolvedValueOnce(jsonRes({ access_token: 'PAGE_TOKEN' }))
+      .mockResolvedValueOnce(jsonRes({ id: 'IG1', name: 'ig' }))
+      .mockRejectedValueOnce(new Error('network')) as any;
+
+    await expect(
+      provider.fetchPageInformation('USER_TOKEN', { pageId: 'PAGE1', id: 'IG1' })
+    ).resolves.toMatchObject({ id: 'IG1', access_token: 'PAGE_TOKEN' });
+  });
+
+  it('sendPrivateReply deve levar code/subcode e a dica no erro', async () => {
+    global.fetch = jest
+      .fn()
+      .mockResolvedValueOnce(jsonRes({ id: 'PAGE1' }))
+      .mockResolvedValueOnce(
+        jsonRes(
+          {
+            error: {
+              message:
+                '(#200) O dono da conta desativou o acesso às mensagens diretas do Instagram',
+              code: 200,
+              error_subcode: 2534041,
+            },
+          },
+          false,
+          400
+        )
+      ) as any;
+
+    await expect(
+      provider.sendPrivateReply('PTOKEN', 'IG1', 'C1', 'oi')
+    ).rejects.toThrow(/desativou o acesso.*subcode=2534041.*Permitir acesso a mensagens/);
+  });
+});

@@ -14,18 +14,26 @@ import { InstagramDto } from '@gitroom/nestjs-libraries/dtos/posts/providers-set
 import { Integration } from '@prisma/client';
 import { Rules } from '@gitroom/nestjs-libraries/chat/rules.description.decorator';
 import { InstagramDmButton } from '@gitroom/nestjs-libraries/integrations/social/instagram-dm-button.type';
+import { formatGraphApiError } from '@gitroom/nestjs-libraries/integrations/social/graph-error.message';
+
+// Campos que a Pagina precisa ter inscritos no app para a Meta entregar os
+// webhooks do Instagram ligado a ela (canal via Facebook Login). Provado em
+// producao (27/11/2026): sem a Pagina em /{page-id}/subscribed_apps nenhum
+// comentario chega, mesmo com o webhook do app configurado e o app em Live.
+export const PAGE_WEBHOOK_FIELDS = ['feed'];
 
 // Aborta a chamada Graph API se passar de `timeoutMs` ms. Evita que uma
 // chamada lenta a graph.facebook.com (comum em agencias com muitas pages
 // via Business Manager) trave o OAuth callback inteiro e cause 504 do Nginx.
 async function fetchWithTimeout(
   url: string,
-  timeoutMs = 15000
+  timeoutMs = 15000,
+  init: RequestInit = {}
 ): Promise<Response> {
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), timeoutMs);
   try {
-    return await fetch(url, { signal: controller.signal });
+    return await fetch(url, { ...init, signal: controller.signal });
   } finally {
     clearTimeout(timeout);
   }
@@ -68,6 +76,10 @@ export class InstagramProvider
     'instagram_manage_comments',
     'instagram_manage_insights',
     'instagram_manage_messages',
+    // Necessario para inscrever a Pagina no app (POST /{page-id}/subscribed_apps)
+    // e para ler essa inscricao no webhook-status. Sem ele a Meta nao entrega
+    // os webhooks de comentario do Instagram ligado a Pagina.
+    'pages_manage_metadata',
   ];
   override maxConcurrentJob = 400;
   editor = 'normal' as const;
@@ -622,6 +634,22 @@ export class InstagramProvider
       )
     ).json();
 
+    // Conectar ou reconectar o canal inscreve a Pagina no app, para que os
+    // webhooks de comentario cheguem. Fail-soft: o canal serve para publicar
+    // mesmo sem a inscricao; o webhook-status mostra quando ela falta.
+    if (access_token && data.pageId) {
+      const sub = await this.subscribePageToApp(data.pageId, access_token);
+      if (sub.success) {
+        console.log(
+          `[Instagram.fetchPageInformation] Pagina ${data.pageId} inscrita no app (subscribed_fields=${PAGE_WEBHOOK_FIELDS.join(',')})`
+        );
+      } else {
+        console.warn(
+          `[Instagram.fetchPageInformation] falha ao inscrever a Pagina ${data.pageId} no app: ${sub.error}`
+        );
+      }
+    }
+
     return {
       id,
       name,
@@ -1069,9 +1097,9 @@ export class InstagramProvider
 
     const body = await response.json();
     if (!response.ok || body.error) {
-      const errMsg =
-        body?.error?.message || JSON.stringify(body?.error || body);
-      throw new Error(`Instagram DM failed (${response.status}): ${errMsg}`);
+      throw new Error(
+        formatGraphApiError('Instagram DM failed', response.status, body)
+      );
     }
 
     return {
@@ -1142,10 +1170,12 @@ export class InstagramProvider
 
     const body = await response.json();
     if (!response.ok || body.error) {
-      const errMsg =
-        body?.error?.message || JSON.stringify(body?.error || body);
       throw new Error(
-        `Instagram private reply failed (${response.status}): ${errMsg}`
+        formatGraphApiError(
+          'Instagram private reply failed',
+          response.status,
+          body
+        )
       );
     }
 
@@ -1259,13 +1289,97 @@ export class InstagramProvider
     }
   }
 
+  // Inscreve a Pagina no app (POST /{page-id}/subscribed_apps) com o Page
+  // Access Token. Exige o escopo pages_manage_metadata. Nunca lanca.
+  async subscribePageToApp(
+    pageId: string,
+    pageAccessToken: string,
+    fields: string[] = PAGE_WEBHOOK_FIELDS
+  ): Promise<{ success: boolean; error?: string }> {
+    try {
+      const response = await fetchWithTimeout(
+        `https://graph.facebook.com/v25.0/${pageId}/subscribed_apps?subscribed_fields=${fields.join(
+          ','
+        )}&access_token=${pageAccessToken}`,
+        15000,
+        { method: 'POST' }
+      );
+      const body = await response.json();
+      if (!response.ok || body?.error || body?.success !== true) {
+        return {
+          success: false,
+          error: formatGraphApiError('subscribed_apps', response.status, body),
+        };
+      }
+      return { success: true };
+    } catch (err) {
+      return { success: false, error: (err as Error)?.message || String(err) };
+    }
+  }
+
+  // Le GET /{page-id}/subscribed_apps e diz se o app `appId` esta na lista.
+  // subscribed=null quando a leitura falha (ex.: token sem pages_manage_metadata).
+  async checkPageSubscription(
+    pageId: string,
+    pageAccessToken: string,
+    appId: string
+  ): Promise<{ subscribed: boolean | null; fields: string[]; error?: string }> {
+    try {
+      const response = await fetchWithTimeout(
+        `https://graph.facebook.com/v25.0/${pageId}/subscribed_apps?access_token=${pageAccessToken}`
+      );
+      const body = await response.json();
+      if (!response.ok || body?.error) {
+        return {
+          subscribed: null,
+          fields: [],
+          error: formatGraphApiError('subscribed_apps', response.status, body),
+        };
+      }
+      const apps: Array<{ id?: string; subscribed_fields?: string[] }> =
+        Array.isArray(body?.data) ? body.data : [];
+      const ours = apps.find((a) => String(a.id) === String(appId));
+      return { subscribed: !!ours, fields: ours?.subscribed_fields || [] };
+    } catch (err) {
+      return {
+        subscribed: null,
+        fields: [],
+        error: (err as Error)?.message || String(err),
+      };
+    }
+  }
+
   async ensureWebhookSubscription(
     pageAccessToken: string,
     igAccountId: string,
     type = 'graph.facebook.com'
   ): Promise<boolean> {
-    // Instagram webhooks are subscribed directly on the IG account, not the Page.
-    return this.subscribeToWebhooks(igAccountId, pageAccessToken, type);
+    // Canal via Facebook Login: o que faz a Meta entregar os webhooks do IG e a
+    // Pagina inscrita no app. A inscricao direta na conta IG fica como tentativa
+    // extra (vale para apps com Instagram Login).
+    const errors: string[] = [];
+    if (type === 'graph.facebook.com') {
+      const pageId = await this.getPageIdForIgAccount(
+        pageAccessToken,
+        igAccountId,
+        type
+      );
+      if (pageId) {
+        const page = await this.subscribePageToApp(pageId, pageAccessToken);
+        if (page.success) {
+          return true;
+        }
+        errors.push(`Pagina ${pageId}: ${page.error}`);
+      } else {
+        errors.push('Pagina nao encontrada para o token do canal');
+      }
+    }
+    try {
+      return await this.subscribeToWebhooks(igAccountId, pageAccessToken, type);
+    } catch (err) {
+      errors.push((err as Error)?.message || String(err));
+      throw new Error(errors.join(' | '));
+    }
   }
 
   async getMediaMetadata(

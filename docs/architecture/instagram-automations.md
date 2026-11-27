@@ -339,6 +339,26 @@ apps/frontend/src/components/automations/
    e resiliente: uma credencial que nao descriptografa (ex.: `ENCRYPTION_KEY`
    trocada apos salvar) e **pulada com log**, nao derruba o webhook de todos —
    a validacao segue pelo segredo de ambiente.
+9. **Canal via Facebook Login so recebe webhook com a Pagina inscrita no app.**
+   Configurar o webhook do app (`/{app-id}/subscriptions`) e deixar o app em
+   Live nao basta: a Pagina ligada ao Instagram precisa aparecer em
+   `/{page-id}/subscribed_apps`. O provider pede `pages_manage_metadata` e,
+   ao conectar ou reconectar o canal (`fetchPageInformation`, usado tambem
+   por `reConnect`), faz `POST /{page-id}/subscribed_apps?subscribed_fields=feed`
+   com o Page Access Token, fail-soft e com log. Ativar uma automacao repete
+   a inscricao (`ensureWebhookSubscription`). O `webhook-status` confere as
+   duas camadas: app e Pagina (procura o `clientId` do app Facebook na lista);
+   Pagina fora da lista bloqueia com "nao inscrita"; leitura que falha (token
+   antigo sem `pages_manage_metadata`) so avisa. Canal conectado antes desta
+   mudanca precisa ser reconectado para ganhar o escopo. Incidente de origem:
+   27/11/2026, Agiliza Terapias e Acelerador de Pacientes.
+10. **O historico de execucoes mostra o erro da Graph API, nao "Activity task
+    failed".** O Temporal embrulha o erro da activity num `ActivityFailure`;
+    o workflow `flow.execution` grava a mensagem mais interna da cadeia
+    `cause`. DM e private reply formatam o erro com `formatGraphApiError`
+    (`graph-error.message.ts`): mensagem + `code`/`subcode` e, no subcode
+    `2534041` (acesso a mensagens desligado pelo dono da conta), a dica
+    "Ative Permitir acesso a mensagens no app do Instagram".
 
 ---
 

@@ -149,11 +149,27 @@ export async function flowExecutionWorkflow(input: FlowExecutionInput) {
   } catch (err: any) {
     await updateExecution(input.executionId, {
       status: 'FAILED' as any,
-      error: err?.message || 'Unknown error',
+      error: failureMessage(err),
       completedAt: new Date(),
     });
     throw err;
   }
+}
+
+// Temporal embrulha o erro de uma activity num ActivityFailure cuja mensagem e
+// sempre "Activity task failed"; o erro real (ex.: o texto da Graph API com
+// code/subcode) fica em `cause`. Guarda a mensagem mais interna para o
+// historico de execucoes mostrar o motivo de verdade.
+function failureMessage(err: any): string {
+  let best: string | undefined = err?.message;
+  let current = err;
+  for (let depth = 0; current && depth < 5; depth++) {
+    if (current.message && current.message !== 'Activity task failed') {
+      best = current.message;
+    }
+    current = current.cause;
+  }
+  return best || 'Unknown error';
 }
 
 async function traverseNode(
@@ -445,7 +461,7 @@ async function traverseNode(
       nodeType: node.type,
       status: 'error',
       timestamp: new Date().toISOString(),
-      error: nodeErr?.message || 'Unknown error',
+      error: failureMessage(nodeErr),
     });
     throw nodeErr;
   }
